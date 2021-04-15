@@ -1,23 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Switch, Link } from "react-router-dom";
+import { GetSentence } from "./pages/GetSentence";
+import { AddSentence } from "./pages/AddSentence";
+import { UserFeed } from "./pages/UserFeed";
 
 function App() {
   return (
-    <div className="App">
+    <div
+      style={{
+        display: "flex",
+        minHeight: "100vh",
+        flexDirection: "column",
+      }}
+    >
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <button>noti</button>
       </header>
+      <main style={{ flex: 1 }}>
+        <section>
+          <Switch>
+            <Route path="/" exact={true} component={GetSentence} />
+            <Route path="/add" exact={true} component={AddSentence} />
+            <Route path="/feed" exact={true} component={UserFeed} />
+          </Switch>
+        </section>
+        <section>
+          <Link to="/">Get Sentence. 유리병 아이콘</Link>
+          <Link to="/add">Add Sentence. 플러스 아이콘</Link>
+          <Link to="/feed">My Feed. 사람아이콘</Link>
+        </section>
+      </main>
+      <footer>kundera.so ©</footer>
     </div>
   );
 }
