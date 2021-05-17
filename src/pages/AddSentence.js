@@ -1,12 +1,74 @@
+import axios from "axios";
+import React from "react";
+import styled from "styled-components";
+
 export const AddSentence = () => {
+  const [bodyText, setBodyText] = React.useState("");
+  const [checkValue, setCheckValue] = React.useState("");
   return (
     <>
       <div>
-        문장 추가하기. 여기서 문장추가하면 전체 문장풀에도 추가되지만, 자기
-        자신의 피드에도 추가돼야 하겠지.
-        <textarea placeholder="인상깊었던 문장, 마음에 갖고 있는 문장, 어딘가 띄워보내고 싶은 문장"></textarea>
-        <input placeholder="어디서 나온 문장인가요? 몰라도 상관없어요."></input>
+        <TextareaWrapper>
+          <textarea
+            value={bodyText}
+            style={{
+              height: "90%",
+              padding: "10px",
+              width: "95%",
+              resize: "none",
+              outline: "none",
+              border: "none",
+            }}
+            onChange={(e) => {
+              setBodyText(e.target.value);
+            }}
+            placeholder="갖고 있는 문장을 어딘가로 띄워보내요"
+            minlength="1"
+            maxlength="1000"
+            autoFocus="false"
+            spellcheck="false"
+          />
+        </TextareaWrapper>
+        <br />
+        <div>
+          <button
+            onClick={async () => {
+              const res = await axios({
+                method: "post",
+                url: "http://localhost:8000/post",
+                data: {
+                  bodyText: bodyText,
+                  addedBy: "임시 사용자 아이디",
+                },
+              });
+              console.log(res.data);
+              setCheckValue(res.data.bodyText);
+            }}
+          >
+            submit
+          </button>
+        </div>
       </div>
+      <div>{checkValue}</div>
     </>
   );
 };
+
+const TextareaWrapper = styled.div`
+  border: 1px solid #999;
+  width: 400px;
+  height: 50vw;
+  @media (max-width: 1024px) {
+    width: 400px;
+  }
+  @media (max-width: 768px) {
+    width: 400px;
+  }
+  @media (max-width: 600px) {
+    width: 90vw;
+  }
+  @media (max-width: 475px) {
+    width: 100vw;
+    height: 40vw;
+  }
+`;

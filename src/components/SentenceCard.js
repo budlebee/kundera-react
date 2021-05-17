@@ -1,7 +1,7 @@
 export const SentenceCard = ({ children }) => {
   return (
     <>
-      <div>{children}</div>
+      <div style={{ padding: "15px" }}>{children}</div>
     </>
   );
 };
