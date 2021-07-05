@@ -1,4 +1,7 @@
 import { BlackBellIcon, RedRingingBellIcon } from "../components/Icons";
+import MainLogo from "../assets/MainLogo.png";
+
+import { Link } from "react-router-dom";
 
 export const Nav = () => {
   return (
@@ -12,7 +15,9 @@ export const Nav = () => {
         justifyContent: "space-between",
       }}
     >
-      <div>kundera 로고</div>{" "}
+      <Link to="/">
+        <img src={MainLogo} style={{ height: "60px" }} />
+      </Link>
       <button
         style={{
           border: "none",

@@ -1,26 +1,45 @@
 import { SentenceCard } from "../components/SentenceCard";
-import { testSentences } from "../lib/test";
+import { testSentences, testId } from "../lib/test";
 
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export const GetSentence = () => {
-  const [sentences, setSentences] = React.useState(testSentences);
+  const [postList, setPostList] = useState([]);
+  const [post, setPost] = useState(null);
   const [count, setCount] = React.useState(0);
+
+  useEffect(() => {
+    const readPosts = async () => {
+      const res = await axios({
+        method: "post",
+        url: "http://localhost:8000/get-sentence",
+        data: { userId: testId },
+      });
+      console.log(res.data.result);
+      setPostList(res.data.result);
+      setPost(res.data.result[0]);
+    };
+    readPosts();
+  }, []);
+
   return (
     <>
-      <div>
-        문장 랜덤하게(사실은 인기순이지만) 보기. 나중에는 공통 취향에 따라
-        나타나는 문장이 달라지면 재밌겠다.
-      </div>
-      <div>
-        <SentenceCard>{sentences[count].sentence}</SentenceCard>
-      </div>
+      <div></div>
+      <div>{post ? <SentenceCard>{post.content}</SentenceCard> : ""}</div>
       <button
-        onClick={() => {
-          if (count === sentences.length - 1) {
+        onClick={async () => {
+          console.log(post.id);
+          const res = await axios({
+            method: "post",
+            url: "http://localhost:8000/love-sentence",
+            data: { userId: testId, postId: `${post.id}` },
+          });
+          console.log(res.data);
+          if (count === postList.length - 1) {
             alert("문장이 바닥났어요");
           } else {
+            setPost(postList[count + 1]);
             setCount(count + 1);
           }
           // 여기서 남은 문장이 0개면 서버에 요청날리고, 로딩비슷하게 "새로운 문장이 떠내려오고 있어요 이런 문구 적자."
@@ -32,14 +51,34 @@ export const GetSentence = () => {
       </button>
       <button
         onClick={async () => {
+          console.log(post.id);
           const res = await axios({
-            method: "get",
-            url: "http://localhost:8000",
+            method: "post",
+            url: "http://localhost:8000/hate-sentence",
+            data: { userId: testId, postId: `${post.id}` },
+          });
+          if (count === postList.length - 1) {
+            alert("문장이 바닥났어요");
+            return;
+          } else {
+            setPost(postList[count + 1]);
+            setCount(count + 1);
+          }
+        }}
+      >
+        새로운 문장 찾기
+      </button>
+      <button
+        onClick={async () => {
+          const res = await axios({
+            method: "post",
+            url: "http://localhost:8000/get-sentence",
+            data: { email: "bbogle7613@gmail.com", tempKey: "asdf" },
           });
           console.log(res.data);
         }}
       >
-        새로운 문장 찾기
+        임시 테스트용
       </button>
     </>
   );

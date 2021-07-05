@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import styled from "styled-components";
+import { testId } from "../lib/test";
 
 export const AddSentence = () => {
   const [bodyText, setBodyText] = React.useState("");
@@ -35,14 +36,14 @@ export const AddSentence = () => {
             onClick={async () => {
               const res = await axios({
                 method: "post",
-                url: "http://localhost:8000/post",
+                url: "http://localhost:8000/add-sentence",
                 data: {
-                  bodyText: bodyText,
-                  addedBy: "임시 사용자 아이디",
+                  content: bodyText,
+                  userId: testId,
                 },
               });
               console.log(res.data);
-              setCheckValue(res.data.bodyText);
+              setCheckValue(res.data.text);
             }}
           >
             submit

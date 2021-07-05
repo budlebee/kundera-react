@@ -1,6 +1,8 @@
 import { BookmarkIcon, SquarePlusIcon, RippleIcon } from "../components/Icons";
 import { Link } from "react-router-dom";
 
+import { testId } from "../lib/test";
+
 export const Footer = () => {
   return (
     <footer
@@ -23,6 +25,19 @@ export const Footer = () => {
           }}
         >
           <Link to="/">
+            <RippleIcon height="30" width="30" />
+          </Link>
+          <div>Sail</div>
+        </div>
+        <div
+          style={{
+            display: "grid",
+            placeItems: "center",
+            width: "100%",
+            margin: "10px",
+          }}
+        >
+          <Link to={`/gurus-feed/${testId}`}>
             <RippleIcon height="30" width="30" />
           </Link>
           <div>Feed</div>
@@ -48,7 +63,7 @@ export const Footer = () => {
             margin: "10px",
           }}
         >
-          <Link to="/feed">
+          <Link to={`/user-feed/${testId}`}>
             <BookmarkIcon height="30" width="30" />
           </Link>
           <div>My</div>

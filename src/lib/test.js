@@ -1,3 +1,9 @@
+export const testId = "3";
+
+export const testGuruId = "1";
+
+export const testMyId = "3";
+
 export const testSentences = [
   {
     sentence: `누구나 재능은 있다. 드문 것은 그 재능이 이끄는 암흑 속으로 따라 들어갈 용기다. \n - 에리카 종`,
