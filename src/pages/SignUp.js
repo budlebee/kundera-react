@@ -7,9 +7,11 @@ export const SignUp = () => {
   const [pwd, setPwd] = useState("");
   const [pwdCheck, setPwdCheck] = useState("");
 
+  const [emailCode, setEmailCode] = useState("");
   const [emailCheck, setEmailCheck] = useState(false);
   const [emailVerificationButtonDisable, setEmailVerificationButtonDisable] =
     useState(false);
+
   // 정규식을 통해 email 제대로 된건지 체크하고, 제대로 된 이메일이어야지 인증번호 발송 활성화.
   // 이메일 발송버튼은 5초에 한번씩만 활성화.
   return (
@@ -56,18 +58,19 @@ export const SignUp = () => {
       </button>
       <input
         placeholder="이메일 인증코드"
-        value={pwdCheck}
+        value={emailCode}
         onChange={(e) => {
-          setPwdCheck(e.target.value);
+          setEmailCode(e.target.value);
         }}
       ></input>
       <button
-        onClick={() => {
-          axios({
+        onClick={async () => {
+          const res = await axios({
             method: "post",
             url: "http://localhost:8000/signup",
-            data: { email: email, nickname: nickname },
+            data: { email: email, nickname: nickname, pwd: pwd },
           });
+          console.log(res.data);
         }}
       >
         submit

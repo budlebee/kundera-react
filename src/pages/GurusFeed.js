@@ -29,15 +29,17 @@ export const GurusFeed = () => {
   return (
     <>
       <div>자신이 팔로우하는 사람들의 문장을 모아볼 수 있는 피드.</div>
-      {postList.map((ele) => {
+      {postList.map((ele, idx) => {
         return (
-          <>
+          <div key={idx}>
             <HorizontalLine />
-            <SentenceCard>
-              <div>{ele.content}</div>
-              <div>{ele.timestamp}</div>
-            </SentenceCard>
-          </>
+            <SentenceCard
+              content={ele.content}
+              nickname={ele.nickname}
+              userId={ele.created_by}
+              timestamp={ele.timestamp}
+            ></SentenceCard>
+          </div>
         );
       })}
     </>

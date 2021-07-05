@@ -9,6 +9,7 @@ import { testGuruId, testMyId } from "../lib/test";
 export const UserFeed = ({ match }) => {
   //const [userId, setUserId] = useState(testId);
   const { userId } = match.params || "1";
+  const myId = testMyId;
   const [postList, setPostList] = useState([]);
 
   useEffect(() => {
@@ -16,7 +17,7 @@ export const UserFeed = ({ match }) => {
       const res = await axios({
         method: "post",
         url: `http://localhost:8000/user-feed`,
-        data: { userId, myId: testMyId },
+        data: { userId, myId },
       });
       console.log(
         res.data.result.sort(function (x, y) {
@@ -25,6 +26,7 @@ export const UserFeed = ({ match }) => {
       );
       // post 뿐만 아니라, 이사람과 내가 팔로우 관계인지 아닌지 체크해야되니까 followers 확인도 해야되네.
       // api 를 따로 구성할까? 아님 하나에서 전부 처리할까? 하나에서 하자.
+      console.log(res.data.result);
       setPostList(res.data.result);
       // res.data.isFollowing 값을 return 에 넣으면 되지.
       //setPost(res.data.result[0]);
@@ -51,15 +53,17 @@ export const UserFeed = ({ match }) => {
           </button>
         </span>
       </div>
-      {postList.map((ele) => {
+      {postList.map((ele, idx) => {
         return (
-          <>
+          <div key={idx}>
             <HorizontalLine />
-            <SentenceCard>
-              <div>{ele.content}</div>
-              <div>{ele.timestamp}</div>
-            </SentenceCard>
-          </>
+            <SentenceCard
+              content={ele.content}
+              nickname={ele.nickname}
+              userId={ele.created_by}
+              timestamp={ele.timestamp}
+            ></SentenceCard>
+          </div>
         );
       })}
     </>

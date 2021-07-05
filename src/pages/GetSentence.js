@@ -26,7 +26,9 @@ export const GetSentence = () => {
   return (
     <>
       <div></div>
-      <div>{post ? <SentenceCard>{post.content}</SentenceCard> : ""}</div>
+      <div>
+        {post ? <SentenceCard content={post.content}></SentenceCard> : ""}
+      </div>
       <button
         onClick={async () => {
           console.log(post.id);
