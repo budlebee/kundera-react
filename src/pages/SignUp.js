@@ -1,7 +1,11 @@
 import { useState } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { signUp } from "../redux/user";
 
 export const SignUp = () => {
+  const dispatch = useDispatch();
+
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
@@ -64,13 +68,8 @@ export const SignUp = () => {
         }}
       ></input>
       <button
-        onClick={async () => {
-          const res = await axios({
-            method: "post",
-            url: "http://localhost:8000/signup",
-            data: { email: email, nickname: nickname, pwd: pwd },
-          });
-          console.log(res.data);
+        onClick={() => {
+          dispatch(signUp(email, nickname, pwd));
         }}
       >
         submit

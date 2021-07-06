@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 import { HorizontalLine } from "../components/Lines";
 import { SentenceCard } from "../components/SentenceCard";
@@ -9,7 +10,14 @@ import { testGuruId, testMyId } from "../lib/test";
 export const UserFeed = ({ match }) => {
   //const [userId, setUserId] = useState(testId);
   const { userId } = match.params || "1";
-  const myId = testMyId;
+  const { loading, error, myId } = useSelector((state) => {
+    return {
+      loading: state.user.loading,
+      error: state.user.error,
+      myId: state.user.myId,
+    };
+  });
+
   const [postList, setPostList] = useState([]);
 
   useEffect(() => {

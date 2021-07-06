@@ -1,9 +1,13 @@
+import Cookies from "universal-cookie";
+
 import { BlackBellIcon, RedRingingBellIcon } from "../components/Icons";
 import MainLogo from "../assets/MainLogo.png";
 
 import { Link } from "react-router-dom";
 
 export const Nav = () => {
+  const cookies = new Cookies();
+  const loginCheck = cookies.get("user-id");
   return (
     <header
       style={{
@@ -26,6 +30,11 @@ export const Nav = () => {
         }}
       >
         <BlackBellIcon width="30px" height="30px" />
+        {loginCheck ? (
+          <div>로그인 아이디: {loginCheck}</div>
+        ) : (
+          <div>로그인 아님</div>
+        )}
       </button>
     </header>
   );

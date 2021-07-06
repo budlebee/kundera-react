@@ -3,18 +3,27 @@ import { testSentences, testId } from "../lib/test";
 
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 export const GetSentence = () => {
   const [postList, setPostList] = useState([]);
   const [post, setPost] = useState(null);
   const [count, setCount] = React.useState(0);
 
+  const { loading, error, myId } = useSelector((state) => {
+    return {
+      loading: state.user.loading,
+      error: state.user.error,
+      myId: state.user.myId,
+    };
+  });
+
   useEffect(() => {
     const readPosts = async () => {
       const res = await axios({
         method: "post",
-        url: "http://localhost:8000/get-sentence",
-        data: { userId: testId },
+        url: `${process.env.REACT_APP_SERVER_URL}/get-sentence`,
+        data: { userId: myId },
       });
       console.log(res.data.result);
       setPostList(res.data.result);
@@ -35,7 +44,7 @@ export const GetSentence = () => {
           const res = await axios({
             method: "post",
             url: "http://localhost:8000/love-sentence",
-            data: { userId: testId, postId: `${post.id}` },
+            data: { userId: myId, postId: `${post.id}` },
           });
           console.log(res.data);
           if (count === postList.length - 1) {
@@ -57,7 +66,7 @@ export const GetSentence = () => {
           const res = await axios({
             method: "post",
             url: "http://localhost:8000/hate-sentence",
-            data: { userId: testId, postId: `${post.id}` },
+            data: { userId: myId, postId: `${post.id}` },
           });
           if (count === postList.length - 1) {
             alert("문장이 바닥났어요");

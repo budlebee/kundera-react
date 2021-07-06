@@ -1,9 +1,12 @@
-import { BookmarkIcon, SquarePlusIcon, RippleIcon } from "../components/Icons";
-import { Link } from "react-router-dom";
-
 import { testId } from "../lib/test";
+import { Link } from "react-router-dom";
+import Cookies from "universal-cookie";
+import { useState } from "react";
+import { BookmarkIcon, SquarePlusIcon, RippleIcon } from "../components/Icons";
 
 export const Footer = () => {
+  const cookies = new Cookies();
+  const [myId, setMyId] = useState(cookies.get("user-id"));
   return (
     <footer
       style={{
@@ -37,7 +40,7 @@ export const Footer = () => {
             margin: "10px",
           }}
         >
-          <Link to={`/gurus-feed/${testId}`}>
+          <Link to={`/gurus-feed/${myId}`}>
             <RippleIcon height="30" width="30" />
           </Link>
           <div>Feed</div>
@@ -63,7 +66,7 @@ export const Footer = () => {
             margin: "10px",
           }}
         >
-          <Link to={`/user-feed/${testId}`}>
+          <Link to={`/user-feed/${myId}`}>
             <BookmarkIcon height="30" width="30" />
           </Link>
           <div>My</div>
