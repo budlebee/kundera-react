@@ -2,6 +2,7 @@ import { testId } from "../lib/test";
 import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import {
   BookmarkIcon,
   SquarePlusIcon,
@@ -12,7 +13,13 @@ import {
 
 export const Footer = () => {
   const cookies = new Cookies();
-  const [myId, setMyId] = useState(cookies.get("user-id"));
+  const { error, myId } = useSelector((state) => {
+    return {
+      error: state.user.error,
+      myId: state.user.myId,
+    };
+  });
+
   return (
     <footer
       style={{

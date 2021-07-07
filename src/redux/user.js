@@ -23,7 +23,13 @@ export const signUp = (email, nickname, pwd) => async (dispatch) => {
       data: { email: email, nickname: nickname, pwd: pwd },
     });
     console.log(res.data);
-    cookies.set("user-id", res.data.userId, { maxAge: 3600 * 24 * 3 });
+    if (cookies.get("user-id")) {
+      cookies.remove("user-id", { path: "/" });
+    }
+    cookies.set("user-id", res.data.userId, {
+      path: "/",
+      maxAge: 3600 * 24 * 3,
+    });
     console.log("회원가입 성공!");
     dispatch({
       type: SIGNUP_SUCCESS,
@@ -49,7 +55,13 @@ export const login = (email, pwd) => async (dispatch) => {
     });
     if (res.data.result) {
       console.log(res);
-      cookies.set("user-id", res.data.userId, { maxAge: 3600 * 24 * 3 });
+      if (cookies.get("user-id")) {
+        cookies.remove("user-id", { path: "/" });
+      }
+      cookies.set("user-id", res.data.userId, {
+        path: "/",
+        maxAge: 3600 * 24 * 3,
+      });
       console.log("로그인 성공!");
       dispatch({
         type: LOG_IN_SUCCESS,
@@ -70,8 +82,9 @@ const LOG_OUT = "user/LOG_OUT";
 export const logout = () => async (dispatch) => {
   console.log("localStorage set logout!");
   window.localStorage.setItem("logout", Date.now());
-  cookies.remove("rftk");
-  cookies.remove("user-id");
+  cookies.remove("rftk", { path: "/" });
+  cookies.remove("user-id", { path: "/" });
+  dispatch({ type: LOG_OUT });
 };
 
 const REFRESH_TOKEN_TRY = "user/REFRESH_TOKEN_TRY";
@@ -88,10 +101,14 @@ export const refreshToken = (accessToken) => async (dispatch) => {
       withCredentials: true,
     });
     console.log(res.data);
-    if (!res.data.accessToken) {
+    if (!res.data.token) {
+      cookies.remove("user-id", { path: "/" });
       throw "no access token";
     }
-    cookies.set("user-id", res.data.userId, { maxAge: 3600 * 24 * 3 });
+    cookies.set("user-id", res.data.userId, {
+      path: "/",
+      maxAge: 3600 * 24 * 3,
+    });
     dispatch({
       type: REFRESH_TOKEN_SUCCESS,
       accessToken: res.data.token,
@@ -113,7 +130,7 @@ export default function user(state = initialState, action) {
       return {
         ...state,
         accessToken: action.accessToken,
-        userId: action.userId,
+        myId: action.userId,
       };
     case LOG_IN_FAIL:
       return {
@@ -139,7 +156,7 @@ export default function user(state = initialState, action) {
       return {
         ...state,
         accessToken: action.accessToken,
-        userId: action.userId,
+        myId: action.userId,
       };
     case SIGNUP_FAIL:
       return {
@@ -148,6 +165,9 @@ export default function user(state = initialState, action) {
     case LOG_OUT:
       return {
         ...state,
+        accessToken: null,
+        myId: null,
+        myNickname: null,
       };
     default:
       return { ...state };
