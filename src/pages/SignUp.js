@@ -3,6 +3,10 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { signUp } from "../redux/user";
 
+import Cookies from "universal-cookie";
+
+import { Redirect, Link } from "react-router-dom";
+
 export const SignUp = () => {
   const dispatch = useDispatch();
 
@@ -15,6 +19,12 @@ export const SignUp = () => {
   const [emailCheck, setEmailCheck] = useState(false);
   const [emailVerificationButtonDisable, setEmailVerificationButtonDisable] =
     useState(false);
+
+  const cookies = new Cookies();
+  if (cookies.get("user-id")) {
+    console.log("이미 로그인상태에요");
+    return <Redirect to="/" />;
+  }
 
   // 정규식을 통해 email 제대로 된건지 체크하고, 제대로 된 이메일이어야지 인증번호 발송 활성화.
   // 이메일 발송버튼은 5초에 한번씩만 활성화.
@@ -74,6 +84,7 @@ export const SignUp = () => {
       >
         submit
       </button>
+      <Link to="/login">회원이 이신가요? 로그인</Link>
     </>
   );
 };

@@ -2,10 +2,28 @@ import axios from "axios";
 import React from "react";
 import styled from "styled-components";
 import { testId } from "../lib/test";
+import { useSelector, useDispatch } from "react-redux";
+import Cookies from "universal-cookie";
+import { Redirect } from "react-router";
 
 export const AddSentence = () => {
   const [bodyText, setBodyText] = React.useState("");
   const [checkValue, setCheckValue] = React.useState("");
+
+  const { loading, error, myId } = useSelector((state) => {
+    return {
+      loading: state.user.loading,
+      error: state.user.error,
+      myId: state.user.myId,
+    };
+  });
+
+  const cookies = new Cookies();
+  if (!cookies.get("user-id")) {
+    console.log("로그인이 필요해요");
+    return <Redirect to="/login" />;
+  }
+
   return (
     <>
       <div>
@@ -27,7 +45,7 @@ export const AddSentence = () => {
             minlength="1"
             maxlength="1000"
             autoFocus="false"
-            spellcheck="false"
+            spellCheck="false"
           />
         </TextareaWrapper>
         <br />
@@ -36,10 +54,10 @@ export const AddSentence = () => {
             onClick={async () => {
               const res = await axios({
                 method: "post",
-                url: "http://localhost:8000/add-sentence",
+                url: `${process.env.REACT_APP_SERVER_URL}/add-sentence`,
                 data: {
                   content: bodyText,
-                  userId: testId,
+                  userId: myId,
                 },
               });
               console.log(res.data);

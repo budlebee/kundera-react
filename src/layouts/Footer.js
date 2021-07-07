@@ -2,7 +2,13 @@ import { testId } from "../lib/test";
 import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { useState } from "react";
-import { BookmarkIcon, SquarePlusIcon, RippleIcon } from "../components/Icons";
+import {
+  BookmarkIcon,
+  SquarePlusIcon,
+  RippleIcon,
+  BlackBellIcon,
+  RedRingingBellIcon,
+} from "../components/Icons";
 
 export const Footer = () => {
   const cookies = new Cookies();
@@ -57,6 +63,19 @@ export const Footer = () => {
             <SquarePlusIcon height="30" width="30" />
           </Link>
           <div>Add</div>
+        </div>
+        <div
+          style={{
+            display: "grid",
+            placeItems: "center",
+            width: "100%",
+            margin: "10px",
+          }}
+        >
+          <Link to={`/notification/${myId}`}>
+            <BlackBellIcon height="30" width="30" />
+          </Link>
+          <div>Alert</div>
         </div>
         <div
           style={{

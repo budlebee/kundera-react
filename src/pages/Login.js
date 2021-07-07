@@ -1,12 +1,21 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../redux/user";
+import Cookies from "universal-cookie";
+
+import { Redirect, Link } from "react-router-dom";
 
 export const Login = () => {
   const dispatch = useDispatch();
 
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
+
+  const cookies = new Cookies();
+  if (cookies.get("user-id")) {
+    console.log("이미 로그인상태에요");
+    return <Redirect to="/" />;
+  }
 
   return (
     <>
@@ -36,6 +45,7 @@ export const Login = () => {
       >
         로그인
       </button>
+      <Link to="/signup">회원이 아니신가요? 회원가입</Link>
     </>
   );
 };

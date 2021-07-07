@@ -8,7 +8,7 @@ const initialState = {
   error: null,
   myId: cookies.get("user-id"),
   myNickname: "",
-  accessToken: "",
+  accessToken: null,
 };
 
 const SIGNUP_TRY = "user/SIGNUP_SUCCESS";
@@ -23,13 +23,7 @@ export const signUp = (email, nickname, pwd) => async (dispatch) => {
       data: { email: email, nickname: nickname, pwd: pwd },
     });
     console.log(res.data);
-    //const cookies = new Cookies();
-    if (cookies.get("user-id")) {
-      cookies.remove("user-id");
-      cookies.set("user-id", res.data.userId, { maxAge: 3600 });
-    } else {
-      cookies.set("user-id", res.data.userId, { maxAge: 3600 });
-    }
+    cookies.set("user-id", res.data.userId, { maxAge: 3600 * 24 * 3 });
     console.log("회원가입 성공!");
     dispatch({
       type: SIGNUP_SUCCESS,
@@ -51,18 +45,11 @@ export const login = (email, pwd) => async (dispatch) => {
       method: "post",
       url: `${process.env.REACT_APP_SERVER_URL}/login`,
       data: { email, pwd },
-      //withCredentials: true,
+      withCredentials: true,
     });
     if (res.data.result) {
-      console.log(res.data);
-      //const cookies = new Cookies();
-      if (cookies.get("user-id")) {
-        cookies.remove("user-id");
-        cookies.set("user-id", res.data.userId, { maxAge: 3600 });
-      } else {
-        cookies.set("user-id", res.data.userId, { maxAge: 3600 });
-      }
-      //cookies.set("refresh_token", JSON.stringify({ id: res.data.userId }));
+      console.log(res);
+      cookies.set("user-id", res.data.userId, { maxAge: 3600 * 24 * 3 });
       console.log("로그인 성공!");
       dispatch({
         type: LOG_IN_SUCCESS,
@@ -80,6 +67,41 @@ export const login = (email, pwd) => async (dispatch) => {
 };
 
 const LOG_OUT = "user/LOG_OUT";
+export const logout = () => async (dispatch) => {
+  console.log("localStorage set logout!");
+  window.localStorage.setItem("logout", Date.now());
+  cookies.remove("rftk");
+  cookies.remove("user-id");
+};
+
+const REFRESH_TOKEN_TRY = "user/REFRESH_TOKEN_TRY";
+const REFRESH_TOKEN_SUCCESS = "user/REFRESH_TOKEN_SUCCESS";
+const REFRESH_TOKEN_FAIL = "user/REFRESH_TOKEN_FAIL";
+export const refreshToken = (accessToken) => async (dispatch) => {
+  dispatch({ type: REFRESH_TOKEN_TRY });
+  try {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+    const res = await axios({
+      method: "post",
+      url: `${process.env.REACT_APP_SERVER_URL}/silent-refresh`,
+      data: {},
+      withCredentials: true,
+    });
+    console.log(res.data);
+    if (!res.data.accessToken) {
+      throw "no access token";
+    }
+    cookies.set("user-id", res.data.userId, { maxAge: 3600 * 24 * 3 });
+    dispatch({
+      type: REFRESH_TOKEN_SUCCESS,
+      accessToken: res.data.token,
+      userId: res.data.userId,
+    });
+  } catch (e) {
+    console.log("error: ", e);
+    dispatch({ type: REFRESH_TOKEN_FAIL });
+  }
+};
 
 export default function user(state = initialState, action) {
   switch (action.type) {
@@ -97,6 +119,18 @@ export default function user(state = initialState, action) {
       return {
         ...state,
       };
+    case REFRESH_TOKEN_TRY:
+      return { ...state, loading: true };
+    case REFRESH_TOKEN_SUCCESS:
+      return {
+        ...state,
+        accessToken: action.accessToken,
+        myId: action.userId,
+        loading: false,
+      };
+    case REFRESH_TOKEN_FAIL:
+      return { ...state, loading: false };
+
     case SIGNUP_TRY:
       return {
         ...state,

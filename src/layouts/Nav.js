@@ -1,6 +1,6 @@
 import Cookies from "universal-cookie";
 
-import { BlackBellIcon, RedRingingBellIcon } from "../components/Icons";
+import { SettingIcon } from "../components/Icons";
 import MainLogo from "../assets/MainLogo.png";
 
 import { Link } from "react-router-dom";
@@ -22,20 +22,14 @@ export const Nav = () => {
       <Link to="/">
         <img src={MainLogo} style={{ height: "60px" }} />
       </Link>
-      <button
-        style={{
-          border: "none",
-          padding: "8px",
-          backgroundColor: "transparent",
-        }}
-      >
-        <BlackBellIcon width="30px" height="30px" />
+      <Link to="/setting">
+        <SettingIcon width="30px" height="30px" />
         {loginCheck ? (
           <div>로그인 아이디: {loginCheck}</div>
         ) : (
           <div>로그인 아님</div>
         )}
-      </button>
+      </Link>
     </header>
   );
 };

@@ -1,6 +1,9 @@
 import { SentenceCard } from "../components/SentenceCard";
 import { testSentences, testId } from "../lib/test";
 
+import Cookies from "universal-cookie";
+
+import { Redirect } from "react-router";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -19,18 +22,25 @@ export const GetSentence = () => {
   });
 
   useEffect(() => {
+    // cookie 체크하고 없다면 redirection.
     const readPosts = async () => {
       const res = await axios({
         method: "post",
         url: `${process.env.REACT_APP_SERVER_URL}/get-sentence`,
-        data: { userId: myId },
+        data: { userId: `${myId}` },
       });
       console.log(res.data.result);
       setPostList(res.data.result);
       setPost(res.data.result[0]);
     };
     readPosts();
-  }, []);
+  }, [myId]);
+
+  const cookies = new Cookies();
+  if (!cookies.get("user-id")) {
+    console.log("로그인이 필요해요");
+    return <Redirect to="/guest" />;
+  }
 
   return (
     <>
