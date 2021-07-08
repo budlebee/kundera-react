@@ -5,6 +5,7 @@ import { testId } from "../lib/test";
 import { useSelector, useDispatch } from "react-redux";
 import Cookies from "universal-cookie";
 import { Redirect } from "react-router";
+import { colors } from "../lib/style";
 
 export const AddSentence = () => {
   const [bodyText, setBodyText] = React.useState("");
@@ -21,33 +22,36 @@ export const AddSentence = () => {
   const cookies = new Cookies();
   if (!cookies.get("user-id")) {
     console.log("로그인이 필요해요");
-    return <Redirect to="/login" />;
+    return <Redirect to="/signup" />;
   }
 
   return (
     <>
       <div>
-        <TextareaWrapper>
-          <textarea
-            value={bodyText}
-            style={{
-              height: "90%",
-              padding: "10px",
-              width: "95%",
-              resize: "none",
-              outline: "none",
-              border: "none",
-            }}
-            onChange={(e) => {
-              setBodyText(e.target.value);
-            }}
-            placeholder="갖고 있는 문장을 어딘가로 띄워보내요"
-            minlength="1"
-            maxlength="1000"
-            autoFocus="false"
-            spellCheck="false"
-          />
-        </TextareaWrapper>
+        <textarea
+          value={bodyText}
+          style={{
+            height: "500px",
+            padding: "10px",
+            width: "400px",
+            resize: "none",
+            outline: "none",
+            backgroundColor: "#ffffff",
+            border: `1px solid ${colors.border}`,
+            fontFamily: `-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif`,
+          }}
+          onChange={(e) => {
+            setBodyText(e.target.value);
+          }}
+          placeholder="갖고 있는 문장을 어딘가로 띄워보내요"
+          minlength="1"
+          maxlength="1000"
+          autoFocus="false"
+          spellCheck="false"
+        />
+
         <br />
         <div>
           <button
@@ -57,7 +61,7 @@ export const AddSentence = () => {
                 url: `${process.env.REACT_APP_SERVER_URL}/add-sentence`,
                 data: {
                   content: bodyText,
-                  userId: myId,
+                  userId: `${myId}`,
                 },
               });
               console.log(res.data);

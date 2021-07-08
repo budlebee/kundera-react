@@ -3,6 +3,7 @@ import { testSentences, testId } from "../lib/test";
 
 import Cookies from "universal-cookie";
 
+import { RedFireIcon } from "../components/Icons";
 import { Redirect } from "react-router";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -68,7 +69,10 @@ export const GetSentence = () => {
           // 처음에는 귀찮으니 걍 개별로 날리자.
         }}
       >
-        보관하기
+        <div>
+          <RedFireIcon height="30" width="30" />
+        </div>
+        <div>보관하기</div>
       </button>
       <button
         onClick={async () => {
@@ -88,18 +92,6 @@ export const GetSentence = () => {
         }}
       >
         새로운 문장 찾기
-      </button>
-      <button
-        onClick={async () => {
-          const res = await axios({
-            method: "post",
-            url: "http://localhost:8000/get-sentence",
-            data: { email: "bbogle7613@gmail.com", tempKey: "asdf" },
-          });
-          console.log(res.data);
-        }}
-      >
-        임시 테스트용
       </button>
     </>
   );

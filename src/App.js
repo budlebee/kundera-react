@@ -32,9 +32,17 @@ function App() {
   return (
     <div
       style={{
-        display: "flex",
-        minHeight: "100vh",
-        flexDirection: "column",
+        margin: "0",
+        padding: "0",
+        display: "grid",
+        gridTemplateRows: "auto 1fr auto",
+        //display: "flex",
+        minHeight: "100%",
+        whiteSpace: "pre-wrap",
+        //height: "100%",
+        //height: "100vh",
+        //flexDirection: "column",
+        //WebkitFlexDirection: "column",
       }}
     >
       <Nav />

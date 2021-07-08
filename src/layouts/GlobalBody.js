@@ -5,10 +5,10 @@ export const GlobalBody = ({ children }) => {
     <>
       <BodyWrapper
         style={{
-          display: "grid",
-          placeItems: "center",
-
-          flex: "1",
+          display: "flex",
+          flex: "1 0 0px",
+          //placeItems: "center",
+          justifyContent: "center",
         }}
       >
         {children}
@@ -20,7 +20,7 @@ export const GlobalBody = ({ children }) => {
 const BodyWrapper = styled.div`
   margin-left: 25vw;
   margin-right: 25vw;
-  padding-top: 60px;
+  padding-top: 20px;
   padding-bottom: 60px;
   @media (max-width: 1024px) {
     margin-left: 15vw;

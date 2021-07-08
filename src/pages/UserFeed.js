@@ -54,7 +54,7 @@ export const UserFeed = ({ match }) => {
   const cookies = new Cookies();
   if (!cookies.get("user-id")) {
     console.log("로그인이 필요해요");
-    return <Redirect to="/login" />;
+    return <Redirect to="/signup" />;
   }
   return (
     <>
@@ -105,7 +105,6 @@ export const UserFeed = ({ match }) => {
       {postList.map((ele, idx) => {
         return (
           <div key={idx}>
-            <HorizontalLine />
             <SentenceCard
               content={ele.content}
               nickname={ele.nickname}
