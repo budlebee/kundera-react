@@ -30,7 +30,6 @@ export const Nav = () => {
           style={{
             display: "flex",
             justifyContent: "center",
-            width: "600px",
           }}
         >
           <div style={{ padding: "15px" }}>

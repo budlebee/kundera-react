@@ -34,50 +34,57 @@ export const Footer = () => {
         position: "fixed",
         bottom: "0",
         backgroundColor: colors.background,
+        display: "grid",
+        placeItems: "center",
       }}
     >
-      <div style={{ display: "grid", placeItems: "center" }}>
-        <div style={{ display: "flex", width: "500px" }}>
-          <div
-            style={{
-              display: "grid",
-              placeItems: "center",
-              width: "100%",
-              margin: "10px",
-            }}
-          >
-            <Link to="/">
-              <RippleIcon height="20" width="20" />
-            </Link>
-            <div>Sail</div>
-          </div>
-          <div
-            style={{
-              display: "grid",
-              placeItems: "center",
-              width: "100%",
-              margin: "10px",
-            }}
-          >
-            <Link to={`/gurus-feed/${myId}`}>
-              <RippleIcon height="20" width="20" />
-            </Link>
-            <div>Feed</div>
-          </div>
-          <div
-            style={{
-              display: "grid",
-              placeItems: "center",
-              width: "100%",
-              margin: "10px",
-            }}
-          >
-            <Link to="/add">
-              <SquarePlusIcon height="20" width="20" />
-            </Link>
-            <div>Add</div>
-          </div>
-          {/*<div
+      <div style={{ display: "flex", fontSize: "12px" }}>
+        <div
+          style={{
+            display: "grid",
+            placeItems: "center",
+            width: "100%",
+            margin: "10px",
+            marginLeft: "20px",
+            marginRight: "20px",
+          }}
+        >
+          <Link to="/">
+            <RippleIcon height="20" width="20" />
+          </Link>
+          <div>Sail</div>
+        </div>
+        <div
+          style={{
+            display: "grid",
+            placeItems: "center",
+            width: "100%",
+            margin: "10px",
+            marginLeft: "20px",
+            marginRight: "20px",
+          }}
+        >
+          <Link to={`/gurus-feed/${myId}`}>
+            <RippleIcon height="20" width="20" />
+          </Link>
+          <div>Feed</div>
+        </div>
+        <div
+          style={{
+            display: "grid",
+            placeItems: "center",
+            width: "100%",
+            margin: "10px",
+            marginLeft: "20px",
+            marginRight: "20px",
+          }}
+        >
+          <Link to="/add">
+            <SquarePlusIcon height="20" width="20" />
+          </Link>
+          <div>Add</div>
+        </div>
+        {/*<div
             style={{
               display: "grid",
               placeItems: "center",
@@ -91,32 +98,35 @@ export const Footer = () => {
             <div>Alert</div>
           </div>*/}
 
-          <div
-            style={{
-              display: "grid",
-              placeItems: "center",
-              width: "100%",
-              margin: "10px",
-            }}
-          >
-            <Link to={`/user-feed/${myId}`}>
-              <BookmarkIcon height="20" width="20" />
-            </Link>
-            <div>My</div>
-          </div>
-          <div
-            style={{
-              display: "grid",
-              placeItems: "center",
-              width: "100%",
-              margin: "10px",
-            }}
-          >
-            <Link to={`/setting`}>
-              <SettingIcon height="20" width="20" />
-            </Link>
-            <div>Setting</div>
-          </div>
+        <div
+          style={{
+            display: "grid",
+            placeItems: "center",
+            width: "100%",
+            margin: "10px",
+            marginLeft: "20px",
+            marginRight: "20px",
+          }}
+        >
+          <Link to={`/user-feed/${myId}`}>
+            <BookmarkIcon height="20" width="20" />
+          </Link>
+          <div>My</div>
+        </div>
+        <div
+          style={{
+            display: "grid",
+            placeItems: "center",
+            width: "100%",
+            margin: "10px",
+            marginLeft: "20px",
+            marginRight: "20px",
+          }}
+        >
+          <Link to={`/setting`}>
+            <SettingIcon height="20" width="20" />
+          </Link>
+          <div>Setting</div>
         </div>
       </div>
     </footer>

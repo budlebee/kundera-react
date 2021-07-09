@@ -45,54 +45,57 @@ export const GetSentence = () => {
 
   return (
     <>
-      <div></div>
-      <div>
-        {post ? <SentenceCard content={post.content}></SentenceCard> : ""}
-      </div>
-      <button
-        onClick={async () => {
-          console.log(post.id);
-          const res = await axios({
-            method: "post",
-            url: "http://localhost:8000/love-sentence",
-            data: { userId: myId, postId: `${post.id}` },
-          });
-          console.log(res.data);
-          if (count === postList.length - 1) {
-            alert("문장이 바닥났어요");
-          } else {
-            setPost(postList[count + 1]);
-            setCount(count + 1);
-          }
-          // 여기서 남은 문장이 0개면 서버에 요청날리고, 로딩비슷하게 "새로운 문장이 떠내려오고 있어요 이런 문구 적자."
-          // 그래서 또 10개 보충하고 그런식으로.
-          // 처음에는 귀찮으니 걍 개별로 날리자.
-        }}
-      >
+      <div style={{ display: "grid", placeItems: "center" }}>
         <div>
-          <RedFireIcon height="30" width="30" />
+          {post ? <SentenceCard content={post.content}></SentenceCard> : ""}
         </div>
-        <div>보관하기</div>
-      </button>
-      <button
-        onClick={async () => {
-          console.log(post.id);
-          const res = await axios({
-            method: "post",
-            url: "http://localhost:8000/hate-sentence",
-            data: { userId: myId, postId: `${post.id}` },
-          });
-          if (count === postList.length - 1) {
-            alert("문장이 바닥났어요");
-            return;
-          } else {
-            setPost(postList[count + 1]);
-            setCount(count + 1);
-          }
-        }}
-      >
-        새로운 문장 찾기
-      </button>
+        <div>
+          <button
+            onClick={async () => {
+              console.log(post.id);
+              const res = await axios({
+                method: "post",
+                url: "http://localhost:8000/love-sentence",
+                data: { userId: `${myId}`, postId: `${post.id}` },
+              });
+              console.log(res.data);
+              if (count === postList.length - 1) {
+                alert("문장이 바닥났어요");
+              } else {
+                setPost(postList[count + 1]);
+                setCount(count + 1);
+              }
+              // 여기서 남은 문장이 0개면 서버에 요청날리고, 로딩비슷하게 "새로운 문장이 떠내려오고 있어요 이런 문구 적자."
+              // 그래서 또 10개 보충하고 그런식으로.
+              // 처음에는 귀찮으니 걍 개별로 날리자.
+            }}
+          >
+            <div>
+              <RedFireIcon height="30" width="30" />
+            </div>
+            <div>보관하기</div>
+          </button>
+          <button
+            onClick={async () => {
+              console.log(post.id);
+              const res = await axios({
+                method: "post",
+                url: "http://localhost:8000/hate-sentence",
+                data: { userId: `${myId}`, postId: `${post.id}` },
+              });
+              if (count === postList.length - 1) {
+                alert("문장이 바닥났어요");
+                return;
+              } else {
+                setPost(postList[count + 1]);
+                setCount(count + 1);
+              }
+            }}
+          >
+            새로운 문장 찾기
+          </button>
+        </div>
+      </div>
     </>
   );
 };

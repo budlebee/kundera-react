@@ -155,7 +155,7 @@ export const RedFireIcon = ({ width, height }) => {
       width={width || "44"}
       height={height || "44"}
       viewBox="0 0 1200 1200"
-      enable-background="new 0 0 1200 1200"
+      enableBackground="new 0 0 1200 1200"
     >
       <path
         id="path8046"

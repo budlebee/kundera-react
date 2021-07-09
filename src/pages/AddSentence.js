@@ -46,9 +46,9 @@ export const AddSentence = () => {
             setBodyText(e.target.value);
           }}
           placeholder="갖고 있는 문장을 어딘가로 띄워보내요"
-          minlength="1"
-          maxlength="1000"
-          autoFocus="false"
+          minLength="1"
+          maxLength="1000"
+          autoFocus={false}
           spellCheck="false"
         />
 
