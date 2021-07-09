@@ -10,7 +10,12 @@ body {
 }
 
 
-
+a{
+  text-decoration: none;
+}
+a:visited{
+  color: #000000
+}
 
 code {
   font-family: -apple-system, source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

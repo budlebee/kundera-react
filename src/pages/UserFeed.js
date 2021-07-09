@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import Cookies from "universal-cookie";
 
 import { Redirect } from "react-router";
+import { DefaultButton } from "../components/Buttons";
 import { HorizontalLine } from "../components/Lines";
 import { SentenceCard } from "../components/SentenceCard";
 import { testGuruId, testMyId } from "../lib/test";
@@ -15,6 +16,7 @@ export const UserFeed = ({ match }) => {
   const { userId } = match.params;
   const [loading, setLoading] = useState(false);
   const [isGuru, setIsGuru] = useState(false);
+  const [userNickname, setUserNickname] = useState("");
   const { error, myId } = useSelector((state) => {
     return {
       error: state.user.error,
@@ -43,9 +45,9 @@ export const UserFeed = ({ match }) => {
         //setLoading(false);
         setIsGuru(res.data.isGuru);
         setPostList(res.data.result);
+        setUserNickname(res.data.userNickname);
       } catch (e) {
         console.log("error: ", e);
-        setLoading(false);
       }
     };
     readPosts();
@@ -58,49 +60,56 @@ export const UserFeed = ({ match }) => {
   }
   return (
     <>
-      <div>갈무리한 문장들을 모아볼 수 있는 피드.</div>
       <div>
-        <span>사용자 아이콘</span>
-        <span>사용자 닉네임</span>
-        <span>
-          {myId != userId ? (
-            <div>
-              {isGuru ? (
-                <button
-                  onClick={async () => {
-                    console.log("unfollow");
-                    const res = await axios({
-                      method: "post",
-                      url: `${process.env.REACT_APP_SERVER_URL}/unfollow`,
-                      data: { userId: `${myId}`, guruId: `${userId}` },
-                    });
-                    setIsGuru(res.data.isGuru);
-                    console.log(res.data);
-                  }}
-                >
-                  당신은 이분을 팔로우 중입니다.
-                </button>
-              ) : (
-                <button
-                  onClick={async () => {
-                    console.log("follow");
-                    const res = await axios({
-                      method: "post",
-                      url: `http://localhost:8000/follow`,
-                      data: { userId: `${myId}`, guruId: `${userId}` },
-                    });
-                    setIsGuru(res.data.isGuru);
-                  }}
-                >
-                  팔로우 하실건가요?
-                </button>
-              )}
-            </div>
-          ) : (
-            ""
-          )}
-        </span>
+        <div>
+          <span>{userNickname}</span>
+
+          <span>
+            {myId != userId ? (
+              <>
+                {isGuru ? (
+                  <DefaultButton
+                    onClickHandler={async () => {
+                      console.log("unfollow");
+                      const res = await axios({
+                        method: "post",
+                        url: `${process.env.REACT_APP_SERVER_URL}/unfollow`,
+                        data: { userId: `${myId}`, guruId: `${userId}` },
+                      });
+                      setIsGuru(res.data.isGuru);
+                      console.log(res.data);
+                    }}
+                  >
+                    팔로우 중
+                  </DefaultButton>
+                ) : (
+                  <DefaultButton
+                    onClickHandler={async () => {
+                      console.log("follow");
+                      const res = await axios({
+                        method: "post",
+                        url: `http://localhost:8000/follow`,
+                        data: { userId: `${myId}`, guruId: `${userId}` },
+                      });
+                      setIsGuru(res.data.isGuru);
+                    }}
+                  >
+                    팔로우 하기
+                  </DefaultButton>
+                )}
+              </>
+            ) : (
+              ""
+            )}
+          </span>
+          <DefaultButton>팔로워</DefaultButton>
+          <DefaultButton>팔로우</DefaultButton>
+        </div>
+        <div>
+          한줄 소개글. 기본적으론 암것도 안적혀있고, 마이페이지에서 수정가능.
+        </div>
       </div>
+      <div></div>
       {loading ? <Skeleton count={5} /> : ""}
       {postList.map((ele, idx) => {
         return (

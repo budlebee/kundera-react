@@ -11,18 +11,18 @@ import { testId } from "../lib/test";
 export const GurusFeed = () => {
   const [userId, setUserId] = useState(testId);
   const [postList, setPostList] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const [cookieCheck, setCookieCheck] = useState(false);
-  const { loading, error, myId } = useSelector((state) => {
+  const { myId } = useSelector((state) => {
     return {
-      loading: state.user.loading,
-      error: state.user.error,
       myId: state.user.myId,
     };
   });
 
   useEffect(() => {
     const readPosts = async () => {
+      setLoading(true);
       const res = await axios({
         method: "post",
         url: `http://localhost:8000/gurus-feed`,
@@ -35,6 +35,7 @@ export const GurusFeed = () => {
       );
       setPostList(res.data.result);
       //setPost(res.data.result[0]);
+      setLoading(false);
     };
     readPosts();
   }, [myId]);
@@ -44,9 +45,12 @@ export const GurusFeed = () => {
     console.log("로그인이 필요해요");
     return <Redirect to="/signup" />;
   }
+  if (loading) {
+    return <></>;
+  }
   return (
     <>
-      <div>자신이 팔로우하는 사람들의 문장을 모아볼 수 있는 피드.</div>
+      <div>Feed</div>
       {postList.map((ele, idx) => {
         return (
           <div key={idx}>

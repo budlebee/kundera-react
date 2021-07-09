@@ -1,4 +1,5 @@
 import { testId } from "../lib/test";
+import styled from "styled-components";
 
 import { colors } from "../lib/style";
 import { Link } from "react-router-dom";
@@ -12,6 +13,7 @@ import {
   BlackBellIcon,
   RedRingingBellIcon,
   SettingIcon,
+  QuestionCircle,
 } from "../components/Icons";
 
 export const Footer = () => {
@@ -38,7 +40,9 @@ export const Footer = () => {
         placeItems: "center",
       }}
     >
-      <div style={{ display: "flex", fontSize: "12px" }}>
+      <ResponsibleWrapper
+        style={{ display: "flex", justifyContent: "center", fontSize: "12px" }}
+      >
         <div
           style={{
             display: "grid",
@@ -50,9 +54,9 @@ export const Footer = () => {
           }}
         >
           <Link to="/">
-            <RippleIcon height="20" width="20" />
+            <QuestionCircle height="20" width="20" />
           </Link>
-          <div>Sail</div>
+          <div>Find</div>
         </div>
         <div
           style={{
@@ -128,7 +132,25 @@ export const Footer = () => {
           </Link>
           <div>Setting</div>
         </div>
-      </div>
+      </ResponsibleWrapper>
     </footer>
   );
 };
+
+const ResponsibleWrapper = styled.div`
+  margin-left: 25vw;
+  margin-right: 25vw;
+  @media (max-width: 1024px) {
+    margin-left: 15vw;
+    margin-right: 15vw;
+  }
+  @media (max-width: 768px) {
+    margin-left: 10vw;
+    margin-right: 10vw;
+  }
+  @media (max-width: "600px") {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+`;

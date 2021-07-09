@@ -5,11 +5,11 @@ export const GlobalBody = ({ children }) => {
     <>
       <BodyWrapper
         style={{
-          //display: "grid",
-          //placeItems: "center",
-          display: "flex",
-          flex: "1 0 0px",
-          justifyContent: "center",
+          display: "grid",
+          placeItems: "center",
+          //display: "flex",
+          //flex: "1 0 0px",
+          //justifyContent: "center",
         }}
       >
         {children}
@@ -21,19 +21,19 @@ export const GlobalBody = ({ children }) => {
 const BodyWrapper = styled.div`
   padding-top: 20px;
   padding-bottom: 60px;
-  margin-left: 25vw;
-  margin-right: 25vw;
+  margin-left: 35vw;
+  margin-right: 35vw;
+
   @media (max-width: 1024px) {
-    margin-left: 15vw;
-    margin-right: 15vw;
+    margin-left: 30vw;
+    margin-right: 30vw;
   }
   @media (max-width: 768px) {
-    margin-left: 10vw;
-    margin-right: 10vw;
+    margin-left: 20vw;
+    margin-right: 20vw;
   }
   @media (max-width: "600px") {
-    width: 100%;
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: 5vw;
+    margin-right: 5vw;
   }
 `;

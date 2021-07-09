@@ -39,6 +39,7 @@ function App() {
         //display: "flex",
         minHeight: "100%",
         whiteSpace: "pre-wrap",
+
         //height: "100%",
         //height: "100vh",
         //flexDirection: "column",
@@ -46,6 +47,7 @@ function App() {
       }}
     >
       <Nav />
+
       <GlobalBody>
         <main>
           <Switch>
