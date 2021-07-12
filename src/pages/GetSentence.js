@@ -8,7 +8,7 @@ import { RedFireIcon, ArrowRight } from "../components/Icons";
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 
 export const GetSentence = () => {
@@ -23,22 +23,25 @@ export const GetSentence = () => {
     };
   });
 
+  const readPosts = useCallback(async () => {
+    const res = await axios({
+      method: "post",
+      url: `${process.env.REACT_APP_SERVER_URL}/get-sentence`,
+      data: { userId: `${myId}` },
+    });
+    console.log(res.data.result);
+    setPostList(res.data.result);
+    setPost(res.data.result[0]);
+    setLoading(false);
+  }, [myId]);
+
   useEffect(() => {
     // cookie 체크하고 없다면 redirection.
-    setLoading(true);
-    const readPosts = async () => {
-      const res = await axios({
-        method: "post",
-        url: `${process.env.REACT_APP_SERVER_URL}/get-sentence`,
-        data: { userId: `${myId}` },
-      });
-      console.log(res.data.result);
-      setPostList(res.data.result);
-      setPost(res.data.result[0]);
-      setLoading(false);
-    };
-    readPosts();
-  }, [myId]);
+    if (cookies.get("user-id")) {
+      setLoading(true);
+      readPosts();
+    }
+  }, []);
 
   const cookies = new Cookies();
   if (!cookies.get("user-id")) {
@@ -75,11 +78,17 @@ export const GetSentence = () => {
                 const res = await axios({
                   method: "post",
                   url: "http://localhost:8000/love-sentence",
-                  data: { userId: `${myId}`, postId: `${post.id}` },
+                  data: {
+                    userId: `${myId}`,
+                    postId: `${post.id}`,
+                    createdBy: post.created_by,
+                  },
                 });
                 console.log(res.data);
                 if (count === postList.length - 1) {
-                  setPostList([]);
+                  readPosts();
+                  setCount(0);
+                  //setPostList([]);
                   //alert("문장이 바닥났어요");
                 } else {
                   setPost(postList[count + 1]);
@@ -93,7 +102,7 @@ export const GetSentence = () => {
               <div>
                 <RedFireIcon height="30" width="30" />
               </div>
-              <div>보관하기</div>
+              <div>간직하기</div>
             </DefaultButton>
             <DefaultButton
               onClickHandler={async () => {
@@ -104,7 +113,9 @@ export const GetSentence = () => {
                   data: { userId: `${myId}`, postId: `${post.id}` },
                 });
                 if (count === postList.length - 1) {
-                  setPostList([]);
+                  readPosts();
+                  setCount(0);
+                  //setPostList([]);
                   //alert("문장이 바닥났어요");
                   return;
                 } else {

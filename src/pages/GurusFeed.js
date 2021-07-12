@@ -21,23 +21,25 @@ export const GurusFeed = () => {
   });
 
   useEffect(() => {
-    const readPosts = async () => {
-      setLoading(true);
-      const res = await axios({
-        method: "post",
-        url: `http://localhost:8000/gurus-feed`,
-        data: { myId: `${myId}` },
-      });
-      console.log(
-        res.data.result.sort(function (x, y) {
-          return -new Date(x.timestamp) + new Date(y.timestamp);
-        })
-      );
-      setPostList(res.data.result);
-      //setPost(res.data.result[0]);
-      setLoading(false);
-    };
-    readPosts();
+    if (cookies.get("user-id")) {
+      const readPosts = async () => {
+        setLoading(true);
+        const res = await axios({
+          method: "post",
+          url: `http://localhost:8000/gurus-feed`,
+          data: { myId: `${myId}` },
+        });
+        console.log(
+          res.data.result.sort(function (x, y) {
+            return -new Date(x.timestamp) + new Date(y.timestamp);
+          })
+        );
+        setPostList(res.data.result);
+        //setPost(res.data.result[0]);
+        setLoading(false);
+      };
+      readPosts();
+    }
   }, [myId]);
 
   const cookies = new Cookies();
@@ -51,6 +53,13 @@ export const GurusFeed = () => {
   return (
     <>
       <div>Feed</div>
+      {postList.length < 1 ? (
+        <div>
+          마음에 든 문장을 추가한 사람을 팔로우하면 피드에서 모아볼 수 있어요
+        </div>
+      ) : (
+        ""
+      )}
       {postList.map((ele, idx) => {
         return (
           <div key={idx}>

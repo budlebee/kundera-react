@@ -3,6 +3,8 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import Cookies from "universal-cookie";
 
+import { Link } from "react-router-dom";
+import { SettingIcon } from "../components/Icons";
 import { Redirect } from "react-router";
 import { DefaultButton } from "../components/Buttons";
 import { HorizontalLine } from "../components/Lines";
@@ -25,32 +27,36 @@ export const UserFeed = ({ match }) => {
   });
 
   const [postList, setPostList] = useState([]);
+  const [guruList, setGuruList] = useState([]);
+  const [followerList, setFollowerList] = useState([]);
 
   useEffect(() => {
-    const readPosts = async () => {
-      try {
-        //setLoading(true);
-        const res = await axios({
-          method: "post",
-          url: `http://localhost:8000/user-feed`,
-          data: { userId: `${userId}`, myId: `${myId}` },
-        });
-        console.log(
-          res.data.result.sort(function (x, y) {
-            return -new Date(x.timestamp) + new Date(y.timestamp);
-          })
-        );
+    if (cookies.get("user-id")) {
+      const readPosts = async () => {
+        try {
+          //setLoading(true);
+          const res = await axios({
+            method: "post",
+            url: `http://localhost:8000/user-feed`,
+            data: { userId: `${userId}`, myId: `${myId}` },
+          });
+          console.log(
+            res.data.result.sort(function (x, y) {
+              return -new Date(x.timestamp) + new Date(y.timestamp);
+            })
+          );
 
-        console.log(res.data);
-        //setLoading(false);
-        setIsGuru(res.data.isGuru);
-        setPostList(res.data.result);
-        setUserNickname(res.data.userNickname);
-      } catch (e) {
-        console.log("error: ", e);
-      }
-    };
-    readPosts();
+          console.log(res.data);
+          //setLoading(false);
+          setIsGuru(res.data.isGuru);
+          setPostList(res.data.result);
+          setUserNickname(res.data.userNickname);
+        } catch (e) {
+          console.log("error: ", e);
+        }
+      };
+      readPosts();
+    }
   }, [userId, myId]);
 
   const cookies = new Cookies();
@@ -102,8 +108,42 @@ export const UserFeed = ({ match }) => {
               ""
             )}
           </span>
-          <DefaultButton>팔로워</DefaultButton>
-          <DefaultButton>팔로우</DefaultButton>
+          <DefaultButton
+            onClickHandler={async () => {
+              const res = await axios({
+                method: "post",
+                url: `${process.env.REACT_APP_SERVER_URL}/get-followers`,
+                data: { userId: `${userId}` },
+              });
+              console.log(res.data.result);
+              setFollowerList(res.data.result);
+            }}
+          >
+            팔로워
+          </DefaultButton>
+          <DefaultButton
+            onClickHandler={async () => {
+              const res = await axios({
+                method: "post",
+                url: `${process.env.REACT_APP_SERVER_URL}/get-gurus`,
+                data: { userId: `${userId}` },
+              });
+              console.log(res.data.result);
+              setGuruList(res.data.result);
+            }}
+          >
+            팔로우
+          </DefaultButton>
+          {myId == userId ? (
+            <span>
+              {" "}
+              <Link to={`/setting`}>
+                <SettingIcon height="20" width="20" />
+              </Link>
+            </span>
+          ) : (
+            ""
+          )}
         </div>
         <div>
           한줄 소개글. 기본적으론 암것도 안적혀있고, 마이페이지에서 수정가능.

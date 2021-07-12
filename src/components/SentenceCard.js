@@ -21,9 +21,15 @@ export const SentenceCard = ({
       }}
     >
       <div>{content}</div>
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          marginTop: "7px",
+        }}
+      >
         <Link
-          style={{ color: "0000000", fontWeight: "700" }}
+          style={{ color: "#000000", fontWeight: "700" }}
           to={`/user-feed/${userId}`}
         >
           {nickname}

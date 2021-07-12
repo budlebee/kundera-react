@@ -7,6 +7,7 @@ export const DefaultButton = ({ onClickHandler, children }) => {
         backgroundColor: "#ffffff",
         border: `1px solid ${colors.border}`,
         borderRadius: "5px",
+        cursor: "pointer",
       }}
       onClick={onClickHandler}
     >

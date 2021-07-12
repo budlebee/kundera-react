@@ -9,20 +9,33 @@ const initialState = {
   myId: cookies.get("user-id"),
   myNickname: "",
   accessToken: null,
+  tempLoveId: "",
 };
 
-const SIGNUP_TRY = "user/SIGNUP_SUCCESS";
+const SAVE_LOVE_ID_FOR_GUEST = "user/SAVE_LOVE_ID_FOR_GUEST";
+export const saveLoveIdForGuest = (id) => {
+  return { type: SAVE_LOVE_ID_FOR_GUEST, tempLoveId: id };
+};
+
+const SIGNUP_TRY = "user/SIGNUP_TRY";
 const SIGNUP_SUCCESS = "user/SIGNUP_SUCCESS";
 const SIGNUP_FAIL = "user/SIGNUP_FAIL";
-export const signUp = (email, nickname, pwd) => async (dispatch) => {
+export const signUp = (email, nickname, pwd, tempLove) => async (dispatch) => {
   dispatch({ type: SIGNUP_TRY });
   try {
     const res = await axios({
       method: "post",
       url: `${process.env.REACT_APP_SERVER_URL}/signup`,
-      data: { email: email, nickname: nickname, pwd: pwd },
+      data: { email: email, nickname: nickname, pwd: pwd, tempLove: tempLove },
+      withCredentials: true,
     });
     console.log(res.data);
+    if (!res.data.result) {
+      alert(res.data.message);
+      throw "이미 가입한 상태임";
+    }
+    window.localStorage.removeItem("tempLove");
+
     if (cookies.get("user-id")) {
       cookies.remove("user-id", { path: "/" });
     }
@@ -33,7 +46,7 @@ export const signUp = (email, nickname, pwd) => async (dispatch) => {
     console.log("회원가입 성공!");
     dispatch({
       type: SIGNUP_SUCCESS,
-      accessToken: res.data.token,
+      //accessToken: res.data.token,
       userId: res.data.userId,
     });
   } catch (e) {
@@ -50,10 +63,10 @@ export const login = (email, pwd) => async (dispatch) => {
     const res = await axios({
       method: "post",
       url: `${process.env.REACT_APP_SERVER_URL}/login`,
-      data: { email, pwd },
+      data: { email: `${email}`, pwd: `${pwd}` },
       withCredentials: true,
     });
-    if (res.data.result) {
+    if (res.data) {
       console.log(res);
       if (cookies.get("user-id")) {
         cookies.remove("user-id", { path: "/" });
@@ -65,7 +78,7 @@ export const login = (email, pwd) => async (dispatch) => {
       console.log("로그인 성공!");
       dispatch({
         type: LOG_IN_SUCCESS,
-        accessToken: res.data.token,
+        //accessToken: res.data.token,
         userId: res.data.userId,
       });
     } else {
@@ -80,9 +93,14 @@ export const login = (email, pwd) => async (dispatch) => {
 
 const LOG_OUT = "user/LOG_OUT";
 export const logout = () => async (dispatch) => {
+  await axios({
+    method: "post",
+    url: `${process.env.REACT_APP_SERVER_URL}/logout`,
+    withCredentials: true,
+  });
   console.log("localStorage set logout!");
   window.localStorage.setItem("logout", Date.now());
-  cookies.remove("rftk", { path: "/" });
+
   cookies.remove("user-id", { path: "/" });
   dispatch({ type: LOG_OUT });
 };
@@ -101,17 +119,17 @@ export const refreshToken = (accessToken) => async (dispatch) => {
       withCredentials: true,
     });
     console.log(res.data);
-    if (!res.data.token) {
-      cookies.remove("user-id", { path: "/" });
-      throw "no access token";
-    }
+    //if (!res.data.token) {
+    //  cookies.remove("user-id", { path: "/" });
+    //  throw "no access token";
+    //}
     cookies.set("user-id", res.data.userId, {
       path: "/",
       maxAge: 3600 * 24 * 3,
     });
     dispatch({
       type: REFRESH_TOKEN_SUCCESS,
-      accessToken: res.data.token,
+      //accessToken: res.data.token,
       userId: res.data.userId,
     });
   } catch (e) {
@@ -129,7 +147,7 @@ export default function user(state = initialState, action) {
     case LOG_IN_SUCCESS:
       return {
         ...state,
-        accessToken: action.accessToken,
+        //accessToken: action.accessToken,
         myId: action.userId,
       };
     case LOG_IN_FAIL:
@@ -141,7 +159,7 @@ export default function user(state = initialState, action) {
     case REFRESH_TOKEN_SUCCESS:
       return {
         ...state,
-        accessToken: action.accessToken,
+        // accessToken: action.accessToken,
         myId: action.userId,
         loading: false,
       };
@@ -155,7 +173,7 @@ export default function user(state = initialState, action) {
     case SIGNUP_SUCCESS:
       return {
         ...state,
-        accessToken: action.accessToken,
+        //  accessToken: action.accessToken,
         myId: action.userId,
       };
     case SIGNUP_FAIL:
@@ -168,6 +186,11 @@ export default function user(state = initialState, action) {
         accessToken: null,
         myId: null,
         myNickname: null,
+      };
+    case SAVE_LOVE_ID_FOR_GUEST:
+      return {
+        ...state,
+        tempLoveId: action.tempLoveId,
       };
     default:
       return { ...state };

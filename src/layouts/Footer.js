@@ -88,19 +88,19 @@ export const Footer = () => {
           </Link>
           <div>Add</div>
         </div>
-        {/*<div
-            style={{
-              display: "grid",
-              placeItems: "center",
-              width: "100%",
-              margin: "10px",
-            }}
-          >
-            <Link to={`/notification/${myId}`}>
-              <BlackBellIcon height="20" width="20" />
-            </Link>
-            <div>Alert</div>
-          </div>*/}
+        <div
+          style={{
+            display: "grid",
+            placeItems: "center",
+            width: "100%",
+            margin: "10px",
+          }}
+        >
+          <Link to={`/noti/${myId}`}>
+            <BlackBellIcon height="20" width="20" />
+          </Link>
+          <div>Alert</div>
+        </div>
 
         <div
           style={{
@@ -117,7 +117,8 @@ export const Footer = () => {
           </Link>
           <div>My</div>
         </div>
-        <div
+        {/*
+ <div
           style={{
             display: "grid",
             placeItems: "center",
@@ -132,6 +133,7 @@ export const Footer = () => {
           </Link>
           <div>Setting</div>
         </div>
+         */}
       </ResponsibleWrapper>
     </footer>
   );
