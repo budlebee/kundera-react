@@ -12,10 +12,12 @@ export const SentenceCard = ({
   return (
     <div
       style={{
-        padding: "15px",
+        padding: "20px",
+        paddingTop: "30px",
+        paddingBottom: "30px",
         marginTop: "15px",
         marginBottom: "15px",
-
+        borderRadius: "2px",
         border: `1px solid ${colors.border}`,
         backgroundColor: "#ffffff",
       }}

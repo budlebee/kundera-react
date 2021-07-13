@@ -7,6 +7,7 @@ export const GlobalBody = ({ children }) => {
         style={{
           display: "grid",
           placeItems: "center",
+          //alignItems: "center",
           //display: "flex",
           //flex: "1 0 0px",
           //justifyContent: "center",

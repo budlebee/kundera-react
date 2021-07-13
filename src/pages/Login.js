@@ -4,6 +4,10 @@ import { login } from "../redux/user";
 import Cookies from "universal-cookie";
 
 import { Redirect, Link } from "react-router-dom";
+import { ListWrapper } from "../components/ListWrapper";
+import { colors } from "../lib/style";
+import { FormInput } from "../components/Inputs";
+import { FormButton } from "../components/Buttons";
 
 export const Login = () => {
   const dispatch = useDispatch();
@@ -19,31 +23,32 @@ export const Login = () => {
 
   return (
     <>
-      <div
-        style={{
-          display: "grid",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+      <ListWrapper>
         <div>로그인</div>
-        <input
+        <FormInput
           placeholder="로그인 email"
           value={email}
+          minLength="1"
+          required
           onChange={(e) => {
             setEmail(e.target.value);
           }}
-        ></input>
+        />
 
-        <input
-          placeholder="비밀번호."
+        <FormInput
+          type="password"
+          placeholder="비밀번호"
           value={pwd}
+          minLength="8"
+          maxLength="30"
+          required
           onChange={(e) => {
             setPwd(e.target.value);
           }}
-        ></input>
+        />
 
-        <button
+        <FormButton
+          disabled={!((email.length > 0) & (pwd.length > 0))}
           onClick={() => {
             dispatch(login(email, pwd));
             // res.data에 담긴 access token 을 redux 에 담아놓고.
@@ -51,9 +56,12 @@ export const Login = () => {
           }}
         >
           로그인
-        </button>
-        <Link to="/signup">계정이 없으신가요? 회원가입하기</Link>
-      </div>
+        </FormButton>
+        <Link to="/signup">
+          아직 회원이 아니신가요?{" "}
+          <span style={{ color: colors.softViolet }}>회원가입하기</span>
+        </Link>
+      </ListWrapper>
     </>
   );
 };

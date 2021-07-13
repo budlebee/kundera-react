@@ -6,6 +6,10 @@ import { signUp } from "../redux/user";
 import Cookies from "universal-cookie";
 
 import { Redirect, Link } from "react-router-dom";
+import { ListWrapper } from "../components/ListWrapper";
+import { colors } from "../lib/style";
+import { FormInput } from "../components/Inputs";
+import { FormButton } from "../components/Buttons";
 
 export const SignUp = () => {
   const dispatch = useDispatch();
@@ -30,7 +34,7 @@ export const SignUp = () => {
   // 이메일 발송버튼은 5초에 한번씩만 활성화.
   return (
     <>
-      <div
+      <ListWrapper
         style={{
           display: "grid",
           justifyContent: "center",
@@ -38,35 +42,52 @@ export const SignUp = () => {
         }}
       >
         <div>회원가입</div>
-        <input
-          placeholder="로그인용 email"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-        ></input>
-        <input
+        <FormInput
           placeholder="닉네임"
+          minLength="1"
+          maxLength="30"
+          required
           value={nickname}
           onChange={(e) => {
             setNickname(e.target.value);
           }}
-        ></input>
-        <input
-          placeholder="비밀번호. 8~30자. 영어랑 숫자 조합 포함돼야함."
+        />
+        <FormInput
+          placeholder="로그인용 email"
+          type="email"
+          value={email}
+          required
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+        />
+
+        <FormInput
+          placeholder="비밀번호. 8~30자, 영어+숫자"
+          type="password"
+          pattern="^[a-zA-Z0-9]+$" //숫자와 영문 대소문자만.
+          title="비밀번호를 입력해주세요"
+          required
+          minLength="8"
+          maxLength="30"
           value={pwd}
           onChange={(e) => {
             setPwd(e.target.value);
           }}
-        ></input>
-        <input
+        />
+        <FormInput
           placeholder="비밀번호 확인"
+          type="password"
+          minLength="8"
+          maxLength="30"
+          title="확인을 위해 비밀번호를 다시 한번 입력해주세요"
+          required
           value={pwdCheck}
           onChange={(e) => {
             setPwdCheck(e.target.value);
           }}
-        ></input>
-        <button
+        />
+        <FormButton
           onClick={() => {
             axios({
               method: "post",
@@ -78,15 +99,22 @@ export const SignUp = () => {
           }}
         >
           이메일 인증코드 발송
-        </button>
-        <input
+        </FormButton>
+        <FormInput
           placeholder="이메일 인증코드"
+          required
+          title="이메일로 발송된 숫자를 입력해주세요"
+          minLength="1"
+          maxLength="30"
           value={emailCode}
           onChange={(e) => {
             setEmailCode(e.target.value);
           }}
-        ></input>
-        <button
+        />
+        <FormButton
+          disabled={
+            !(email.length > 0 && pwd.length > 0 && emailCode.length > 0)
+          }
           onClick={() => {
             dispatch(
               signUp(
@@ -99,9 +127,12 @@ export const SignUp = () => {
           }}
         >
           submit
-        </button>
-        <Link to="/login">이미 회원이신가요? 로그인</Link>
-      </div>
+        </FormButton>
+        <Link to="/login">
+          이미 회원이신가요?{" "}
+          <span style={{ color: colors.softViolet }}>로그인</span>
+        </Link>
+      </ListWrapper>
     </>
   );
 };

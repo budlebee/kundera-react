@@ -11,6 +11,7 @@ import { HorizontalLine } from "../components/Lines";
 import { SentenceCard } from "../components/SentenceCard";
 import { testGuruId, testMyId } from "../lib/test";
 import Skeleton from "react-loading-skeleton";
+import { colors } from "../lib/style";
 
 // params 에 유저 id 를 집어넣고, 그 id 에 따라서 요청 보내게끔.
 export const UserFeed = ({ match }) => {
@@ -67,83 +68,95 @@ export const UserFeed = ({ match }) => {
   return (
     <>
       <div>
-        <div>
-          <span>{userNickname}</span>
+        <div
+          className="profile-buttons"
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <div>
+            <span>{userNickname}</span>
 
-          <span>
-            {myId != userId ? (
-              <>
-                {isGuru ? (
-                  <DefaultButton
-                    onClickHandler={async () => {
-                      console.log("unfollow");
-                      const res = await axios({
-                        method: "post",
-                        url: `${process.env.REACT_APP_SERVER_URL}/unfollow`,
-                        data: { userId: `${myId}`, guruId: `${userId}` },
-                      });
-                      setIsGuru(res.data.isGuru);
-                      console.log(res.data);
-                    }}
-                  >
-                    팔로우 중
-                  </DefaultButton>
-                ) : (
-                  <DefaultButton
-                    onClickHandler={async () => {
-                      console.log("follow");
-                      const res = await axios({
-                        method: "post",
-                        url: `http://localhost:8000/follow`,
-                        data: { userId: `${myId}`, guruId: `${userId}` },
-                      });
-                      setIsGuru(res.data.isGuru);
-                    }}
-                  >
-                    팔로우 하기
-                  </DefaultButton>
-                )}
-              </>
+            <span>
+              {myId != userId ? (
+                <>
+                  {isGuru ? (
+                    <DefaultButton
+                      onClickHandler={async () => {
+                        console.log("unfollow");
+                        const res = await axios({
+                          method: "post",
+                          url: `${process.env.REACT_APP_SERVER_URL}/unfollow`,
+                          data: { userId: `${myId}`, guruId: `${userId}` },
+                        });
+                        setIsGuru(res.data.isGuru);
+                        console.log(res.data);
+                      }}
+                    >
+                      팔로우 중
+                    </DefaultButton>
+                  ) : (
+                    <DefaultButton
+                      style={{ backgroundColor: colors.softViolet }}
+                      onClickHandler={async () => {
+                        console.log("follow");
+                        const res = await axios({
+                          method: "post",
+                          url: `${process.env.REACT_APP_SERVER_URL}/follow`,
+                          data: { userId: `${myId}`, guruId: `${userId}` },
+                        });
+                        setIsGuru(res.data.isGuru);
+                      }}
+                    >
+                      팔로우 하기
+                    </DefaultButton>
+                  )}
+                </>
+              ) : (
+                ""
+              )}
+            </span>
+          </div>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <DefaultButton
+              onClickHandler={async () => {
+                const res = await axios({
+                  method: "post",
+                  url: `${process.env.REACT_APP_SERVER_URL}/get-followers`,
+                  data: { userId: `${userId}` },
+                });
+                console.log(res.data.result);
+                setFollowerList(res.data.result);
+              }}
+            >
+              팔로워
+            </DefaultButton>
+            <DefaultButton
+              onClickHandler={async () => {
+                const res = await axios({
+                  method: "post",
+                  url: `${process.env.REACT_APP_SERVER_URL}/get-gurus`,
+                  data: { userId: `${userId}` },
+                });
+                console.log(res.data.result);
+                setGuruList(res.data.result);
+              }}
+            >
+              팔로우
+            </DefaultButton>
+            {myId == userId ? (
+              <span>
+                {" "}
+                <Link to={`/setting`}>
+                  <SettingIcon height="20" width="20" />
+                </Link>
+              </span>
             ) : (
               ""
             )}
-          </span>
-          <DefaultButton
-            onClickHandler={async () => {
-              const res = await axios({
-                method: "post",
-                url: `${process.env.REACT_APP_SERVER_URL}/get-followers`,
-                data: { userId: `${userId}` },
-              });
-              console.log(res.data.result);
-              setFollowerList(res.data.result);
-            }}
-          >
-            팔로워
-          </DefaultButton>
-          <DefaultButton
-            onClickHandler={async () => {
-              const res = await axios({
-                method: "post",
-                url: `${process.env.REACT_APP_SERVER_URL}/get-gurus`,
-                data: { userId: `${userId}` },
-              });
-              console.log(res.data.result);
-              setGuruList(res.data.result);
-            }}
-          >
-            팔로우
-          </DefaultButton>
-          {myId == userId ? (
-            <span>
-              {" "}
-              <Link to={`/setting`}>
-                <SettingIcon height="20" width="20" />
-              </Link>
-            </span>
-          ) : (
-            ""
-          )}
+          </div>
         </div>
         <div>
           한줄 소개글. 기본적으론 암것도 안적혀있고, 마이페이지에서 수정가능.

@@ -37,12 +37,16 @@ function App() {
   return (
     <div
       style={{
+        height: "100%",
+        position: "absolute",
+        left: "0px",
+        width: "100%",
         margin: "0",
         padding: "0",
         display: "grid",
         gridTemplateRows: "auto 1fr auto",
         //display: "flex",
-        minHeight: "100%",
+        //minHeight: "100%",
         whiteSpace: "pre-wrap",
 
         //height: "100%",
@@ -69,7 +73,6 @@ function App() {
           </Switch>
         </main>
       </GlobalBody>
-
       <Footer />
     </div>
   );

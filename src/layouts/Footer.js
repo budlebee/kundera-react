@@ -18,10 +18,11 @@ import {
 
 export const Footer = () => {
   const cookies = new Cookies();
-  const { error, myId } = useSelector((state) => {
+  const { error, myId, hasNoti } = useSelector((state) => {
     return {
       error: state.user.error,
       myId: state.user.myId,
+      hasNoti: state.user.hasNoti,
     };
   });
 
@@ -97,7 +98,11 @@ export const Footer = () => {
           }}
         >
           <Link to={`/noti/${myId}`}>
-            <BlackBellIcon height="20" width="20" />
+            {hasNoti ? (
+              <RedRingingBellIcon height="20" width="20" />
+            ) : (
+              <BlackBellIcon height="20" width="20" />
+            )}
           </Link>
           <div>Alert</div>
         </div>

@@ -1,3 +1,6 @@
+body > #root > div {
+  height: "100vh";
+}
 
 body {  
   margin: 0;
@@ -7,11 +10,13 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #fafafa;
+ 
 }
 
 
 a{
   text-decoration: none;
+  color: #000000;
 }
 a:visited{
   color: #000000

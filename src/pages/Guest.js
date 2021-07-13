@@ -61,7 +61,12 @@ export const Guest = () => {
   return (
     <>
       {postList.length < 1 ? (
-        <div style={{ display: "grid", placeItems: "center" }}>
+        <div
+          style={{
+            display: "grid",
+            placeItems: "center",
+          }}
+        >
           <div>지금은 떠다니는 문장이 없어요. </div>
           <div>
             문장을{" "}
@@ -87,7 +92,7 @@ export const Guest = () => {
                 // sweetalert2 쓰자.
                 Swal.fire({
                   title: "문장을 모아보세요!",
-                  text: "회원가입하면 문장을 모으고 멋진 취향의 사람들을 팔로우할 수 있어요!",
+                  text: "문장을 공유하고 멋진 취향의 사람들을 팔로우할 수 있어요!",
 
                   confirmButtonText: `가입해볼래요!`,
                   showCancelButton: true,

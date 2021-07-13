@@ -10,6 +10,7 @@ const initialState = {
   myNickname: "",
   accessToken: null,
   tempLoveId: "",
+  hasNoti: false,
 };
 
 const SAVE_LOVE_ID_FOR_GUEST = "user/SAVE_LOVE_ID_FOR_GUEST";
@@ -39,15 +40,20 @@ export const signUp = (email, nickname, pwd, tempLove) => async (dispatch) => {
     if (cookies.get("user-id")) {
       cookies.remove("user-id", { path: "/" });
     }
-    cookies.set("user-id", res.data.userId, {
-      path: "/",
-      maxAge: 3600 * 24 * 3,
-    });
-    console.log("회원가입 성공!");
+    if (res.data.userId) {
+      cookies.set("user-id", res.data.userId, {
+        path: "/",
+        maxAge: 3600 * 24 * 3,
+      });
+    }
+    if (res.data.hasNoti) {
+      window.localStorage.setItem("has-noti", res.data.hasNoti);
+    }
     dispatch({
       type: SIGNUP_SUCCESS,
       //accessToken: res.data.token,
       userId: res.data.userId,
+      hasNoti: res.data.hasNoti,
     });
   } catch (e) {
     dispatch({ type: SIGNUP_FAIL, error: e });
@@ -71,15 +77,21 @@ export const login = (email, pwd) => async (dispatch) => {
       if (cookies.get("user-id")) {
         cookies.remove("user-id", { path: "/" });
       }
-      cookies.set("user-id", res.data.userId, {
-        path: "/",
-        maxAge: 3600 * 24 * 3,
-      });
+      if (res.data.userId) {
+        cookies.set("user-id", res.data.userId, {
+          path: "/",
+          maxAge: 3600 * 24 * 3,
+        });
+      }
+      if (res.data.hasNoti) {
+        window.localStorage.setItem("has-noti", res.data.hasNoti);
+      }
       console.log("로그인 성공!");
       dispatch({
         type: LOG_IN_SUCCESS,
         //accessToken: res.data.token,
         userId: res.data.userId,
+        hasNoti: res.data.hasNoti,
       });
     } else {
       console.log(res.data);
@@ -119,18 +131,23 @@ export const refreshToken = (accessToken) => async (dispatch) => {
       withCredentials: true,
     });
     console.log(res.data);
-    //if (!res.data.token) {
-    //  cookies.remove("user-id", { path: "/" });
-    //  throw "no access token";
-    //}
-    cookies.set("user-id", res.data.userId, {
-      path: "/",
-      maxAge: 3600 * 24 * 3,
-    });
+    if (res.data.userId) {
+      cookies.set("user-id", res.data.userId, {
+        path: "/",
+        maxAge: 3600 * 24 * 3,
+      });
+    } else {
+      cookies.remove("user-id", { path: "/" });
+      throw "로그인이 필요해요";
+    }
+    if (res.data.hasNoti) {
+      window.localStorage.setItem("has-noti", res.data.hasNoti);
+    }
     dispatch({
       type: REFRESH_TOKEN_SUCCESS,
       //accessToken: res.data.token,
       userId: res.data.userId,
+      hasNoti: res.data.hasNoti,
     });
   } catch (e) {
     console.log("error: ", e);
@@ -138,8 +155,15 @@ export const refreshToken = (accessToken) => async (dispatch) => {
   }
 };
 
+const CHECK_NOTI = "user/CHECK_NOTI";
+export const CheckNoti = () => {
+  return { type: CHECK_NOTI };
+};
+
 export default function user(state = initialState, action) {
   switch (action.type) {
+    case CHECK_NOTI:
+      return { ...state, hasNoti: false };
     case LOG_IN_TRY:
       return {
         ...state,
@@ -164,7 +188,7 @@ export default function user(state = initialState, action) {
         loading: false,
       };
     case REFRESH_TOKEN_FAIL:
-      return { ...state, loading: false };
+      return { ...state, loading: false, myId: null, hasNoti: false };
 
     case SIGNUP_TRY:
       return {

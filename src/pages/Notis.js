@@ -1,7 +1,12 @@
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
+import { CheckNoti } from "../redux/user";
+
+import { Link } from "react-router-dom";
+import { Redirect } from "react-router";
+import { NotiBlock } from "../components/NotiBlock";
 
 export const Notis = ({ match }) => {
   const { userId } = match.params;
@@ -11,15 +16,14 @@ export const Notis = ({ match }) => {
       myId: state.user.myId,
     };
   });
+  const [notiList, setNotiList] = useState([]);
 
   const cookies = new Cookies();
-  console.log(userId);
-  console.log(cookies.get("user-id"));
-  useEffect(() => {
-    // 여기서 유저의 has_notis 정보도 가져와서, noti 가 있다면 redux state를 바꾸고, 아이콘 빨갛게 바꿔줘야해.
 
+  useEffect(() => {
+    window.localStorage.removeItem("has-noti");
+    CheckNoti();
     if (cookies.get("user-id") == userId) {
-      console.log("dd");
       const readNotis = async () => {
         try {
           //setLoading(true);
@@ -29,6 +33,7 @@ export const Notis = ({ match }) => {
             data: { myId: `${userId}` },
           });
           console.log(res.data);
+          setNotiList(res.data.result);
         } catch (e) {
           console.log("error: ", e);
         }
@@ -37,6 +42,23 @@ export const Notis = ({ match }) => {
     }
   }, [userId]);
 
-  return <>뭐임 왜안됨?</>;
+  if (!cookies.get("user-id")) {
+    console.log("로그인이 필요해요");
+    return <Redirect to="/signup" />;
+  }
+
+  return (
+    <>
+      {notiList.map((ele, idx) => {
+        return (
+          <div key={idx}>
+            <Link to={`/user-feed/${ele.sender_id}`}>
+              <NotiBlock message={ele.message} createdAt={ele.created_at} />
+            </Link>
+          </div>
+        );
+      })}
+    </>
+  );
   // 여기선 남의 noti 보면 안되니까, myId 변수랑 param 값이 일치하는지 체크하고 다르면 홈화면으로 리다이렉션
 };
