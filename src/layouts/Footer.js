@@ -12,6 +12,7 @@ import {
   RippleIcon,
   BlackBellIcon,
   RedRingingBellIcon,
+  SearchIcon,
   SettingIcon,
   QuestionCircle,
 } from "../components/Icons";
@@ -37,109 +38,101 @@ export const Footer = () => {
         position: "fixed",
         bottom: "0",
         backgroundColor: colors.background,
+        width: "100%",
         display: "grid",
         placeItems: "center",
       }}
     >
-      <ResponsibleWrapper
-        style={{ display: "flex", justifyContent: "center", fontSize: "12px" }}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          fontSize: "12px",
+          maxWidth: "600px",
+        }}
       >
         <div
           style={{
             display: "grid",
-            placeItems: "center",
+            textAlign: "center",
+            //justifyContent: "center",
             width: "100%",
             margin: "10px",
-            marginLeft: "20px",
-            marginRight: "20px",
           }}
         >
-          <Link to="/">
-            <QuestionCircle height="20" width="20" />
-          </Link>
+          <div>
+            <Link to="/">
+              <SearchIcon height="20" width="20" />
+            </Link>
+          </div>
           <div>Find</div>
         </div>
         <div
           style={{
             display: "grid",
-            placeItems: "center",
+            textAlign: "center",
             width: "100%",
             margin: "10px",
-            marginLeft: "20px",
-            marginRight: "20px",
           }}
         >
-          <Link to={`/gurus-feed/${myId}`}>
-            <RippleIcon height="20" width="20" />
-          </Link>
+          <div>
+            <Link to={`/gurus-feed/${myId}`}>
+              <RippleIcon height="20" width="20" />
+            </Link>
+          </div>
           <div>Feed</div>
         </div>
         <div
           style={{
             display: "grid",
-            placeItems: "center",
+            textAlign: "center",
             width: "100%",
             margin: "10px",
-            marginLeft: "20px",
-            marginRight: "20px",
           }}
         >
-          <Link to="/add">
-            <SquarePlusIcon height="20" width="20" />
-          </Link>
+          <div>
+            <Link to="/add">
+              <SquarePlusIcon height="20" width="20" />
+            </Link>
+          </div>
           <div>Add</div>
         </div>
         <div
           style={{
             display: "grid",
-            placeItems: "center",
+            textAlign: "center",
             width: "100%",
             margin: "10px",
           }}
         >
-          <Link to={`/noti/${myId}`}>
-            {hasNoti ? (
-              <RedRingingBellIcon height="20" width="20" />
-            ) : (
-              <BlackBellIcon height="20" width="20" />
-            )}
-          </Link>
+          <div>
+            <Link to={`/noti/${myId}`}>
+              {hasNoti ? (
+                <RedRingingBellIcon height="20" width="20" />
+              ) : (
+                <BlackBellIcon height="20" width="20" />
+              )}
+            </Link>
+          </div>
           <div>Alert</div>
         </div>
 
         <div
           style={{
             display: "grid",
-            placeItems: "center",
+            textAlign: "center",
             width: "100%",
             margin: "10px",
-            marginLeft: "20px",
-            marginRight: "20px",
           }}
         >
-          <Link to={`/user-feed/${myId}`}>
-            <BookmarkIcon height="20" width="20" />
-          </Link>
+          <div>
+            <Link to={`/user-feed/${myId}`}>
+              <BookmarkIcon height="20" width="20" />
+            </Link>
+          </div>
           <div>My</div>
         </div>
-        {/*
- <div
-          style={{
-            display: "grid",
-            placeItems: "center",
-            width: "100%",
-            margin: "10px",
-            marginLeft: "20px",
-            marginRight: "20px",
-          }}
-        >
-          <Link to={`/setting`}>
-            <SettingIcon height="20" width="20" />
-          </Link>
-          <div>Setting</div>
-        </div>
-         */}
-      </ResponsibleWrapper>
+      </div>
     </footer>
   );
 };
@@ -147,6 +140,7 @@ export const Footer = () => {
 const ResponsibleWrapper = styled.div`
   margin-left: 25vw;
   margin-right: 25vw;
+
   @media (max-width: 1024px) {
     margin-left: 15vw;
     margin-right: 15vw;

@@ -50,16 +50,9 @@ export const GurusFeed = () => {
   if (loading) {
     return <></>;
   }
+  // 사용자의 피드 밑에는 랜덤 피드를 뿌려주자.
   return (
-    <>
-      <div>Feed</div>
-      {postList.length < 1 ? (
-        <div>
-          마음에 든 문장을 추가한 사람을 팔로우하면 피드에서 모아볼 수 있어요
-        </div>
-      ) : (
-        ""
-      )}
+    <div>
       {postList.map((ele, idx) => {
         return (
           <div key={idx}>
@@ -72,6 +65,6 @@ export const GurusFeed = () => {
           </div>
         );
       })}
-    </>
+    </div>
   );
 };

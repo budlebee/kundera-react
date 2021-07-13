@@ -48,6 +48,7 @@ function App() {
         //display: "flex",
         //minHeight: "100%",
         whiteSpace: "pre-wrap",
+        placeItems: "center",
 
         //height: "100%",
         //height: "100vh",
@@ -58,7 +59,7 @@ function App() {
       <Nav />
 
       <GlobalBody>
-        <main>
+        <main style={{ width: "100%" }}>
           <Switch>
             <Route path="/" exact={true} component={GetSentence} />
             <Route path="/add" exact={true} component={AddSentence} />

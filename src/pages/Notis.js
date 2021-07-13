@@ -53,7 +53,11 @@ export const Notis = ({ match }) => {
         return (
           <div key={idx}>
             <Link to={`/user-feed/${ele.sender_id}`}>
-              <NotiBlock message={ele.message} createdAt={ele.created_at} />
+              <NotiBlock
+                nickname={ele.nickname}
+                message={ele.message}
+                createdAt={ele.created_at}
+              />
             </Link>
           </div>
         );

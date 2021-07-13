@@ -6,7 +6,7 @@ export const FormInput = styled.input`
   border: 0;
   box-sizing: border-box;
   color: #303245;
-  font-size: 18px;
+  font-size: 14px;
   height: 100%;
   outline: 0;
   padding: 10px 20px 10px;

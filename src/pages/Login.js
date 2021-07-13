@@ -59,7 +59,7 @@ export const Login = () => {
         </FormButton>
         <Link to="/signup">
           아직 회원이 아니신가요?{" "}
-          <span style={{ color: colors.softViolet }}>회원가입하기</span>
+          <span style={{ color: colors.softViolet }}>회원가입</span>
         </Link>
       </ListWrapper>
     </>

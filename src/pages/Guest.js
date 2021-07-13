@@ -22,6 +22,7 @@ import { Redirect } from "react-router";
 import axios from "axios";
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
+import { colors } from "../lib/style";
 
 export const Guest = () => {
   const [postList, setPostList] = useState([]);
@@ -70,7 +71,10 @@ export const Guest = () => {
           <div>지금은 떠다니는 문장이 없어요. </div>
           <div>
             문장을{" "}
-            <Link style={{ fontWeight: 700 }} to="/add">
+            <Link
+              style={{ fontWeight: 700, color: colors.softViolet }}
+              to="/add"
+            >
               직접 추가해
             </Link>{" "}
             볼 수 있어요!
@@ -84,7 +88,7 @@ export const Guest = () => {
           </div>
           <div>
             <DefaultButton
-              onClickHandler={async () => {
+              onClick={async () => {
                 // 여기서 임시 좋아요들을 보관하고 리덕스 메모리에 보관하고 있다가,
                 // 사용자가 회원가입을 한다면 임시 저장소들을 전부 love-sentence 로 보내버리자.
                 // 딱 하나만 보관하기 눌러도 회원가입 강제할 거니까 기존 api 활용할 수 있어.
@@ -116,7 +120,7 @@ export const Guest = () => {
               <div>보관하기</div>
             </DefaultButton>
             <DefaultButton
-              onClickHandler={async () => {
+              onClick={async () => {
                 // 무덤덤 애들도 보관을 하고 반영을 할까? 고민되네.
                 // 처음엔 문장갯수도 그리 많지 않을테니 그냥 두자.
                 if (count === postList.length - 1) {

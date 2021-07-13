@@ -1,7 +1,7 @@
 import { timeForToday } from "../lib/functions";
 import { colors } from "../lib/style";
 
-export const NotiBlock = ({ message, createdAt }) => {
+export const NotiBlock = ({ message, createdAt, nickname }) => {
   return (
     <div
       style={{
@@ -15,7 +15,12 @@ export const NotiBlock = ({ message, createdAt }) => {
         //borderRadius: "5px",
       }}
     >
-      <div>{message}</div>
+      <div>
+        <span style={{ color: colors.softViolet, fontWeight: "700" }}>
+          {nickname}
+        </span>
+        {message}
+      </div>
       <div style={{ width: "100%", textAlign: "end" }}>
         {timeForToday(createdAt)}
       </div>

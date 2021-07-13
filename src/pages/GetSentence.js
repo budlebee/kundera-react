@@ -10,6 +10,7 @@ import { Redirect } from "react-router";
 import axios from "axios";
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
+import { colors } from "../lib/style";
 
 export const GetSentence = () => {
   const [postList, setPostList] = useState([]);
@@ -60,7 +61,10 @@ export const GetSentence = () => {
           <div>지금은 떠다니는 문장이 없어요. </div>
           <div>
             문장을{" "}
-            <Link style={{ fontWeight: 700 }} to="/add">
+            <Link
+              style={{ fontWeight: 700, color: colors.softViolet }}
+              to="/add"
+            >
               직접 추가해
             </Link>{" "}
             볼 수 있어요!
@@ -73,7 +77,7 @@ export const GetSentence = () => {
           </div>
           <div>
             <DefaultButton
-              onClickHandler={async () => {
+              onClick={async () => {
                 console.log(post.id);
                 const res = await axios({
                   method: "post",
@@ -105,7 +109,7 @@ export const GetSentence = () => {
               <div>간직하기</div>
             </DefaultButton>
             <DefaultButton
-              onClickHandler={async () => {
+              onClick={async () => {
                 console.log(post.id);
                 const res = await axios({
                   method: "post",

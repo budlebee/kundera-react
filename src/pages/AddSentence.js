@@ -7,7 +7,7 @@ import Cookies from "universal-cookie";
 import { Redirect } from "react-router";
 import { colors } from "../lib/style";
 
-import { DefaultButton } from "../components/Buttons";
+import { DefaultButton, FormButton } from "../components/Buttons";
 
 export const AddSentence = () => {
   const [bodyText, setBodyText] = React.useState("");
@@ -40,7 +40,7 @@ export const AddSentence = () => {
             value={bodyText}
             cols="30"
             style={{
-              height: "400px",
+              height: "350px",
               padding: "20px",
               resize: "none",
               outline: "none",
@@ -55,7 +55,7 @@ export const AddSentence = () => {
             onChange={(e) => {
               setBodyText(e.target.value);
             }}
-            placeholder="갖고 있는 문장을 어딘가로 띄워보내요"
+            placeholder="갖고 있는 문장을 어딘가로 띄워보낼 수 있어요"
             minLength="1"
             maxLength="1000"
             autoFocus={false}
@@ -63,10 +63,10 @@ export const AddSentence = () => {
           />
         </div>
 
-        <div>
-          <DefaultButton
-            disabled={loading}
-            onClickHandler={async () => {
+        <div style={{ padding: "10px" }}>
+          <FormButton
+            disabled={!(!loading && bodyText.length > 0)}
+            onClick={async () => {
               try {
                 setLoading(true);
                 const res = await axios({
@@ -87,8 +87,8 @@ export const AddSentence = () => {
               }
             }}
           >
-            <div style={{ fontSize: "16px" }}>추가하기</div>
-          </DefaultButton>
+            <div style={{ fontSize: "16px" }}>띄워보내기</div>
+          </FormButton>
         </div>
       </div>
     </>

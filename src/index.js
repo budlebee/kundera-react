@@ -15,7 +15,7 @@ let localRedux;
 if (process.env.NODE_ENV !== "production") {
   localRedux = createStore(rootReducer, applyMiddleware(thunk, logger));
 } else {
-  localRedux = createStore(rootReducer, thunk);
+  localRedux = createStore(rootReducer, applyMiddleware(thunk));
 }
 
 export const reduxStore = localRedux;

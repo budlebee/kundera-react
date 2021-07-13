@@ -1,23 +1,25 @@
 import { colors } from "../lib/style";
-export const ListWrapper = ({ children }) => {
-  return (
-    <div
-      style={{
-        //boxSizing: "border-box",
-        //height: "500px",
-        padding: "20px",
-        paddingTop: "30px",
-        paddingBottom: "30px",
-        width: "320px",
-        display: "grid",
-        gap: "20px",
-        placeItems: "center",
-        border: `1px solid ${colors.border}`,
-        backgroundColor: "#ffffff",
-        //width: "100%",
-      }}
-    >
-      {children}
-    </div>
-  );
-};
+import styled from "styled-components";
+
+export const ListWrapper = styled.div`
+  padding: 20px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  display: grid;
+  gap: 15px;
+  place-items: center;
+  grid-template-columns: 1fr;
+  border: 1px solid ${colors.border};
+  background-color: #ffffff;
+  //min-width: 400px;
+  //width: 100%;
+  margin: auto;
+
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+  }
+  @media (max-width: 600px) {
+    //  min-width: 250px;
+  }
+`;

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import Cookies from "universal-cookie";
+import Swal from "sweetalert2";
 
 import { Link } from "react-router-dom";
 import { SettingIcon } from "../components/Icons";
@@ -20,6 +21,7 @@ export const UserFeed = ({ match }) => {
   const [loading, setLoading] = useState(false);
   const [isGuru, setIsGuru] = useState(false);
   const [userNickname, setUserNickname] = useState("");
+  const [userProfile, setUserProfile] = useState("");
   const { error, myId } = useSelector((state) => {
     return {
       error: state.user.error,
@@ -52,6 +54,7 @@ export const UserFeed = ({ match }) => {
           setIsGuru(res.data.isGuru);
           setPostList(res.data.result);
           setUserNickname(res.data.userNickname);
+          setUserProfile(res.data.userProfile);
         } catch (e) {
           console.log("error: ", e);
         }
@@ -67,7 +70,7 @@ export const UserFeed = ({ match }) => {
   }
   return (
     <>
-      <div>
+      <div className="profile-block">
         <div
           className="profile-buttons"
           style={{
@@ -84,7 +87,7 @@ export const UserFeed = ({ match }) => {
                 <>
                   {isGuru ? (
                     <DefaultButton
-                      onClickHandler={async () => {
+                      onClick={async () => {
                         console.log("unfollow");
                         const res = await axios({
                           method: "post",
@@ -99,8 +102,11 @@ export const UserFeed = ({ match }) => {
                     </DefaultButton>
                   ) : (
                     <DefaultButton
-                      style={{ backgroundColor: colors.softViolet }}
-                      onClickHandler={async () => {
+                      style={{
+                        backgroundColor: colors.softViolet,
+                        color: "#eee",
+                      }}
+                      onClick={async () => {
                         console.log("follow");
                         const res = await axios({
                           method: "post",
@@ -121,7 +127,7 @@ export const UserFeed = ({ match }) => {
           </div>
           <div style={{ display: "flex", alignItems: "center" }}>
             <DefaultButton
-              onClickHandler={async () => {
+              onClick={async () => {
                 const res = await axios({
                   method: "post",
                   url: `${process.env.REACT_APP_SERVER_URL}/get-followers`,
@@ -134,7 +140,7 @@ export const UserFeed = ({ match }) => {
               팔로워
             </DefaultButton>
             <DefaultButton
-              onClickHandler={async () => {
+              onClick={async () => {
                 const res = await axios({
                   method: "post",
                   url: `${process.env.REACT_APP_SERVER_URL}/get-gurus`,
@@ -158,9 +164,7 @@ export const UserFeed = ({ match }) => {
             )}
           </div>
         </div>
-        <div>
-          한줄 소개글. 기본적으론 암것도 안적혀있고, 마이페이지에서 수정가능.
-        </div>
+        <div>{userProfile}</div>
       </div>
       <div></div>
       {loading ? <Skeleton count={5} /> : ""}

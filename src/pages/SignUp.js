@@ -34,13 +34,7 @@ export const SignUp = () => {
   // 이메일 발송버튼은 5초에 한번씩만 활성화.
   return (
     <>
-      <ListWrapper
-        style={{
-          display: "grid",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+      <ListWrapper>
         <div>회원가입</div>
         <FormInput
           placeholder="닉네임"
