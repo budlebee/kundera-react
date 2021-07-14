@@ -40,7 +40,7 @@ export const UserFeed = ({ match }) => {
           //setLoading(true);
           const res = await axios({
             method: "post",
-            url: `http://localhost:8000/user-feed`,
+            url: `${process.env.REACT_APP_SERVER_URL}/user-feed`,
             data: { userId: `${userId}`, myId: `${myId}` },
           });
           console.log(

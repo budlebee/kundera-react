@@ -26,7 +26,7 @@ export const GurusFeed = () => {
         setLoading(true);
         const res = await axios({
           method: "post",
-          url: `http://localhost:8000/gurus-feed`,
+          url: `${process.env.REACT_APP_SERVER_URL}/gurus-feed`,
           data: { myId: `${myId}` },
         });
         console.log(

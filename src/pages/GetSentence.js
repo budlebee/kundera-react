@@ -81,7 +81,7 @@ export const GetSentence = () => {
                 console.log(post.id);
                 const res = await axios({
                   method: "post",
-                  url: "http://localhost:8000/love-sentence",
+                  url: `${process.env.REACT_APP_SERVER_URL}/love-sentence`,
                   data: {
                     userId: `${myId}`,
                     postId: `${post.id}`,
@@ -113,7 +113,7 @@ export const GetSentence = () => {
                 console.log(post.id);
                 const res = await axios({
                   method: "post",
-                  url: "http://localhost:8000/hate-sentence",
+                  url: `${process.env.REACT_APP_SERVER_URL}/hate-sentence`,
                   data: { userId: `${myId}`, postId: `${post.id}` },
                 });
                 if (count === postList.length - 1) {

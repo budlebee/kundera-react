@@ -85,7 +85,7 @@ export const SignUp = () => {
           onClick={() => {
             axios({
               method: "post",
-              url: "http://localhost:8000/email-verification",
+              url: `${process.env.REACT_APP_SERVER_URL}/email-verification`,
               data: {
                 email: email,
               },
