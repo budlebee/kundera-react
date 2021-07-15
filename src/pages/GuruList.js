@@ -2,44 +2,34 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
-import { CheckNoti } from "../redux/user";
 
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router";
 import { NotiBlock } from "../components/NotiBlock";
+import { ShortProfileBlock } from "../components/ShortProfileBlock";
+import { BackButton } from "../components/Buttons";
 
-export const Notis = ({ match }) => {
+export const GuruList = ({ match, history }) => {
   const { userId } = match.params;
+  const [guruList, setGuruList] = useState([]);
   const { error, myId } = useSelector((state) => {
     return {
       error: state.user.error,
       myId: state.user.myId,
     };
   });
-  const [notiList, setNotiList] = useState([]);
-
   const cookies = new Cookies();
 
   useEffect(() => {
-    window.localStorage.removeItem("has-noti");
-    CheckNoti();
-    if (cookies.get("user-id") == userId) {
-      const readNotis = async () => {
-        try {
-          //setLoading(true);
-          const res = await axios({
-            method: "post",
-            url: `${process.env.REACT_APP_SERVER_URL}/get-notis`,
-            data: { myId: `${userId}` },
-          });
-          console.log(res.data);
-          setNotiList(res.data.result);
-        } catch (e) {
-          console.log("error: ", e);
-        }
-      };
-      readNotis();
-    }
+    const getFollowers = async () => {
+      const res = await axios({
+        method: "post",
+        url: `${process.env.REACT_APP_SERVER_URL}/get-gurus`,
+        data: { userId: `${userId}` },
+      });
+      setGuruList(res.data.result);
+    };
+    getFollowers();
   }, [userId]);
 
   if (!cookies.get("user-id")) {
@@ -49,21 +39,28 @@ export const Notis = ({ match }) => {
 
   return (
     <>
-      {notiList.length < 1 ? (
+      <BackButton
+        onClick={() => {
+          history.goBack(1);
+        }}
+      >
+        뒤로가기
+      </BackButton>
+      {guruList.length < 1 ? (
         <div style={{ display: "grid", placeItems: "center" }}>
-          지금은 알림이 없어요
+          지금은 팔로우 하는 사람이 없어요
         </div>
       ) : (
         ""
       )}
-      {notiList.map((ele, idx) => {
+      {guruList.map((ele, idx) => {
         return (
           <div key={idx}>
-            <Link to={`/user-feed/${ele.sender_id}`}>
-              <NotiBlock
+            <Link to={`/user-feed/${ele.user_id}`}>
+              <ShortProfileBlock
                 nickname={ele.nickname}
-                message={ele.message}
-                createdAt={ele.created_at}
+                profile={ele.profile}
+                userId={ele.user_id}
               />
             </Link>
           </div>

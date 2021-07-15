@@ -10,6 +10,7 @@ import { ListWrapper } from "../components/ListWrapper";
 import { colors } from "../lib/style";
 import { FormInput } from "../components/Inputs";
 import { FormButton } from "../components/Buttons";
+import Swal from "sweetalert2";
 
 export const SignUp = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ export const SignUp = () => {
 
   const [emailCode, setEmailCode] = useState("");
   const [emailCheck, setEmailCheck] = useState(false);
+  const [emailCheckCode, setEmailCheckCode] = useState("");
   const [emailVerificationButtonDisable, setEmailVerificationButtonDisable] =
     useState(false);
 
@@ -82,14 +84,23 @@ export const SignUp = () => {
           }}
         />
         <FormButton
-          onClick={() => {
-            axios({
-              method: "post",
-              url: `${process.env.REACT_APP_SERVER_URL}/email-verification`,
-              data: {
-                email: email,
-              },
-            });
+          onClick={async () => {
+            // 생각해보니 email 확인에서 가입했는지를 체크해야 되니까, 이건 서버로 보내야 된다.
+            // 서버에서 lambda를 호출해야겠네.
+            try {
+              const res = await axios({
+                method: "post",
+                url: `${process.env.REACT_APP_SERVER_URL}/email-check`,
+                data: {
+                  email: email,
+                },
+              });
+              console.log(res.data);
+              //setEmailCheckCode(res.data.message);
+            } catch (e) {
+              console.log("error: ", e);
+              Swal.fire(e.response.data.message);
+            }
           }}
         >
           이메일 인증코드 발송

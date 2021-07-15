@@ -4,6 +4,8 @@ import { AddSentence } from "./pages/AddSentence";
 import { GurusFeed } from "./pages/GurusFeed";
 import { Notis } from "./pages/Notis";
 import { UserFeed } from "./pages/UserFeed";
+import { FollowerList } from "./pages/FollowerList";
+import { GuruList } from "./pages/GuruList";
 
 import { Login } from "./pages/Login";
 import { SignUp } from "./pages/SignUp";
@@ -45,15 +47,9 @@ function App() {
         padding: "0",
         display: "grid",
         gridTemplateRows: "auto 1fr auto",
-        //display: "flex",
-        //minHeight: "100%",
+
         whiteSpace: "pre-wrap",
         placeItems: "center",
-
-        //height: "100%",
-        //height: "100vh",
-        //flexDirection: "column",
-        //WebkitFlexDirection: "column",
       }}
     >
       <Nav />
@@ -65,6 +61,8 @@ function App() {
             <Route path="/add" exact={true} component={AddSentence} />
             <Route path="/gurus-feed" component={GurusFeed} />
             <Route path="/user-feed/:userId" component={UserFeed} />
+            <Route path="/followers/:userId" component={FollowerList} />
+            <Route path="/gurus/:userId" component={GuruList} />
             <Route path="/noti/:userId" component={Notis} />
             <Route path="/setting" exact={true} component={Setting} />
             <Route path="/signup" exact={true} component={SignUp} />

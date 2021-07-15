@@ -132,7 +132,9 @@ export const Setting = () => {
             <div>budlebeee@gmail.com</div>
             <div>또는</div>
             <div>
-              <InstaIcon width="16" height="16" />
+              <a href="https://www.instagram.com/kundera_so/" target="_blank">
+                <InstaIcon width="16" height="16" />
+              </a>
             </div>
           </div>
         ) : (

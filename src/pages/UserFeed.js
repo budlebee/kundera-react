@@ -14,6 +14,17 @@ import { testGuruId, testMyId } from "../lib/test";
 import Skeleton from "react-loading-skeleton";
 import { colors } from "../lib/style";
 
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+
 // params 에 유저 id 를 집어넣고, 그 id 에 따라서 요청 보내게끔.
 export const UserFeed = ({ match }) => {
   //const [userId, setUserId] = useState(testId);
@@ -32,6 +43,7 @@ export const UserFeed = ({ match }) => {
   const [postList, setPostList] = useState([]);
   const [guruList, setGuruList] = useState([]);
   const [followerList, setFollowerList] = useState([]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
     if (cookies.get("user-id")) {
@@ -132,32 +144,12 @@ export const UserFeed = ({ match }) => {
             </span>
           </div>
           <div style={{ display: "flex", alignItems: "center" }}>
-            <DefaultButton
-              onClick={async () => {
-                const res = await axios({
-                  method: "post",
-                  url: `${process.env.REACT_APP_SERVER_URL}/get-followers`,
-                  data: { userId: `${userId}` },
-                });
-                console.log(res.data.result);
-                setFollowerList(res.data.result);
-              }}
-            >
-              팔로워
-            </DefaultButton>
-            <DefaultButton
-              onClick={async () => {
-                const res = await axios({
-                  method: "post",
-                  url: `${process.env.REACT_APP_SERVER_URL}/get-gurus`,
-                  data: { userId: `${userId}` },
-                });
-                console.log(res.data.result);
-                setGuruList(res.data.result);
-              }}
-            >
-              팔로우
-            </DefaultButton>
+            <Link to={`/followers/${userId}`}>
+              <DefaultButton onClick={async () => {}}>팔로워</DefaultButton>
+            </Link>
+            <Link to={`/gurus/${userId}`}>
+              <DefaultButton onClick={async () => {}}>팔로잉</DefaultButton>
+            </Link>
             {myId == userId ? (
               <span>
                 {" "}

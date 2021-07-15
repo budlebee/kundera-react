@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { colors } from "../lib/style";
+import { ArrowLeft } from "./Icons";
 
 export const DefaultButton = styled.button`
   font-size: 12px;
@@ -11,6 +12,14 @@ export const DefaultButton = styled.button`
   border: 1px solid ${colors.border};
   border-radius: 5px;
 `;
+
+export const BackButton = ({ onClick }) => {
+  return (
+    <button onClick={onClick}>
+      <ArrowLeft width="15" height="15" />
+    </button>
+  );
+};
 
 export const FormButton = styled.button`
   background-color: ${colors.softViolet};
