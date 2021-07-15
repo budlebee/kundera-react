@@ -22,7 +22,7 @@ export const SentenceCard = ({
         backgroundColor: "#ffffff",
       }}
     >
-      <div>{content}</div>
+      <div style={{ lineHeight: "1.5", fontSize: "16px" }}>{content}</div>
       <div
         style={{
           display: "flex",

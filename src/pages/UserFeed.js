@@ -22,9 +22,9 @@ export const UserFeed = ({ match }) => {
   const [isGuru, setIsGuru] = useState(false);
   const [userNickname, setUserNickname] = useState("");
   const [userProfile, setUserProfile] = useState("");
-  const { error, myId } = useSelector((state) => {
+  const [error, setError] = useState(false);
+  const { myId } = useSelector((state) => {
     return {
-      error: state.user.error,
       myId: state.user.myId,
     };
   });
@@ -56,17 +56,23 @@ export const UserFeed = ({ match }) => {
           setUserNickname(res.data.userNickname);
           setUserProfile(res.data.userProfile);
         } catch (e) {
-          console.log("error: ", e);
+          Swal.fire(e.response.data.message);
+          setError(true);
+          console.log("error: ", e.response.data.message);
         }
       };
       readPosts();
     }
-  }, [userId, myId]);
+  }, [userId, myId, error]);
 
   const cookies = new Cookies();
   if (!cookies.get("user-id")) {
     console.log("로그인이 필요해요");
     return <Redirect to="/signup" />;
+  }
+
+  if (error) {
+    return <Redirect to="/" />;
   }
   return (
     <>

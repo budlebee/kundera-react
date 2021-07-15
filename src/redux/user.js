@@ -1,5 +1,6 @@
 import axios from "axios";
 import Cookies from "universal-cookie";
+import Swal from "sweetalert2";
 
 const cookies = new Cookies();
 
@@ -8,6 +9,7 @@ const initialState = {
   error: null,
   myId: cookies.get("user-id"),
   myNickname: "",
+  myProfile: "",
   accessToken: null,
   tempLoveId: "",
   hasNoti: false,
@@ -18,11 +20,21 @@ export const saveLoveIdForGuest = (id) => {
   return { type: SAVE_LOVE_ID_FOR_GUEST, tempLoveId: id };
 };
 
+const CHANGE_NICKNAME = "user/CHANGE_NICKNAME";
+export const changeNickname = (nickname) => {
+  return { type: CHANGE_NICKNAME, nickname };
+};
+
+const CHANGE_PROFILE = "user/CHANGE_PROFILE";
+export const changeProfile = (profile) => {
+  return { type: CHANGE_PROFILE, profile };
+};
+
 const SIGNUP_TRY = "user/SIGNUP_TRY";
 const SIGNUP_SUCCESS = "user/SIGNUP_SUCCESS";
 const SIGNUP_FAIL = "user/SIGNUP_FAIL";
 export const signUp = (email, nickname, pwd, tempLove) => async (dispatch) => {
-  dispatch({ type: SIGNUP_TRY });
+  dispatch({ type: SIGNUP_TRY, loading: true });
   try {
     const res = await axios({
       method: "post",
@@ -30,21 +42,17 @@ export const signUp = (email, nickname, pwd, tempLove) => async (dispatch) => {
       data: { email: email, nickname: nickname, pwd: pwd, tempLove: tempLove },
       withCredentials: true,
     });
-    console.log(res.data);
-    if (!res.data.result) {
-      alert(res.data.message);
-      throw "이미 가입한 상태임";
-    }
+
     window.localStorage.removeItem("tempLove");
 
     if (cookies.get("user-id")) {
       cookies.remove("user-id", { path: "/" });
     }
     if (res.data.userId) {
-      cookies.set("user-id", res.data.userId, {
-        path: "/",
-        maxAge: 3600 * 24 * 3,
-      });
+      //cookies.set("user-id", res.data.userId, {
+      //  path: "/",
+      //  maxAge: 3600 * 24 * 3,
+      //});
     }
     if (res.data.hasNoti) {
       window.localStorage.setItem("has-noti", res.data.hasNoti);
@@ -53,10 +61,14 @@ export const signUp = (email, nickname, pwd, tempLove) => async (dispatch) => {
       type: SIGNUP_SUCCESS,
       //accessToken: res.data.token,
       userId: res.data.userId,
+      nickname: res.data.nickname,
+      profile: res.data.profile,
       hasNoti: res.data.hasNoti,
+      loading: false,
     });
   } catch (e) {
-    dispatch({ type: SIGNUP_FAIL, error: e });
+    dispatch({ type: SIGNUP_FAIL, error: e, loading: false });
+    Swal.fire(e.response.data.message);
   }
 };
 
@@ -64,7 +76,7 @@ const LOG_IN_TRY = "user/LOG_IN_TRY";
 const LOG_IN_SUCCESS = "user/LOG_IN_SUCCESS";
 const LOG_IN_FAIL = "user/LOG_IN_FAIL";
 export const login = (email, pwd) => async (dispatch) => {
-  dispatch({ type: LOG_IN_TRY });
+  dispatch({ type: LOG_IN_TRY, loading: true });
   try {
     const res = await axios({
       method: "post",
@@ -78,10 +90,10 @@ export const login = (email, pwd) => async (dispatch) => {
         cookies.remove("user-id", { path: "/" });
       }
       if (res.data.userId) {
-        cookies.set("user-id", res.data.userId, {
-          path: "/",
-          maxAge: 3600 * 24 * 3,
-        });
+        //cookies.set("user-id", res.data.userId, {
+        //  path: "/",
+        //  maxAge: 3600 * 24 * 3,
+        //});
       }
       if (res.data.hasNoti) {
         window.localStorage.setItem("has-noti", res.data.hasNoti);
@@ -91,15 +103,19 @@ export const login = (email, pwd) => async (dispatch) => {
         type: LOG_IN_SUCCESS,
         //accessToken: res.data.token,
         userId: res.data.userId,
+        nickname: res.data.nickname,
+        profile: res.data.profile,
         hasNoti: res.data.hasNoti,
+        loading: false,
       });
     } else {
-      console.log(res.data);
+      console.log(res.data.message);
       console.log("로그인 실패!");
       throw "login failure";
     }
   } catch (e) {
-    dispatch({ type: LOG_IN_FAIL, error: e });
+    dispatch({ type: LOG_IN_FAIL, error: e, loading: false });
+    Swal.fire(e.response.data.message);
   }
 };
 
@@ -132,10 +148,10 @@ export const refreshToken = (accessToken) => async (dispatch) => {
     });
     console.log(res.data);
     if (res.data.userId) {
-      cookies.set("user-id", res.data.userId, {
-        path: "/",
-        maxAge: 3600 * 24 * 3,
-      });
+      //cookies.set("user-id", res.data.userId, {
+      //  path: "/",
+      //  maxAge: 3600 * 24 * 3,
+      //});
     } else {
       cookies.remove("user-id", { path: "/" });
       throw "로그인이 필요해요";
@@ -147,6 +163,8 @@ export const refreshToken = (accessToken) => async (dispatch) => {
       type: REFRESH_TOKEN_SUCCESS,
       //accessToken: res.data.token,
       userId: res.data.userId,
+      nickname: res.data.myNickname,
+      profile: res.data.myProfile,
       hasNoti: res.data.hasNoti,
     });
   } catch (e) {
@@ -164,6 +182,10 @@ export default function user(state = initialState, action) {
   switch (action.type) {
     case CHECK_NOTI:
       return { ...state, hasNoti: false };
+    case CHANGE_NICKNAME:
+      return { ...state, myNickname: action.nickname };
+    case CHANGE_PROFILE:
+      return { ...state, myProfile: action.profile };
     case LOG_IN_TRY:
       return {
         ...state,
@@ -172,7 +194,10 @@ export default function user(state = initialState, action) {
       return {
         ...state,
         //accessToken: action.accessToken,
+        hasNoti: action.hasNoti,
         myId: action.userId,
+        myNickname: action.nickname,
+        myProfile: action.profile,
       };
     case LOG_IN_FAIL:
       return {
@@ -185,6 +210,8 @@ export default function user(state = initialState, action) {
         ...state,
         // accessToken: action.accessToken,
         myId: action.userId,
+        myNickname: action.nickname,
+        myProfile: action.profile,
         loading: false,
       };
     case REFRESH_TOKEN_FAIL:
@@ -199,6 +226,9 @@ export default function user(state = initialState, action) {
         ...state,
         //  accessToken: action.accessToken,
         myId: action.userId,
+        hasNoti: action.hasNoti,
+        myNickname: action.nickname,
+        myProfile: action.profile,
       };
     case SIGNUP_FAIL:
       return {
