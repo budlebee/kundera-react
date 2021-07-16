@@ -23,6 +23,7 @@ import axios from "axios";
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { colors } from "../lib/style";
+import { HorizontalLine } from "../components/Lines";
 
 export const Guest = () => {
   const [postList, setPostList] = useState([]);
@@ -82,11 +83,12 @@ export const Guest = () => {
         </div>
       ) : (
         <div style={{ display: "grid", placeItems: "center" }}>
-          <div style={{ textAlign: "center" }}>
-            kundera.so는 영감을 주는 문장들을 찾고
+          <div style={{ textAlign: "center", padding: "15px" }}>
+            영감을 주는 문장을 발견하고
             <br />
-            공유할 수 있는 공간이에요.
+            공유할 수 있는 곳 이에요.
           </div>
+          <HorizontalLine />
           <div>
             {post ? <SentenceCard content={post.content}></SentenceCard> : ""}
           </div>
@@ -100,9 +102,9 @@ export const Guest = () => {
                 // sweetalert2 쓰자.
                 Swal.fire({
                   title: "문장을 모아보세요!",
-                  text: "문장을 공유하고 멋진 취향의 사람들을 팔로우할 수 있어요!",
+                  text: "문장을 공유하고 멋진 취향의 사람들을 팔로우할 수 있어요",
 
-                  confirmButtonText: `가입해볼래요!`,
+                  confirmButtonText: `가입해볼래요`,
                   showCancelButton: true,
                   cancelButtonText: "괜찮아요.",
                   //confirmButtonText: '<a href="/signup"></a> 가입해볼래요!',

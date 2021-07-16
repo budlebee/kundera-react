@@ -6,11 +6,12 @@ export const DefaultButton = styled.button`
   font-size: 12px;
   font-weight: 700;
   padding: 5px;
-  margin: 5px;
+  margin: 10px;
   background-color: #ffffff;
-  box-shadow: ${boxShadow.default};
+  //box-shadow: ${boxShadow.default};
   color: #333;
-  border: 1px solid ${colors.border};
+  //border: 1px solid ${colors.border};
+  border: none;
   border-radius: 5px;
 `;
 

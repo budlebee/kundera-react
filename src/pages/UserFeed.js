@@ -89,7 +89,7 @@ export const UserFeed = ({ match }) => {
   }
   return (
     <>
-      <div className="profile-block" style={{ padding: "10px" }}>
+      <div className="profile-block" style={{ padding: "15px" }}>
         <div
           className="profile-buttons"
           style={{
@@ -174,7 +174,6 @@ export const UserFeed = ({ match }) => {
         <div>{userProfile}</div>
       </div>
 
-      <div></div>
       <HorizontalLine />
 
       {loading ? <Skeleton count={5} /> : ""}
