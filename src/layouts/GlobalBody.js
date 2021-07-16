@@ -25,7 +25,7 @@ export const GlobalBody = ({ children }) => {
 };
 
 const BodyWrapper = styled.div`
-  padding-top: 60px;
+  padding-top: 10px;
   padding-bottom: 60px;
   margin-left: 35vw;
   margin-right: 35vw;

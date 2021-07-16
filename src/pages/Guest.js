@@ -84,9 +84,9 @@ export const Guest = () => {
       ) : (
         <div style={{ display: "grid", placeItems: "center" }}>
           <div style={{ textAlign: "center", padding: "15px" }}>
-            영감을 주는 문장을 발견하고
+            kundera는 영감을 주는 문장을 발견하고
             <br />
-            공유할 수 있는 곳 이에요.
+            공유할 수 있는 곳 입니다
           </div>
           <HorizontalLine />
           <div>

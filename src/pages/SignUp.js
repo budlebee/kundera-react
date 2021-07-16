@@ -83,6 +83,7 @@ export const SignUp = () => {
             setPwdCheck(e.target.value);
           }}
         />
+        {/*
         <FormButton
           onClick={async () => {
             // 생각해보니 email 확인에서 가입했는지를 체크해야 되니까, 이건 서버로 보내야 된다.
@@ -90,7 +91,7 @@ export const SignUp = () => {
             try {
               const res = await axios({
                 method: "post",
-                url: `${process.env.REACT_APP_SERVER_URL}/email-check`,
+                url: `${process.env.REACT_APP_MAIL_API}/verify-email`,
                 data: {
                   email: email,
                 },
@@ -115,11 +116,10 @@ export const SignUp = () => {
           onChange={(e) => {
             setEmailCode(e.target.value);
           }}
-        />
+        />*/}
+
         <FormButton
-          disabled={
-            !(email.length > 0 && pwd.length > 0 && emailCode.length > 0)
-          }
+          disabled={!(email.length > 0 && pwd.length > 0 && pwd == pwdCheck)}
           onClick={() => {
             dispatch(
               signUp(
