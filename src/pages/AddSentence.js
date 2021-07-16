@@ -5,7 +5,7 @@ import { testId } from "../lib/test";
 import { useSelector, useDispatch } from "react-redux";
 import Cookies from "universal-cookie";
 import { Redirect } from "react-router";
-import { colors } from "../lib/style";
+import { boxShadow, colors } from "../lib/style";
 
 import { DefaultButton, FormButton } from "../components/Buttons";
 
@@ -42,12 +42,15 @@ export const AddSentence = () => {
             style={{
               height: "350px",
               padding: "20px",
+              fontSize: "14px",
+              lineHeight: "1.5",
               resize: "none",
               outline: "none",
               boxSizing: "border-box",
               backgroundColor: "#ffffff",
-              border: `1px solid ${colors.border}`,
-              //border: "none",
+              //border: `1px solid ${colors.border}`,
+              //boxShadow: boxShadow.default,
+              border: "none",
               fontFamily: `-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif`,
@@ -55,7 +58,7 @@ export const AddSentence = () => {
             onChange={(e) => {
               setBodyText(e.target.value);
             }}
-            placeholder="갖고 있는 문장을 어딘가로 띄워보낼 수 있어요"
+            placeholder="갖고 있는 문장을 어딘가로 띄워보낼 수 있어요. 명언도 좋고, 책에서 읽은 문장도 좋고, 자신의 생각을 담은 통찰을 띄워보내도 좋아요. "
             minLength="1"
             maxLength="1000"
             autoFocus={false}

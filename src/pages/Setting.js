@@ -33,11 +33,17 @@ export const Setting = () => {
   }
   return (
     <ListWrapper>
-      <div style={{ display: "grid", placeItems: "center" }}>
-        <div>
-          <button
+      <div
+        style={{
+          display: "grid",
+          placeItems: "center",
+          width: "100%",
+        }}
+      >
+        <div style={{ width: "100%" }}>
+          <FormButton
             style={{
-              all: "unset",
+              //all: "unset",
               cursor: "pointer",
               width: "100%",
             }}
@@ -46,10 +52,18 @@ export const Setting = () => {
             }}
           >
             프로필 수정
-          </button>
+          </FormButton>
         </div>
         {onChangeSetting ? (
-          <div style={{ display: "grid", placeItems: "center", gap: "20px" }}>
+          <div
+            style={{
+              display: "grid",
+              placeItems: "center",
+              gap: "20px",
+              paddingTop: "10px",
+              paddingBottom: "10px",
+            }}
+          >
             <div>
               새 닉네임
               <FormInput
@@ -101,7 +115,7 @@ export const Setting = () => {
                       },
                     });
                   }}
-                  disabled={!(myNickname.length > 0 && myProfile.length > 0)}
+                  disabled={!myNickname}
                 >
                   수정완료
                 </FormButton>
@@ -112,11 +126,18 @@ export const Setting = () => {
           ""
         )}
       </div>
-      <div style={{ display: "grid", placeItems: "center" }}>
-        <div>
-          <button
+      <div style={{ display: "grid", placeItems: "center", width: "100%" }}>
+        <div
+          style={{
+            width: "100%",
+            paddingTop: "10px",
+            paddingBottom: "10px",
+            lineHeight: 2,
+          }}
+        >
+          <FormButton
             style={{
-              all: "unset",
+              //all: "unset",
               cursor: "pointer",
               width: "100%",
             }}
@@ -125,7 +146,7 @@ export const Setting = () => {
             }}
           >
             문의
-          </button>
+          </FormButton>
         </div>
         {onContact ? (
           <div style={{ display: "grid", placeItems: "center" }}>
@@ -133,7 +154,7 @@ export const Setting = () => {
             <div>또는</div>
             <div>
               <a href="https://www.instagram.com/kundera_so/" target="_blank">
-                <InstaIcon width="16" height="16" />
+                <InstaIcon width="25" height="25" />
               </a>
             </div>
           </div>
@@ -141,7 +162,7 @@ export const Setting = () => {
           ""
         )}
       </div>
-      <div>
+      <div style={{ width: "100%" }}>
         <Link
           style={{
             all: "unset",
@@ -150,9 +171,9 @@ export const Setting = () => {
           }}
           to="/guest"
         >
-          <button
+          <FormButton
             style={{
-              all: "unset",
+              //all: "unset",
               cursor: "pointer",
               width: "100%",
             }}
@@ -161,7 +182,7 @@ export const Setting = () => {
             }}
           >
             로그아웃
-          </button>
+          </FormButton>
         </Link>
       </div>
     </ListWrapper>

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { boxShadow } from "../lib/style";
 
 export const GlobalBody = ({ children }) => {
   return (
@@ -7,6 +8,10 @@ export const GlobalBody = ({ children }) => {
         style={{
           display: "grid",
           placeItems: "center",
+          backgroundColor: "#fff",
+          //boxShadow: boxShadow.default,
+          paddingLeft: "15px",
+          paddingRight: "15px",
           //alignItems: "center",
           //display: "flex",
           //flex: "1 0 0px",
@@ -20,16 +25,16 @@ export const GlobalBody = ({ children }) => {
 };
 
 const BodyWrapper = styled.div`
-  padding-top: 20px;
+  padding-top: 60px;
   padding-bottom: 60px;
   margin-left: 35vw;
   margin-right: 35vw;
   width: 30vw;
 
   @media (max-width: 1024px) {
-    margin-left: 30vw;
-    margin-right: 30vw;
-    width: 40vw;
+    margin-left: 25vw;
+    margin-right: 25vw;
+    width: 50vw;
   }
   @media (max-width: 768px) {
     margin-left: 20vw;
@@ -37,8 +42,8 @@ const BodyWrapper = styled.div`
     width: 60vw;
   }
   @media (max-width: 600px) {
-    width: 90vw;
-    margin-left: 5vw;
-    margin-right: 5vw;
+    width: 96vw;
+    margin-left: 2vw;
+    margin-right: 2vw;
   }
 `;

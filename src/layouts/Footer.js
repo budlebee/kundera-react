@@ -41,97 +41,65 @@ export const Footer = () => {
         width: "100%",
         display: "grid",
         placeItems: "center",
+        boxShadow: "0 0 3px rgba(0, 0, 0, 0.2)",
       }}
     >
       <div
         style={{
           display: "flex",
           justifyContent: "center",
-          fontSize: "12px",
+          fontSize: "8px",
           maxWidth: "600px",
+          height: "55px",
+          width: "100%",
+          overflowX: "auto",
         }}
       >
-        <div
-          style={{
-            display: "grid",
-            textAlign: "center",
-            //justifyContent: "center",
-            width: "100%",
-            margin: "10px",
-          }}
-        >
+        <FooterElement>
           <div>
             <Link to="/">
               <SearchIcon height="20" width="20" />
             </Link>
           </div>
-          <div>Find</div>
-        </div>
-        <div
-          style={{
-            display: "grid",
-            textAlign: "center",
-            width: "100%",
-            margin: "10px",
-          }}
-        >
+          <div>홈</div>
+        </FooterElement>
+        <FooterElement>
           <div>
             <Link to={`/gurus-feed/${myId}`}>
               <RippleIcon height="20" width="20" />
             </Link>
           </div>
-          <div>Feed</div>
-        </div>
-        <div
-          style={{
-            display: "grid",
-            textAlign: "center",
-            width: "100%",
-            margin: "10px",
-          }}
-        >
+          <div>피드</div>
+        </FooterElement>
+        <FooterElement>
           <div>
             <Link to="/add">
               <SquarePlusIcon height="20" width="20" />
             </Link>
           </div>
-          <div>Add</div>
-        </div>
-        <div
-          style={{
-            display: "grid",
-            textAlign: "center",
-            width: "100%",
-            margin: "10px",
-          }}
-        >
+          <div>글쓰기</div>
+        </FooterElement>
+        <FooterElement>
           <div>
             <Link to={`/noti/${myId}`}>
-              {hasNoti ? (
+              {false ? (
                 <RedRingingBellIcon height="20" width="20" />
               ) : (
                 <BlackBellIcon height="20" width="20" />
               )}
             </Link>
           </div>
-          <div>Alert</div>
-        </div>
+          <div>알림</div>
+        </FooterElement>
 
-        <div
-          style={{
-            display: "grid",
-            textAlign: "center",
-            width: "100%",
-            margin: "10px",
-          }}
-        >
+        <FooterElement>
           <div>
             <Link to={`/user-feed/${myId}`}>
               <BookmarkIcon height="20" width="20" />
             </Link>
           </div>
-          <div>My</div>
-        </div>
+          <div>책갈피</div>
+        </FooterElement>
       </div>
     </footer>
   );
@@ -154,4 +122,19 @@ const ResponsibleWrapper = styled.div`
     margin-left: 0;
     margin-right: 0;
   }
+`;
+
+const FooterElement = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  min-width: 50px;
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: sans-serif;
+  font-size: 13px;
+  color: #444444;
+  text-decoration: none;
 `;

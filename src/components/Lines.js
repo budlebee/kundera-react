@@ -1,7 +1,7 @@
 export const HorizontalLine = () => {
   return (
     <div
-      style={{ width: "100%", backgroundColor: "#999999", height: "2px" }}
+      style={{ width: "100%", backgroundColor: "#eeeeee", height: "1px" }}
     ></div>
   );
 };

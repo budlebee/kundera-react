@@ -49,10 +49,10 @@ export const signUp = (email, nickname, pwd, tempLove) => async (dispatch) => {
       cookies.remove("user-id", { path: "/" });
     }
     if (res.data.userId) {
-      //cookies.set("user-id", res.data.userId, {
-      //  path: "/",
-      //  maxAge: 3600 * 24 * 3,
-      //});
+      cookies.set("user-id", res.data.userId, {
+        path: "/",
+        maxAge: 3600 * 24 * 3,
+      });
     }
     if (res.data.hasNoti) {
       window.localStorage.setItem("has-noti", res.data.hasNoti);
@@ -90,10 +90,10 @@ export const login = (email, pwd) => async (dispatch) => {
         cookies.remove("user-id", { path: "/" });
       }
       if (res.data.userId) {
-        //cookies.set("user-id", res.data.userId, {
-        //  path: "/",
-        //  maxAge: 3600 * 24 * 3,
-        //});
+        cookies.set("user-id", res.data.userId, {
+          path: "/",
+          maxAge: 3600 * 24 * 3,
+        });
       }
       if (res.data.hasNoti) {
         window.localStorage.setItem("has-noti", res.data.hasNoti);
@@ -148,10 +148,10 @@ export const refreshToken = (accessToken) => async (dispatch) => {
     });
     console.log(res.data);
     if (res.data.userId) {
-      //cookies.set("user-id", res.data.userId, {
-      //  path: "/",
-      //  maxAge: 3600 * 24 * 3,
-      //});
+      cookies.set("user-id", res.data.userId, {
+        path: "/",
+        maxAge: 3600 * 24 * 3,
+      });
     } else {
       cookies.remove("user-id", { path: "/" });
       throw "로그인이 필요해요";

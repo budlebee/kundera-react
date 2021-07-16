@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../lib/style";
+import { boxShadow, colors } from "../lib/style";
 import { ArrowLeft } from "./Icons";
 
 export const DefaultButton = styled.button`
@@ -8,6 +8,7 @@ export const DefaultButton = styled.button`
   padding: 5px;
   margin: 5px;
   background-color: #ffffff;
+  box-shadow: ${boxShadow.default};
   color: #333;
   border: 1px solid ${colors.border};
   border-radius: 5px;
@@ -15,8 +16,15 @@ export const DefaultButton = styled.button`
 
 export const BackButton = ({ onClick }) => {
   return (
-    <button onClick={onClick}>
-      <ArrowLeft width="15" height="15" />
+    <button
+      style={{
+        all: "unset",
+        cursor: "pointer",
+        width: "100%",
+      }}
+      onClick={onClick}
+    >
+      <ArrowLeft width="20" height="20" />
     </button>
   );
 };
@@ -29,10 +37,15 @@ export const FormButton = styled.button`
   color: #eee;
   cursor: pointer;
   font-size: 16px;
+  font-weight: 500;
+  box-shadow: ${boxShadow.default};
   height: 40px;
   // outline: 0;
   text-align: center;
   width: 100%;
+  &:hover {
+    background-color: ${colors.softVioletActive};
+  }
   &:disabled {
     background-color: #999;
     cursor: default;

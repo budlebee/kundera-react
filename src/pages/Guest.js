@@ -82,7 +82,11 @@ export const Guest = () => {
         </div>
       ) : (
         <div style={{ display: "grid", placeItems: "center" }}>
-          <div>랜덤한 명언이 떠요. 간단한 서비스 소개글.</div>
+          <div style={{ textAlign: "center" }}>
+            kundera.so는 영감을 주는 문장들을 찾고
+            <br />
+            공유할 수 있는 공간이에요.
+          </div>
           <div>
             {post ? <SentenceCard content={post.content}></SentenceCard> : ""}
           </div>

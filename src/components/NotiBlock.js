@@ -11,7 +11,7 @@ export const NotiBlock = ({ message, createdAt, nickname }) => {
         //margin: "5px",
 
         //borderTop: `1px solid ${colors.border}`,
-        borderBottom: `1px solid ${colors.border}`,
+        //borderBottom: `1px solid ${colors.border}`,
         //borderRadius: "5px",
       }}
     >

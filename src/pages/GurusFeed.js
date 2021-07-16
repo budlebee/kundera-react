@@ -53,6 +53,11 @@ export const GurusFeed = () => {
   // 사용자의 피드 밑에는 랜덤 피드를 뿌려주자.
   return (
     <div>
+      {postList.length == 0 ? (
+        <div style={{ textAlign: "center" }}>지금은 팔로우 게시글이 없어요</div>
+      ) : (
+        ""
+      )}
       {postList.map((ele, idx) => {
         return (
           <div key={idx}>

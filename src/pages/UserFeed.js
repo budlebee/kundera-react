@@ -13,6 +13,7 @@ import { SentenceCard } from "../components/SentenceCard";
 import { testGuruId, testMyId } from "../lib/test";
 import Skeleton from "react-loading-skeleton";
 import { colors } from "../lib/style";
+import { ListWrapper } from "../components/ListWrapper";
 
 const customStyles = {
   content: {
@@ -88,7 +89,7 @@ export const UserFeed = ({ match }) => {
   }
   return (
     <>
-      <div className="profile-block">
+      <div className="profile-block" style={{ padding: "10px" }}>
         <div
           className="profile-buttons"
           style={{
@@ -98,7 +99,15 @@ export const UserFeed = ({ match }) => {
           }}
         >
           <div>
-            <span>{userNickname}</span>
+            <span
+              style={{
+                fontWeight: "700",
+                fontSize: "16px",
+                color: colors.violet,
+              }}
+            >
+              {userNickname}
+            </span>
 
             <span>
               {myId != userId ? (
@@ -164,7 +173,10 @@ export const UserFeed = ({ match }) => {
         </div>
         <div>{userProfile}</div>
       </div>
+
       <div></div>
+      <HorizontalLine />
+
       {loading ? <Skeleton count={5} /> : ""}
       {postList.map((ele, idx) => {
         return (

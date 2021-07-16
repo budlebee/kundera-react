@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { colors } from "../lib/style";
+import { boxShadow, colors } from "../lib/style";
 import { timeForToday } from "../lib/functions";
 
 export const SentenceCard = ({
@@ -18,8 +18,9 @@ export const SentenceCard = ({
         marginTop: "15px",
         marginBottom: "15px",
         borderRadius: "2px",
-        border: `1px solid ${colors.border}`,
+        //border: `1px solid ${colors.border}`,
         backgroundColor: "#ffffff",
+        //boxShadow: boxShadow.default,
       }}
     >
       <div style={{ lineHeight: "1.5", fontSize: "16px" }}>{content}</div>
@@ -31,7 +32,11 @@ export const SentenceCard = ({
         }}
       >
         <Link
-          style={{ color: "#000000", fontWeight: "700" }}
+          style={{
+            color: "#000000",
+            fontWeight: "700",
+            color: colors.softViolet,
+          }}
           to={`/user-feed/${userId}`}
         >
           {nickname}
