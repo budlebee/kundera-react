@@ -29,7 +29,7 @@ export const GetSentence = () => {
     const res = await axios({
       method: "post",
       url: `${process.env.REACT_APP_SERVER_URL}/get-sentence`,
-      withCredentials = true,
+      withCredentials: true,
       data: { userId: `${myId}` },
     });
 
@@ -82,7 +82,7 @@ export const GetSentence = () => {
                 const res = await axios({
                   method: "post",
                   url: `${process.env.REACT_APP_SERVER_URL}/love-sentence`,
-                  withCredentials = true,
+                  withCredentials: true,
                   data: {
                     userId: `${myId}`,
                     postId: `${post.id}`,
@@ -114,7 +114,7 @@ export const GetSentence = () => {
                 const res = await axios({
                   method: "post",
                   url: `${process.env.REACT_APP_SERVER_URL}/hate-sentence`,
-                  withCredentials = true,
+                  withCredentials: true,
                   data: { userId: `${myId}`, postId: `${post.id}` },
                 });
                 if (count === postList.length - 1) {

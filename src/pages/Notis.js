@@ -31,7 +31,7 @@ export const Notis = ({ match }) => {
             method: "post",
             url: `${process.env.REACT_APP_SERVER_URL}/get-notis`,
             data: { myId: `${userId}` },
-            withCredentials = true,
+            withCredentials: true,
           });
 
           setNotiList(res.data.result);

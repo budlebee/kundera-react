@@ -55,7 +55,7 @@ export const UserFeed = ({ match }) => {
             method: "post",
             url: `${process.env.REACT_APP_SERVER_URL}/user-feed`,
             data: { userId: `${userId}`, myId: `${myId}` },
-            withCredentials = true,
+            withCredentials: true,
           });
           console.log(
             res.data.result.sort(function (x, y) {
@@ -119,7 +119,7 @@ export const UserFeed = ({ match }) => {
                           method: "post",
                           url: `${process.env.REACT_APP_SERVER_URL}/unfollow`,
                           data: { userId: `${myId}`, guruId: `${userId}` },
-                          withCredentials = true,
+                          withCredentials: true,
                         });
                         setIsGuru(res.data.isGuru);
                       }}
@@ -137,7 +137,7 @@ export const UserFeed = ({ match }) => {
                           method: "post",
                           url: `${process.env.REACT_APP_SERVER_URL}/follow`,
                           data: { userId: `${myId}`, guruId: `${userId}` },
-                          withCredentials = true,
+                          withCredentials: true,
                         });
                         setIsGuru(res.data.isGuru);
                       }}

@@ -113,7 +113,7 @@ export const Setting = () => {
                         nickname: myNickname,
                         profile: myProfile,
                       },
-                      withCredentials = true,
+                      withCredentials: true,
                     });
                   }}
                   disabled={!myNickname}

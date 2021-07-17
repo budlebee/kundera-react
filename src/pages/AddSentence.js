@@ -78,7 +78,7 @@ export const AddSentence = () => {
                     content: bodyText,
                     userId: `${myId}`,
                   },
-                  withCredentials = true,
+                  withCredentials: true,
                 });
 
                 //setCheckValue(res.data.text);

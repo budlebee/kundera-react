@@ -28,7 +28,7 @@ export const GurusFeed = () => {
           method: "post",
           url: `${process.env.REACT_APP_SERVER_URL}/gurus-feed`,
           data: { myId: `${myId}` },
-          withCredentials = true,
+          withCredentials: true,
         });
 
         setPostList(res.data.result);
