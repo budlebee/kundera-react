@@ -24,35 +24,37 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { colors } from "../lib/style";
 import { HorizontalLine } from "../components/Lines";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 export const Guest = () => {
   const [postList, setPostList] = useState([]);
   const [post, setPost] = useState(null);
   const [count, setCount] = React.useState(0);
   const [loading, setLoading] = useState(false);
+  const [loadingTooLong, setLoadingTooLong] = useState(false);
 
   const readPosts = useCallback(async () => {
+    setLoading(true);
     const res = await axios({
       method: "post",
       url: `${process.env.REACT_APP_SERVER_URL}/guest-get-sentence`,
       data: {},
     });
-    console.log(res.data.result);
+
     setPostList(res.data.result);
     setPost(res.data.result[0]);
     setLoading(false);
+    setLoadingTooLong(false);
   }, []);
 
   useEffect(() => {
     // cookie 체크하고 없다면 redirection.
-    setLoading(true);
 
     readPosts();
   }, []);
 
   const cookies = new Cookies();
   if (cookies.get("user-id")) {
-    console.log("로그인 했으면 게스트 페이지로는 올 필요 없지.");
     return <Redirect to="/" />;
   }
 
@@ -84,9 +86,9 @@ export const Guest = () => {
       ) : (
         <div style={{ display: "grid", placeItems: "center" }}>
           <div style={{ textAlign: "center", padding: "15px" }}>
-            kundera는 영감을 주는 문장을 발견하고
+            kundera는 감명을 주는 문장을 발견하고
             <br />
-            공유할 수 있는 곳 입니다
+            공유할 수 있는 곳 이에요
           </div>
           <HorizontalLine />
           <div>

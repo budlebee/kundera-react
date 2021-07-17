@@ -55,6 +55,7 @@ export const UserFeed = ({ match }) => {
             method: "post",
             url: `${process.env.REACT_APP_SERVER_URL}/user-feed`,
             data: { userId: `${userId}`, myId: `${myId}` },
+            withCredentials = true,
           });
           console.log(
             res.data.result.sort(function (x, y) {
@@ -62,7 +63,6 @@ export const UserFeed = ({ match }) => {
             })
           );
 
-          console.log(res.data);
           //setLoading(false);
           setIsGuru(res.data.isGuru);
           setPostList(res.data.result);
@@ -115,14 +115,13 @@ export const UserFeed = ({ match }) => {
                   {isGuru ? (
                     <DefaultButton
                       onClick={async () => {
-                        console.log("unfollow");
                         const res = await axios({
                           method: "post",
                           url: `${process.env.REACT_APP_SERVER_URL}/unfollow`,
                           data: { userId: `${myId}`, guruId: `${userId}` },
+                          withCredentials = true,
                         });
                         setIsGuru(res.data.isGuru);
-                        console.log(res.data);
                       }}
                     >
                       팔로우 중
@@ -134,11 +133,11 @@ export const UserFeed = ({ match }) => {
                         color: "#eee",
                       }}
                       onClick={async () => {
-                        console.log("follow");
                         const res = await axios({
                           method: "post",
                           url: `${process.env.REACT_APP_SERVER_URL}/follow`,
                           data: { userId: `${myId}`, guruId: `${userId}` },
+                          withCredentials = true,
                         });
                         setIsGuru(res.data.isGuru);
                       }}

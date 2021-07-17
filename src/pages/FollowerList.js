@@ -33,7 +33,7 @@ export const FollowerList = ({ match, history }) => {
   }, [userId]);
 
   if (!cookies.get("user-id")) {
-    console.log("로그인이 필요해요");
+  
     return <Redirect to="/signup" />;
   }
 

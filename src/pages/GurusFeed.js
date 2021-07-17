@@ -28,12 +28,9 @@ export const GurusFeed = () => {
           method: "post",
           url: `${process.env.REACT_APP_SERVER_URL}/gurus-feed`,
           data: { myId: `${myId}` },
+          withCredentials = true,
         });
-        console.log(
-          res.data.result.sort(function (x, y) {
-            return -new Date(x.timestamp) + new Date(y.timestamp);
-          })
-        );
+
         setPostList(res.data.result);
         //setPost(res.data.result[0]);
         setLoading(false);
@@ -44,7 +41,6 @@ export const GurusFeed = () => {
 
   const cookies = new Cookies();
   if (!cookies.get("user-id")) {
-    console.log("로그인이 필요해요");
     return <Redirect to="/signup" />;
   }
   if (loading) {

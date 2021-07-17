@@ -1,8 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../redux/user";
-
 import Cookies from "universal-cookie";
 
 import { Redirect, Link } from "react-router-dom";
@@ -20,6 +19,12 @@ export const SignUp = () => {
   const [pwd, setPwd] = useState("");
   const [pwdCheck, setPwdCheck] = useState("");
 
+  const { loading } = useSelector((state) => {
+    return {
+      loading: state.user.loading,
+    };
+  });
+
   const [emailCode, setEmailCode] = useState("");
   const [emailCheck, setEmailCheck] = useState(false);
   const [emailCheckCode, setEmailCheckCode] = useState("");
@@ -28,7 +33,6 @@ export const SignUp = () => {
 
   const cookies = new Cookies();
   if (cookies.get("user-id")) {
-    console.log("이미 로그인상태에요");
     return <Redirect to="/" />;
   }
 
@@ -96,10 +100,10 @@ export const SignUp = () => {
                   email: email,
                 },
               });
-              console.log(res.data);
+              
               //setEmailCheckCode(res.data.message);
             } catch (e) {
-              console.log("error: ", e);
+              
               Swal.fire(e.response.data.message);
             }
           }}
@@ -119,7 +123,15 @@ export const SignUp = () => {
         />*/}
 
         <FormButton
-          disabled={!(email.length > 0 && pwd.length > 0 && pwd == pwdCheck)}
+          disabled={
+            !(
+              !loading &&
+              nickname.length > 0 &&
+              email.length > 0 &&
+              pwd.length > 7 &&
+              pwd == pwdCheck
+            )
+          }
           onClick={() => {
             dispatch(
               signUp(
@@ -131,7 +143,7 @@ export const SignUp = () => {
             );
           }}
         >
-          submit
+          회원가입
         </FormButton>
         <Link to="/login">
           이미 회원이신가요?{" "}

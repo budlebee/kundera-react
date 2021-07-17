@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/user";
 import Cookies from "universal-cookie";
 
@@ -15,9 +15,14 @@ export const Login = () => {
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
 
+  const { loading } = useSelector((state) => {
+    return {
+      loading: state.user.loading,
+    };
+  });
+
   const cookies = new Cookies();
   if (cookies.get("user-id")) {
-    console.log("이미 로그인상태에요");
     return <Redirect to="/" />;
   }
 
@@ -48,7 +53,7 @@ export const Login = () => {
         />
 
         <FormButton
-          disabled={!((email.length > 0) & (pwd.length > 0))}
+          disabled={!(!loading && email.length > 0 && pwd.length > 0)}
           onClick={() => {
             dispatch(login(email, pwd));
             // res.data에 담긴 access token 을 redux 에 담아놓고.

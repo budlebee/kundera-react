@@ -11,6 +11,7 @@ import axios from "axios";
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { colors } from "../lib/style";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 export const GetSentence = () => {
   const [postList, setPostList] = useState([]);
@@ -28,9 +29,10 @@ export const GetSentence = () => {
     const res = await axios({
       method: "post",
       url: `${process.env.REACT_APP_SERVER_URL}/get-sentence`,
+      withCredentials = true,
       data: { userId: `${myId}` },
     });
-    console.log(res.data.result);
+
     setPostList(res.data.result);
     setPost(res.data.result[0]);
     setLoading(false);
@@ -46,7 +48,6 @@ export const GetSentence = () => {
 
   const cookies = new Cookies();
   if (!cookies.get("user-id")) {
-    console.log("로그인이 필요해요");
     return <Redirect to="/guest" />;
   }
 
@@ -78,17 +79,17 @@ export const GetSentence = () => {
           <div>
             <DefaultButton
               onClick={async () => {
-                console.log(post.id);
                 const res = await axios({
                   method: "post",
                   url: `${process.env.REACT_APP_SERVER_URL}/love-sentence`,
+                  withCredentials = true,
                   data: {
                     userId: `${myId}`,
                     postId: `${post.id}`,
                     createdBy: post.created_by,
                   },
                 });
-                console.log(res.data);
+
                 if (count === postList.length - 1) {
                   readPosts();
                   setCount(0);
@@ -110,10 +111,10 @@ export const GetSentence = () => {
             </DefaultButton>
             <DefaultButton
               onClick={async () => {
-                console.log(post.id);
                 const res = await axios({
                   method: "post",
                   url: `${process.env.REACT_APP_SERVER_URL}/hate-sentence`,
+                  withCredentials = true,
                   data: { userId: `${myId}`, postId: `${post.id}` },
                 });
                 if (count === postList.length - 1) {

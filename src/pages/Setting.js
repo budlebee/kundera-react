@@ -12,6 +12,7 @@ import { DefaultButton, FormButton } from "../components/Buttons";
 import { colors } from "../lib/style";
 import { InstaIcon } from "../components/Icons";
 import Swal from "sweetalert2";
+import { ToS } from "../components/ToS";
 
 export const Setting = () => {
   const dispatch = useDispatch();
@@ -28,7 +29,6 @@ export const Setting = () => {
 
   const cookies = new Cookies();
   if (!cookies.get("user-id")) {
-    console.log("로그인이 필요해요");
     return <Redirect to="/signup" />;
   }
   return (
@@ -113,6 +113,7 @@ export const Setting = () => {
                         nickname: myNickname,
                         profile: myProfile,
                       },
+                      withCredentials = true,
                     });
                   }}
                   disabled={!myNickname}
@@ -157,6 +158,7 @@ export const Setting = () => {
                 <InstaIcon width="25" height="25" />
               </a>
             </div>
+            <ToS />
           </div>
         ) : (
           ""

@@ -31,8 +31,9 @@ export const Notis = ({ match }) => {
             method: "post",
             url: `${process.env.REACT_APP_SERVER_URL}/get-notis`,
             data: { myId: `${userId}` },
+            withCredentials = true,
           });
-          console.log(res.data);
+
           setNotiList(res.data.result);
         } catch (e) {
           console.log("error: ", e);
@@ -43,7 +44,6 @@ export const Notis = ({ match }) => {
   }, [userId]);
 
   if (!cookies.get("user-id")) {
-    console.log("로그인이 필요해요");
     return <Redirect to="/signup" />;
   }
 

@@ -52,6 +52,7 @@ export const signUp = (email, nickname, pwd, tempLove) => async (dispatch) => {
       cookies.set("user-id", res.data.userId, {
         path: "/",
         maxAge: 3600 * 24 * 3,
+        domain: ".kundera.so",
       });
     }
     if (res.data.hasNoti) {
@@ -85,7 +86,6 @@ export const login = (email, pwd) => async (dispatch) => {
       withCredentials: true,
     });
     if (res.data) {
-      console.log(res);
       if (cookies.get("user-id")) {
         cookies.remove("user-id", { path: "/" });
       }
@@ -93,12 +93,13 @@ export const login = (email, pwd) => async (dispatch) => {
         cookies.set("user-id", res.data.userId, {
           path: "/",
           maxAge: 3600 * 24 * 3,
+          domain: ".kundera.so",
         });
       }
       if (res.data.hasNoti) {
         window.localStorage.setItem("has-noti", res.data.hasNoti);
       }
-      console.log("로그인 성공!");
+
       dispatch({
         type: LOG_IN_SUCCESS,
         //accessToken: res.data.token,
@@ -109,8 +110,6 @@ export const login = (email, pwd) => async (dispatch) => {
         loading: false,
       });
     } else {
-      console.log(res.data.message);
-      console.log("로그인 실패!");
       throw "login failure";
     }
   } catch (e) {
@@ -146,7 +145,7 @@ export const refreshToken = (accessToken) => async (dispatch) => {
       data: {},
       withCredentials: true,
     });
-    console.log(res.data);
+
     if (res.data.userId) {
       cookies.set("user-id", res.data.userId, {
         path: "/",
@@ -168,7 +167,6 @@ export const refreshToken = (accessToken) => async (dispatch) => {
       hasNoti: res.data.hasNoti,
     });
   } catch (e) {
-    console.log("error: ", e);
     dispatch({ type: REFRESH_TOKEN_FAIL });
   }
 };
@@ -189,6 +187,7 @@ export default function user(state = initialState, action) {
     case LOG_IN_TRY:
       return {
         ...state,
+        loading: true,
       };
     case LOG_IN_SUCCESS:
       return {
@@ -198,10 +197,12 @@ export default function user(state = initialState, action) {
         myId: action.userId,
         myNickname: action.nickname,
         myProfile: action.profile,
+        loading: false,
       };
     case LOG_IN_FAIL:
       return {
         ...state,
+        loading: false,
       };
     case REFRESH_TOKEN_TRY:
       return { ...state, loading: true };
@@ -220,6 +221,7 @@ export default function user(state = initialState, action) {
     case SIGNUP_TRY:
       return {
         ...state,
+        loading: true,
       };
     case SIGNUP_SUCCESS:
       return {
@@ -229,10 +231,12 @@ export default function user(state = initialState, action) {
         hasNoti: action.hasNoti,
         myNickname: action.nickname,
         myProfile: action.profile,
+        loading: false,
       };
     case SIGNUP_FAIL:
       return {
         ...state,
+        loading: false,
       };
     case LOG_OUT:
       return {

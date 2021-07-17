@@ -23,7 +23,6 @@ export const AddSentence = () => {
 
   const cookies = new Cookies();
   if (!cookies.get("user-id")) {
-    console.log("로그인이 필요해요");
     return <Redirect to="/signup" />;
   }
   if (submit) {
@@ -79,14 +78,14 @@ export const AddSentence = () => {
                     content: bodyText,
                     userId: `${myId}`,
                   },
+                  withCredentials = true,
                 });
-                console.log(res.data);
+
                 //setCheckValue(res.data.text);
                 setLoading(false);
                 setSubmit(true);
               } catch (e) {
                 alert("죄송합니다. 에러가 발생했어요");
-                console.log("error: ", e);
               }
             }}
           >
