@@ -9,12 +9,13 @@ export const ShortProfileBlock = ({ nickname, userId, profile }) => {
 
         margin: "5px",
         padding: "10px",
-        //border: `1px solid ${colors.border}`,
+        //width: "100%",
+        border: `1px solid ${colors.border}`,
         //boxShadow: boxShadow.default,
       }}
     >
-      <div>{nickname}</div>
-      <div>{profile}</div>
+      <div style={{ color: colors.violet, fontWeight: "700" }}>{nickname}</div>
+      <div style={{ fontStyle: "italic" }}>{profile}</div>
     </div>
   );
 };

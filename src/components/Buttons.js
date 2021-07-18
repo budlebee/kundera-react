@@ -11,6 +11,7 @@ export const DefaultButton = styled.button`
   //box-shadow: ${boxShadow.default};
   color: #333;
   //border: 1px solid ${colors.border};
+  cursor: pointer;
   border: none;
   border-radius: 5px;
 `;

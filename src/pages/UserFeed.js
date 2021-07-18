@@ -154,7 +154,6 @@ export const UserFeed = ({ match }) => {
             </Link>
             {myId == userId ? (
               <span>
-                {" "}
                 <Link to={`/setting`}>
                   <SettingIcon height="20" width="20" />
                 </Link>
@@ -164,7 +163,7 @@ export const UserFeed = ({ match }) => {
             )}
           </div>
         </div>
-        <div>{userProfile}</div>
+        <div style={{ fontStyle: "italic" }}>{userProfile}</div>
       </div>
 
       <HorizontalLine />

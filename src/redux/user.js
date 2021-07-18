@@ -52,7 +52,7 @@ export const signUp = (email, nickname, pwd, tempLove) => async (dispatch) => {
       cookies.set("user-id", res.data.userId, {
         path: "/",
         maxAge: 3600 * 24 * 3,
-        domain: ".kundera.so",
+        domain: process.env.REACT_APP_COOKIE_DOMAIN,
       });
     }
     if (res.data.hasNoti) {
@@ -93,7 +93,7 @@ export const login = (email, pwd) => async (dispatch) => {
         cookies.set("user-id", res.data.userId, {
           path: "/",
           maxAge: 3600 * 24 * 3,
-          domain: ".kundera.so",
+          domain: process.env.REACT_APP_COOKIE_DOMAIN,
         });
       }
       if (res.data.hasNoti) {
@@ -149,6 +149,7 @@ export const refreshToken = (accessToken) => async (dispatch) => {
       cookies.set("user-id", res.data.userId, {
         path: "/",
         maxAge: 3600 * 24 * 3,
+        domain: process.env.REACT_APP_COOKIE_DOMAIN,
       });
     } else {
       cookies.remove("user-id", { path: "/" });
