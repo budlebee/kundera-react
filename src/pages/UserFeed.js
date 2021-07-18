@@ -57,12 +57,7 @@ export const UserFeed = ({ match }) => {
             data: { userId: `${userId}`, myId: `${myId}` },
             withCredentials: true,
           });
-          console.log(
-            res.data.result.sort(function (x, y) {
-              return -new Date(x.timestamp) + new Date(y.timestamp);
-            })
-          );
-
+          
           //setLoading(false);
           setIsGuru(res.data.isGuru);
           setPostList(res.data.result);
@@ -80,7 +75,6 @@ export const UserFeed = ({ match }) => {
 
   const cookies = new Cookies();
   if (!cookies.get("user-id")) {
-    console.log("로그인이 필요해요");
     return <Redirect to="/signup" />;
   }
 

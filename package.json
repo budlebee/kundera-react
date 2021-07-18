@@ -27,7 +27,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "react-scripts build && aws s3 sync ./build s3://kundera-dev && aws cloudfront create-invalidation --distribution-id E9DV207QFKUFR --paths '/*'"
+    "devdeploy": "env REACT_APP_SERVER_URL=https://dev.kundera.so REACT_APP_COOKIE_DOMAIN=preflight.kundera.so react-scripts build && aws s3 sync ./build s3://kundera-dev && aws cloudfront create-invalidation --distribution-id E38H2AMMEF6CW0 --paths '/*'",
+    "deploy": "react-scripts build && aws s3 sync ./build s3://kundera-release && aws cloudfront create-invalidation --distribution-id E9DV207QFKUFR --paths '/*'"
   },
   "eslintConfig": {
     "extends": [

@@ -33,7 +33,6 @@ export const FollowerList = ({ match, history }) => {
   }, [userId]);
 
   if (!cookies.get("user-id")) {
-  
     return <Redirect to="/signup" />;
   }
 

@@ -125,7 +125,6 @@ export const logout = () => async (dispatch) => {
     url: `${process.env.REACT_APP_SERVER_URL}/logout`,
     withCredentials: true,
   });
-  console.log("localStorage set logout!");
   window.localStorage.setItem("logout", Date.now());
 
   cookies.remove("user-id", { path: "/" });
