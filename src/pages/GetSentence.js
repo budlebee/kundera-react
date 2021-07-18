@@ -18,6 +18,7 @@ export const GetSentence = () => {
   const [post, setPost] = useState(null);
   const [count, setCount] = React.useState(0);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const { myId } = useSelector((state) => {
     return {
@@ -26,16 +27,21 @@ export const GetSentence = () => {
   });
 
   const readPosts = useCallback(async () => {
-    const res = await axios({
-      method: "post",
-      url: `${process.env.REACT_APP_SERVER_URL}/get-sentence`,
-      withCredentials: true,
-      data: { userId: `${myId}` },
-    });
+    try {
+      const res = await axios({
+        method: "post",
+        url: `${process.env.REACT_APP_SERVER_URL}/get-sentence`,
+        withCredentials: true,
+        data: { userId: `${myId}` },
+      });
 
-    setPostList(res.data.result);
-    setPost(res.data.result[0]);
-    setLoading(false);
+      setPostList(res.data.result);
+      setPost(res.data.result[0]);
+      setLoading(false);
+    } catch (e) {
+      console.log("error: ", e);
+      setError(true);
+    }
   }, [myId]);
 
   useEffect(() => {
@@ -49,6 +55,10 @@ export const GetSentence = () => {
   const cookies = new Cookies();
   if (!cookies.get("user-id")) {
     return <Redirect to="/guest" />;
+  }
+  if (error) {
+    setError(false);
+    return <Redirect to="/signup" />;
   }
 
   if (loading) {

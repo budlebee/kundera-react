@@ -57,7 +57,7 @@ export const UserFeed = ({ match }) => {
             data: { userId: `${userId}`, myId: `${myId}` },
             withCredentials: true,
           });
-          
+
           //setLoading(false);
           setIsGuru(res.data.isGuru);
           setPostList(res.data.result);
