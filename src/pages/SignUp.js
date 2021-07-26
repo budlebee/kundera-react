@@ -31,6 +31,9 @@ export const SignUp = () => {
   const [emailVerificationButtonDisable, setEmailVerificationButtonDisable] =
     useState(false);
 
+  const emailRegex = new RegExp("^[^ ]+@[^ ]+.[a-z]{2,63}$");
+  const pwdRegex = new RegExp("^[a-zA-Z0-9]+$");
+
   const cookies = new Cookies();
   if (cookies.get("user-id")) {
     return <Redirect to="/" />;
@@ -55,6 +58,9 @@ export const SignUp = () => {
         <FormInput
           placeholder="로그인용 email"
           type="email"
+          minLength="1"
+          maxLength="320"
+          pattern="^[^ ]+@[^ ]+\.[a-z]{2,63}$"
           value={email}
           required
           onChange={(e) => {
@@ -127,9 +133,11 @@ export const SignUp = () => {
             !(
               !loading &&
               nickname.length > 0 &&
-              email.length > 0 &&
+              email.length > 3 &&
               pwd.length > 7 &&
-              pwd == pwdCheck
+              pwd == pwdCheck &&
+              emailRegex.test(email) &&
+              pwdRegex.test(pwd)
             )
           }
           onClick={() => {
