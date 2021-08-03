@@ -62,6 +62,8 @@ export const GurusFeed = () => {
               nickname={ele.nickname}
               userId={ele.created_by}
               timestamp={ele.timestamp}
+              wasLove={ele.wasLove}
+              postId={ele.post_id}
             ></SentenceCard>
           </div>
         );

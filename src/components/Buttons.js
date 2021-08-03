@@ -14,6 +14,9 @@ export const DefaultButton = styled.button`
   cursor: pointer;
   border: none;
   border-radius: 5px;
+  &:disabled {
+    background-color: #555555;
+  }
 `;
 
 export const BackButton = ({ onClick }) => {

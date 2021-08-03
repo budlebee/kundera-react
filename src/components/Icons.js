@@ -1,3 +1,47 @@
+import { colors } from "../lib/style";
+
+export const ThreeDots = ({ width, height }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-6 w-6"
+      fill="#999999"
+      viewBox="0 0 24 24"
+      stroke="#999999"
+      width={width || "44"}
+      height={height || "44"}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
+      />
+    </svg>
+  );
+};
+
+export const CommentIcon = ({ width, height }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-6 w-6"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      width={width || "44"}
+      height={height || "44"}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+      />
+    </svg>
+  );
+};
+
 export const UserIcon = ({ width, height }) => {
   return (
     <svg
@@ -88,19 +132,40 @@ export const BookmarkIcon = ({ width, height }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className="icon icon-tabler icon-tabler-bookmarks"
+      className="h-6 w-6"
       width={width || "44"}
       height={height || "44"}
-      viewBox="0 0 24 24"
-      strokeWidth="1.5"
-      stroke="#2c3e50"
       fill="none"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
     >
-      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-      <path d="M13 7a2 2 0 0 1 2 2v12l-5 -3l-5 3v-12a2 2 0 0 1 2 -2h6z" />
-      <path d="M9.265 4a2 2 0 0 1 1.735 -1h6a2 2 0 0 1 2 2v12l-1 -.6" />
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
+      />
+    </svg>
+  );
+};
+
+export const BookmarkFilledIcon = ({ width, height }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-6 w-6"
+      width={width || "44"}
+      height={height || "44"}
+      fill={colors.softViolet}
+      viewBox="0 0 24 24"
+      stroke={colors.softViolet}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
+      />
     </svg>
   );
 };

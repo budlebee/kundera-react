@@ -92,7 +92,14 @@ export const Guest = () => {
           </div>
           <HorizontalLine />
           <div>
-            {post ? <SentenceCard content={post.content}></SentenceCard> : ""}
+            {post ? (
+              <SentenceCard
+                content={post.content}
+                postId={post.post_id}
+              ></SentenceCard>
+            ) : (
+              ""
+            )}
           </div>
           <div>
             <DefaultButton

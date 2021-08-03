@@ -6,6 +6,7 @@ import { Notis } from "./pages/Notis";
 import { UserFeed } from "./pages/UserFeed";
 import { FollowerList } from "./pages/FollowerList";
 import { GuruList } from "./pages/GuruList";
+import { Support } from "./pages/Support";
 
 import { Login } from "./pages/Login";
 import { SignUp } from "./pages/SignUp";
@@ -68,6 +69,7 @@ function App() {
             <Route path="/signup" exact={true} component={SignUp} />
             <Route path="/login" exact={true} component={Login} />
             <Route path="/guest" exact={true} component={Guest} />
+            <Route path="/support" exact={true} component={Support} />
             <Route path="*" component={Error} />
           </Switch>
         </main>
