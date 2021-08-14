@@ -37,7 +37,7 @@ export const Footer = () => {
         width: "100%",
         position: "fixed",
         bottom: "0",
-        backgroundColor: colors.background,
+        backgroundColor: "#fff",
         width: "100%",
         display: "grid",
         placeItems: "center",
@@ -98,7 +98,7 @@ export const Footer = () => {
               <BookmarkIcon height="20" width="20" />
             </Link>
           </div>
-          <div>책갈피</div>
+          <div>마이페이지</div>
         </FooterElement>
       </div>
     </footer>

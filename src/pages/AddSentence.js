@@ -5,7 +5,7 @@ import { testId } from "../lib/test";
 import { useSelector, useDispatch } from "react-redux";
 import Cookies from "universal-cookie";
 import { Redirect } from "react-router";
-import { boxShadow, colors } from "../lib/style";
+import { borderRadius, boxShadow, colors } from "../lib/style";
 
 import { DefaultButton, FormButton } from "../components/Buttons";
 
@@ -50,6 +50,7 @@ export const AddSentence = () => {
               //border: `1px solid ${colors.border}`,
               //boxShadow: boxShadow.default,
               border: "none",
+              borderRadius: borderRadius.default,
               fontFamily: `-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif`,

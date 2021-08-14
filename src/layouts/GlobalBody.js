@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { boxShadow } from "../lib/style";
+import { boxShadow, colors } from "../lib/style";
 
 export const GlobalBody = ({ children }) => {
   return (
@@ -8,7 +8,7 @@ export const GlobalBody = ({ children }) => {
         style={{
           display: "grid",
           placeItems: "center",
-          backgroundColor: "#fff",
+          backgroundColor: colors.background,
           //boxShadow: boxShadow.default,
           //paddingLeft: "15px",
           //paddingRight: "15px",

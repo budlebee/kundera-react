@@ -7,6 +7,7 @@ import { CheckNoti } from "../redux/user";
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router";
 import { NotiBlock } from "../components/NotiBlock";
+import { borderRadius } from "../lib/style";
 
 export const Notis = ({ match }) => {
   const { userId } = match.params;
@@ -48,7 +49,9 @@ export const Notis = ({ match }) => {
   }
 
   return (
-    <>
+    <div
+      style={{ backgroundColor: "#fff", borderRadius: borderRadius.default }}
+    >
       {notiList.length < 1 ? (
         <div style={{ display: "grid", placeItems: "center" }}>
           지금은 알림이 없어요
@@ -69,7 +72,7 @@ export const Notis = ({ match }) => {
           </div>
         );
       })}
-    </>
+    </div>
   );
   // 여기선 남의 noti 보면 안되니까, myId 변수랑 param 값이 일치하는지 체크하고 다르면 홈화면으로 리다이렉션
 };

@@ -1,11 +1,19 @@
 import { Link } from "react-router-dom";
-import { boxShadow, colors } from "../lib/style";
+import {
+  borderRadius,
+  boxShadow,
+  colors,
+  fontWeight,
+  padding,
+} from "../lib/style";
 import { timeForToday } from "../lib/functions";
 import {
   BookmarkIcon,
   BookmarkFilledIcon,
   CommentIcon,
   ThreeDots,
+  HeartFilledIcon,
+  HeartEmptyIcon,
 } from "./Icons";
 import { DefaultButton } from "./Buttons";
 import { useEffect, useState } from "react";
@@ -17,6 +25,8 @@ import { nativeTouchData } from "react-dom/cjs/react-dom-test-utils.production.m
 
 export const SentenceCard = ({
   children,
+  keeperNickname,
+  keeperId,
   nickname,
   content,
   userId,
@@ -40,6 +50,8 @@ export const SentenceCard = ({
     };
   });
 
+  const noCommentDefault = "지금은 코멘트가 없어요 :)";
+
   useEffect(() => {
     setOnComment(false);
   }, [postId]);
@@ -47,126 +59,174 @@ export const SentenceCard = ({
   return (
     <div
       style={{
-        padding: "20px",
-        paddingTop: "30px",
-        paddingBottom: "30px",
+        //padding: "10px",
+        paddingLeft: padding.default,
+        paddingRight: padding.default,
+        paddingTop: padding.default,
+        paddingBottom: padding.default,
+        //paddingTop: "30px",
+        //paddingBottom: "30px",
         marginTop: "15px",
         marginBottom: "15px",
-        borderRadius: "2px",
-        //border: `1px solid ${colors.border}`,
+        borderRadius: borderRadius.default,
+        border: `1px solid ${colors.border}`,
         backgroundColor: "#ffffff",
         //boxShadow: boxShadow.default,
       }}
     >
+      {keeperId ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginTop: "7px",
+            marginBottom: "7px",
+          }}
+        >
+          <div>
+            <Link
+              style={{
+                color: "#000000",
+                fontWeight: fontWeight.semiBold,
+                color: colors.softViolet,
+              }}
+              to={`/user-feed/${keeperId}`}
+            >
+              {keeperNickname}
+            </Link>
+          </div>
+          <div>
+            {""}
+            {/* <ThreeDots height="22" width="22" />*/}
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       <div
         style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginTop: "7px",
-          marginBottom: "7px",
+          border: `1px solid ${colors.border}`,
+          borderRadius: borderRadius.default,
+          paddingLeft: padding.default,
+          paddingRight: padding.default,
+          paddingTop: padding.default,
+          paddingBottom: padding.default,
         }}
       >
-        <div>
-          <Link
+        <div style={{ lineHeight: "1.5", fontSize: "16px" }}>{content}</div>
+        {userId && userId != keeperId ? (
+          <div
             style={{
-              color: "#000000",
-              fontWeight: "700",
-              color: colors.softViolet,
+              display: "flex",
+              justifyContent: "space-between",
+              marginTop: "7px",
+              marginBottom: "7px",
             }}
-            to={`/user-feed/${userId}`}
           >
-            {nickname}
-          </Link>
-        </div>
-        <div>
-          {""}
-          {/* <ThreeDots height="22" width="22" />*/}
-        </div>
-      </div>
-      <div style={{ lineHeight: "1.5", fontSize: "16px" }}>{content}</div>
+            <div>
+              {""}
+              {/* <ThreeDots height="22" width="22" />*/}
+            </div>
+            <div>
+              <Link
+                style={{
+                  color: "#000000",
+                  fontWeight: "700",
+                  color: colors.softViolet,
+                }}
+                to={`/user-feed/${userId}`}
+              >
+                {nickname}
+              </Link>
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginTop: "7px",
-        }}
-      >
-        {postId != null ? (
-          <DefaultButton
-            onClick={async () => {
-              if (!onComment) {
-                setLoading(true);
-                const res = await axios({
-                  method: "post",
-                  url: `${process.env.REACT_APP_SERVER_URL}/get-comments`,
-                  data: {
-                    postId: postId,
-                  },
-                  withCredentials: true,
-                });
-                if (res.data.result.length == 0) {
-                  setCommentList([
-                    { nickname: "", content: "지금은 코멘트가 없어요 :)" },
-                  ]);
-                } else {
-                  setCommentList(res.data.result);
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginTop: "7px",
+          }}
+        >
+          {postId != null ? (
+            <DefaultButton
+              onClick={async () => {
+                if (!onComment) {
+                  setLoading(true);
+                  const res = await axios({
+                    method: "post",
+                    url: `${process.env.REACT_APP_SERVER_URL}/get-comments`,
+                    data: {
+                      postId: postId,
+                    },
+                    withCredentials: true,
+                  });
+                  if (res.data.result.length == 0) {
+                    setCommentList([
+                      { nickname: "", content: noCommentDefault },
+                    ]);
+                  } else {
+                    setCommentList(res.data.result);
+                  }
+
+                  setLoading(false);
                 }
+                setOnComment(!onComment);
+              }}
+            >
+              <CommentIcon width="22" height="22" />
+            </DefaultButton>
+          ) : (
+            ""
+          )}
 
-                setLoading(false);
-              }
-              setOnComment(!onComment);
-            }}
-          >
-            <CommentIcon width="22" height="22" />
-          </DefaultButton>
-        ) : (
-          ""
-        )}
-
-        {wasLove != null && myId != userId ? (
-          <DefaultButton
-            onClick={async () => {
-              if (loved) {
-                const res = await axios({
-                  method: "post",
-                  url: `${process.env.REACT_APP_SERVER_URL}/delete-love`,
-                  withCredentials: true,
-                  data: {
-                    userId: `${myId}`,
-                    postId: postId,
-                    createdBy: userId,
-                  },
-                });
-              } else {
-                const res = await axios({
-                  method: "post",
-                  url: `${process.env.REACT_APP_SERVER_URL}/love-sentence`,
-                  withCredentials: true,
-                  data: {
-                    userId: `${myId}`,
-                    postId: postId,
-                    createdBy: userId,
-                  },
-                });
-              }
-              // axios 로 통신 보내고, ok 면 그렇게 한다.
-              setLoved(!loved);
-            }}
-          >
-            {loved ? (
-              <BookmarkFilledIcon width="22" height="22" />
-            ) : (
-              <BookmarkIcon width="22" height="22" />
-            )}
-          </DefaultButton>
-        ) : (
-          ""
-        )}
-      </div>
-      {/* 초창기에는 ~일전, ~시간전 이런 문구 추가하지 말자. 간격이 너무 길면 유령사이트 같아보여.
+          {wasLove != null && myId != userId ? (
+            <DefaultButton
+              onClick={async () => {
+                if (loved) {
+                  const res = await axios({
+                    method: "post",
+                    url: `${process.env.REACT_APP_SERVER_URL}/delete-love`,
+                    withCredentials: true,
+                    data: {
+                      userId: `${myId}`,
+                      postId: postId,
+                      createdBy: userId,
+                    },
+                  });
+                } else {
+                  const res = await axios({
+                    method: "post",
+                    url: `${process.env.REACT_APP_SERVER_URL}/love-sentence`,
+                    withCredentials: true,
+                    data: {
+                      userId: `${myId}`,
+                      postId: postId,
+                      createdBy: userId,
+                    },
+                  });
+                }
+                // axios 로 통신 보내고, ok 면 그렇게 한다.
+                setLoved(!loved);
+              }}
+            >
+              {loved ? (
+                <HeartFilledIcon width="22" height="22" />
+              ) : (
+                <HeartEmptyIcon width="22" height="22" />
+              )}
+            </DefaultButton>
+          ) : (
+            ""
+          )}
+        </div>
+        {/* 초창기에는 ~일전, ~시간전 이런 문구 추가하지 말자. 간격이 너무 길면 유령사이트 같아보여.
       <div>{timeForToday(timestamp)}</div>
       */}
+      </div>
       {onComment ? (
         <div>
           <div>
@@ -225,7 +285,14 @@ export const SentenceCard = ({
                     });
 
                     setCommentList([
-                      ...commentList,
+                      ...commentList.filter((ele) => {
+                        if (
+                          ele.content != noCommentDefault &&
+                          ele.nickname != ""
+                        ) {
+                          return;
+                        }
+                      }),
                       { content: comment, nickname: myNickname },
                     ]);
                     setComment("");
@@ -244,7 +311,6 @@ export const SentenceCard = ({
       ) : (
         ""
       )}
-      <HorizontalLine />
     </div>
   );
 };

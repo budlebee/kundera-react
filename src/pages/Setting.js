@@ -6,6 +6,7 @@ import axios from "axios";
 import { Redirect, Link } from "react-router-dom";
 import { logout, changeProfile, changeNickname } from "../redux/user";
 
+import AppStoreWhite from "../assets/AppStoreWhite.svg";
 import { ListWrapper } from "../components/ListWrapper";
 import { FormInput } from "../components/Inputs";
 import { DefaultButton, FormButton } from "../components/Buttons";
@@ -40,6 +41,18 @@ export const Setting = () => {
           width: "100%",
         }}
       >
+        <div
+          style={{
+            width: "100%",
+            display: "grid",
+            placeItems: "center",
+            padding: "20px",
+          }}
+        >
+          <a href="https://apps.apple.com/kr/app/%EC%BF%A4%EB%8D%B0%EB%9D%BC/id1579221671">
+            <img src={AppStoreWhite} />
+          </a>
+        </div>
         <div style={{ width: "100%" }}>
           <FormButton
             style={{

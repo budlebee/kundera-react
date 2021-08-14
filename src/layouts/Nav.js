@@ -16,7 +16,7 @@ export const Nav = () => {
         //position: "fixed",
         //WebkitPosition: "static",
         //top: "0px",
-        backgroundColor: colors.background,
+        backgroundColor: colors.white,
         borderBottom: `1px solid ${colors.border}`,
         width: "100%",
 

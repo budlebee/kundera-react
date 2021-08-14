@@ -30,7 +30,7 @@ export const GurusFeed = () => {
           data: { myId: `${myId}` },
           withCredentials: true,
         });
-
+        console.log(res.data);
         setPostList(res.data.result);
         //setPost(res.data.result[0]);
         setLoading(false);
@@ -59,6 +59,8 @@ export const GurusFeed = () => {
           <div key={idx}>
             <SentenceCard
               content={ele.content}
+              keeperId={ele.keeper_id}
+              keeperNickname={ele.keeper_nickname}
               nickname={ele.nickname}
               userId={ele.created_by}
               timestamp={ele.timestamp}

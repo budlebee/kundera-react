@@ -83,7 +83,10 @@ export const UserFeed = ({ match }) => {
   }
   return (
     <>
-      <div className="profile-block" style={{ padding: "15px" }}>
+      <div
+        className="profile-block"
+        style={{ backgroundColor: "#fff", padding: "15px" }}
+      >
         <div
           className="profile-buttons"
           style={{

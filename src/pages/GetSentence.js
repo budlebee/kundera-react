@@ -102,7 +102,7 @@ export const GetSentence = () => {
                   withCredentials: true,
                   data: {
                     userId: `${myId}`,
-                    postId: `${post.id}`,
+                    postId: `${post.post_id}`,
                     createdBy: post.created_by,
                   },
                 });
@@ -133,7 +133,7 @@ export const GetSentence = () => {
                   method: "post",
                   url: `${process.env.REACT_APP_SERVER_URL}/hate-sentence`,
                   withCredentials: true,
-                  data: { userId: `${myId}`, postId: `${post.id}` },
+                  data: { userId: `${myId}`, postId: `${post.post_id}` },
                 });
                 if (count === postList.length - 1) {
                   readPosts();
