@@ -55,6 +55,13 @@ export const SignUp = () => {
             setNickname(e.target.value);
           }}
         />
+        {nickname.length > 29 ? (
+          <div style={{ color: colors.softRed }}>
+            {`너무 긴 닉네임은 지원하지 않고 있습니다 ;(`}
+          </div>
+        ) : (
+          ""
+        )}
         <FormInput
           placeholder="로그인용 email"
           type="email"
@@ -67,6 +74,13 @@ export const SignUp = () => {
             setEmail(e.target.value);
           }}
         />
+        {!emailRegex.test(email) && email.length > 2 ? (
+          <div style={{ color: colors.softRed }}>
+            이메일 형식이 올바르지 않아요.
+          </div>
+        ) : (
+          ""
+        )}
 
         <FormInput
           placeholder="비밀번호. 8~30자, 영어+숫자"
@@ -81,6 +95,13 @@ export const SignUp = () => {
             setPwd(e.target.value);
           }}
         />
+        {pwd.length < 8 && pwd.length > 1 ? (
+          <div style={{ color: colors.softRed }}>
+            비밀번호는 영문+숫자를 포함해 8자 이상이어야 해요
+          </div>
+        ) : (
+          ""
+        )}
         <FormInput
           placeholder="비밀번호 확인"
           type="password"
@@ -93,6 +114,11 @@ export const SignUp = () => {
             setPwdCheck(e.target.value);
           }}
         />
+        {pwdCheck.length > 1 && pwd != pwdCheck ? (
+          <div style={{ color: colors.softRed }}>비밀번호가 달라요</div>
+        ) : (
+          ""
+        )}
         {/*
         <FormButton
           onClick={async () => {

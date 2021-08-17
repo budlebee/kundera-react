@@ -226,91 +226,91 @@ export const SentenceCard = ({
         {/* 초창기에는 ~일전, ~시간전 이런 문구 추가하지 말자. 간격이 너무 길면 유령사이트 같아보여.
       <div>{timeForToday(timestamp)}</div>
       */}
-      </div>
-      {onComment ? (
-        <div>
+        {onComment ? (
           <div>
-            {commentList.map((ele) => {
-              return (
-                <div
-                  style={{
-                    fontSize: "14px",
-                    paddingTop: "5px",
-                    paddingBottom: "5px",
-                  }}
-                >
-                  <span style={{ fontWeight: "700", padding: "5px" }}>
-                    <Link
-                      style={{
-                        color: "#000000",
-                        fontWeight: "700",
-                        color: colors.softViolet,
-                      }}
-                      to={`/user-feed/${ele.created_by}`}
-                    >
-                      {ele.nickname}
-                    </Link>
-                  </span>
-                  <span style={{ padding: "5px" }}>{ele.content}</span>
+            <div>
+              {commentList.map((ele) => {
+                return (
+                  <div
+                    style={{
+                      fontSize: "14px",
+                      paddingTop: "5px",
+                      paddingBottom: "5px",
+                    }}
+                  >
+                    <span style={{ fontWeight: "700", padding: "5px" }}>
+                      <Link
+                        style={{
+                          color: "#000000",
+                          fontWeight: "700",
+                          color: colors.softViolet,
+                        }}
+                        to={`/user-feed/${ele.created_by}`}
+                      >
+                        {ele.nickname}
+                      </Link>
+                    </span>
+                    <span style={{ padding: "5px" }}>{ele.content}</span>
+                  </div>
+                );
+              })}
+            </div>
+            {myId != null ? (
+              <>
+                <div>
+                  <StyledTextArea
+                    value={comment}
+                    onChange={(e) => {
+                      setComment(e.target.value);
+                    }}
+                    placeholder="댓글"
+                    style={{ width: "100%", backgroundColor: "#fafafa" }}
+                  />
                 </div>
-              );
-            })}
+                <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                  <DefaultButton
+                    disabled={loading}
+                    onClick={async () => {
+                      setLoading(true);
+                      const res = await axios({
+                        method: "post",
+                        url: `${process.env.REACT_APP_SERVER_URL}/add-comment`,
+                        data: {
+                          content: comment,
+                          userId: `${myId}`,
+                          postId: postId,
+                        },
+                        withCredentials: true,
+                      });
+
+                      setCommentList([
+                        ...commentList.filter((ele) => {
+                          if (
+                            ele.content != noCommentDefault &&
+                            ele.nickname != ""
+                          ) {
+                            return;
+                          }
+                        }),
+                        { content: comment, nickname: myNickname },
+                      ]);
+                      setComment("");
+
+                      setLoading(false);
+                    }}
+                  >
+                    댓글달기
+                  </DefaultButton>
+                </div>
+              </>
+            ) : (
+              ""
+            )}
           </div>
-          {myId != null ? (
-            <>
-              <div>
-                <StyledTextArea
-                  value={comment}
-                  onChange={(e) => {
-                    setComment(e.target.value);
-                  }}
-                  placeholder="댓글"
-                  style={{ width: "100%", backgroundColor: "#fafafa" }}
-                />
-              </div>
-              <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <DefaultButton
-                  disabled={loading}
-                  onClick={async () => {
-                    setLoading(true);
-                    const res = await axios({
-                      method: "post",
-                      url: `${process.env.REACT_APP_SERVER_URL}/add-comment`,
-                      data: {
-                        content: comment,
-                        userId: `${myId}`,
-                        postId: postId,
-                      },
-                      withCredentials: true,
-                    });
-
-                    setCommentList([
-                      ...commentList.filter((ele) => {
-                        if (
-                          ele.content != noCommentDefault &&
-                          ele.nickname != ""
-                        ) {
-                          return;
-                        }
-                      }),
-                      { content: comment, nickname: myNickname },
-                    ]);
-                    setComment("");
-
-                    setLoading(false);
-                  }}
-                >
-                  댓글달기
-                </DefaultButton>
-              </div>
-            </>
-          ) : (
-            ""
-          )}
-        </div>
-      ) : (
-        ""
-      )}
+        ) : (
+          ""
+        )}
+      </div>
     </div>
   );
 };

@@ -6,6 +6,7 @@ export const colors = {
   violet: "#6357ee",
   softViolet: "#8787f9", //"#7367F9",
   softVioletActive: "#9998ff",
+  softRed: "#ff5555",
 };
 
 export const borderRadius = {
