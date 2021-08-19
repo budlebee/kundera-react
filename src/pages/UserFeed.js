@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { SettingIcon } from "../components/Icons";
 import { Redirect } from "react-router";
-import { DefaultButton } from "../components/Buttons";
+import { BorderButton, DefaultButton } from "../components/Buttons";
 import { HorizontalLine } from "../components/Lines";
 import { SentenceCard } from "../components/SentenceCard";
 import { testGuruId, testMyId } from "../lib/test";
@@ -167,6 +167,22 @@ export const UserFeed = ({ match }) => {
           </div>
         </div>
         <div style={{ fontStyle: "italic" }}>{userProfile}</div>
+        {myId == userId ? (
+          <div style={{ display: "flex", paddingTop: "5px" }}>
+            <span style={{ width: "100%", textAlign: "center" }}>
+              <BorderButton style={{ width: "100%", textAlign: "center" }}>
+                <Link to={`/setting`}> 프로필 변경</Link>
+              </BorderButton>
+            </span>
+            <span style={{ width: "100%", textAlign: "center" }}>
+              <BorderButton style={{ width: "100%", textAlign: "center" }}>
+                <Link to={`/my-comments/${myId}`}>내가 쓴 댓글</Link>
+              </BorderButton>
+            </span>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
 
       <HorizontalLine />

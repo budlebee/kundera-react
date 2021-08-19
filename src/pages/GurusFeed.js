@@ -3,6 +3,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import Cookies from "universal-cookie";
 
+import { Link } from "react-router-dom";
 import { Redirect } from "react-router";
 import { HorizontalLine } from "../components/Lines";
 import { SentenceCard } from "../components/SentenceCard";

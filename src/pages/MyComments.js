@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import { CheckNoti } from "../redux/user";
+import { timeForToday } from "../lib/functions";
 
+import { Link } from "react-router-dom";
 import { Redirect } from "react-router";
 import { NotiBlock } from "../components/NotiBlock";
 import { borderRadius } from "../lib/style";
 
-export const Notis = ({ match }) => {
+export const MyComments = ({ match }) => {
   const { userId } = match.params;
   const { error, myId } = useSelector((state) => {
     return {
@@ -16,30 +18,31 @@ export const Notis = ({ match }) => {
       myId: state.user.myId,
     };
   });
-  const [notiList, setNotiList] = useState([]);
-
+  const [commentList, setCommentList] = useState([]);
+  const [loading, setLoading] = useState(false);
   const cookies = new Cookies();
 
   useEffect(() => {
-    window.localStorage.removeItem("has-noti");
-    CheckNoti();
+    console.log(userId);
     if (cookies.get("user-id") == userId) {
-      const readNotis = async () => {
+      const getMyComments = async () => {
         try {
-          //setLoading(true);
+          setLoading(true);
           const res = await axios({
             method: "post",
-            url: `${process.env.REACT_APP_SERVER_URL}/get-notis`,
+            url: `${process.env.REACT_APP_SERVER_URL}/get-my-comments`,
             data: { myId: `${userId}` },
             withCredentials: true,
           });
 
-          setNotiList(res.data.result);
+          setCommentList(res.data.result);
+          console.log(res.data.result);
         } catch (e) {
           console.log("error: ", e);
         }
       };
-      readNotis();
+      setLoading(false);
+      getMyComments();
     }
   }, [userId]);
 
@@ -51,24 +54,26 @@ export const Notis = ({ match }) => {
     <div
       style={{ backgroundColor: "#fff", borderRadius: borderRadius.default }}
     >
-      {notiList.length < 1 ? (
-        <div style={{ display: "grid", placeItems: "center" }}>
-          지금은 알림이 없어요
+      {commentList.length < 1 && !loading ? (
+        <div style={{ padding: "20px", display: "grid", placeItems: "center" }}>
+          지금은 비어있어요.
         </div>
       ) : (
         ""
       )}
-      {notiList.map((ele, idx) => {
+      {commentList.map((ele, idx) => {
         return (
-          <div key={idx}>
-            <NotiBlock
-              senderId={ele.sender_id}
-              nickname={ele.nickname}
-              message={ele.message}
-              createdAt={ele.created_at}
-              notiType={ele.type}
-              postId={ele.post_id}
-            />
+          <div key={idx} style={{ padding: "10px" }}>
+            <Link to={`/post/${ele.post_id}`}>
+              <div>
+                {ele.content.length > 200
+                  ? `${ele.content.slice(0, 200)}...`
+                  : ele.content}
+              </div>
+              <div style={{ width: "100%", textAlign: "end" }}>
+                {timeForToday(ele.created_at)}
+              </div>
+            </Link>
           </div>
         );
       })}

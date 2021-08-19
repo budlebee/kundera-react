@@ -22,6 +22,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { FormInput, StyledTextArea } from "./Inputs";
 import { nativeTouchData } from "react-dom/cjs/react-dom-test-utils.production.min";
+import Swal from "sweetalert2";
 
 export const SentenceCard = ({
   children,
@@ -33,11 +34,14 @@ export const SentenceCard = ({
   timestamp,
   wasLove,
   postId,
+  commentUnfold,
+  comments,
 }) => {
   const [loved, setLoved] = useState(wasLove);
   const [comment, setComment] = useState("");
-  const [onComment, setOnComment] = useState(false);
+  const [onComment, setOnComment] = useState(commentUnfold);
   const [loading, setLoading] = useState(false);
+  const [commentLoading, setCommentLoading] = useState(false);
   const [commentList, setCommentList] = useState([]);
   const { myId } = useSelector((state) => {
     return {
@@ -51,10 +55,39 @@ export const SentenceCard = ({
   });
 
   const noCommentDefault = "지금은 코멘트가 없어요 :)";
+  useEffect(() => {
+    if (typeof comments != "undefined") {
+      if (comments.length > 0) {
+        setCommentList(comments);
+      }
+    }
+  }, [commentList]);
 
   useEffect(() => {
-    setOnComment(false);
-  }, [postId]);
+    if (!commentUnfold) {
+      setOnComment(false);
+    } else {
+      const getComments = async () => {
+        try {
+          setCommentLoading(true);
+          const res = await axios({
+            method: "post",
+            url: `${process.env.REACT_APP_SERVER_URL}/get-comments`,
+            data: { postId: `${postId}` },
+            withCredentials: true,
+          });
+
+          setCommentList(res.data.result);
+        } catch (e) {
+          Swal.fire(e.response.data.message);
+          //setError(true);
+          console.log("error: ", e.response.data.message);
+        }
+        setCommentLoading(false);
+      };
+      getComments();
+    }
+  }, [postId, commentUnfold]);
 
   return (
     <div
@@ -279,6 +312,7 @@ export const SentenceCard = ({
                           content: comment,
                           userId: `${myId}`,
                           postId: postId,
+                          createdBy: userId,
                         },
                         withCredentials: true,
                       });
@@ -289,7 +323,7 @@ export const SentenceCard = ({
                             ele.content != noCommentDefault &&
                             ele.nickname != ""
                           ) {
-                            return;
+                            return true;
                           }
                         }),
                         { content: comment, nickname: myNickname },

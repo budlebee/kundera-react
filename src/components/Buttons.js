@@ -19,6 +19,23 @@ export const DefaultButton = styled.button`
   }
 `;
 
+export const BorderButton = styled.button`
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px;
+  margin: 10px;
+  background-color: #ffffff;
+  //box-shadow: ${boxShadow.default};
+  color: #333;
+  border: 1px solid ${colors.border};
+  cursor: pointer;
+  //border: none;
+  border-radius: 5px;
+  &:disabled {
+    background-color: #555555;
+  }
+`;
+
 export const BackButton = ({ onClick }) => {
   return (
     <button

@@ -7,6 +7,8 @@ import { UserFeed } from "./pages/UserFeed";
 import { FollowerList } from "./pages/FollowerList";
 import { GuruList } from "./pages/GuruList";
 import { Support } from "./pages/Support";
+import { Post } from "./pages/Post";
+import { MyComments } from "./pages/MyComments";
 
 import { Login } from "./pages/Login";
 import { SignUp } from "./pages/SignUp";
@@ -60,6 +62,8 @@ function App() {
           <Switch>
             <Route path="/" exact={true} component={GetSentence} />
             <Route path="/add" exact={true} component={AddSentence} />
+            <Route path="/post/:postId" component={Post} />
+            <Route path="/my-comments/:userId" component={MyComments} />
             <Route path="/gurus-feed" component={GurusFeed} />
             <Route path="/user-feed/:userId" component={UserFeed} />
             <Route path="/followers/:userId" component={FollowerList} />
