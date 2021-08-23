@@ -4,7 +4,7 @@ import { testSentences, testId } from "../lib/test";
 import Cookies from "universal-cookie";
 
 import { DefaultButton } from "../components/Buttons";
-import { RedFireIcon, ArrowRight } from "../components/Icons";
+import { RedFireIcon, ArrowRight, HeartFilledIcon } from "../components/Icons";
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router";
 import axios from "axios";
@@ -148,7 +148,7 @@ export const GetSentence = () => {
               }}
             >
               <div>
-                <RedFireIcon height="30" width="30" />
+                <HeartFilledIcon height="30" width="30" />
               </div>
               <div>간직하기</div>
             </DefaultButton>

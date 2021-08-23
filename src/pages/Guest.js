@@ -16,7 +16,7 @@ import { saveLoveIdForGuest } from "../redux/user";
 import { SentenceCard } from "../components/SentenceCard";
 import Swal from "sweetalert2";
 import { DefaultButton } from "../components/Buttons";
-import { RedFireIcon, ArrowRight } from "../components/Icons";
+import { RedFireIcon, ArrowRight, HeartFilledIcon } from "../components/Icons";
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router";
 import axios from "axios";
@@ -104,6 +104,28 @@ export const Guest = () => {
           <div>
             <DefaultButton
               onClick={async () => {
+                // 무덤덤 애들도 보관을 하고 반영을 할까? 고민되네.
+                // 처음엔 문장갯수도 그리 많지 않을테니 그냥 두자.
+                if (count === postList.length - 1) {
+                  readPosts();
+                  setCount(0);
+                  //setPostList([]);
+                  //alert("문장이 바닥났어요");
+                  return;
+                } else {
+                  setPost(postList[count + 1]);
+                  setCount(count + 1);
+                }
+              }}
+            >
+              <div>
+                <ArrowRight height="30" width="30" />
+              </div>
+              <div>넘어가기</div>
+            </DefaultButton>
+
+            <DefaultButton
+              onClick={async () => {
                 // 여기서 임시 좋아요들을 보관하고 리덕스 메모리에 보관하고 있다가,
                 // 사용자가 회원가입을 한다면 임시 저장소들을 전부 love-sentence 로 보내버리자.
                 // 딱 하나만 보관하기 눌러도 회원가입 강제할 거니까 기존 api 활용할 수 있어.
@@ -130,30 +152,9 @@ export const Guest = () => {
               }}
             >
               <div>
-                <RedFireIcon height="30" width="30" />
+                <HeartFilledIcon height="30" width="30" />
               </div>
               <div>보관하기</div>
-            </DefaultButton>
-            <DefaultButton
-              onClick={async () => {
-                // 무덤덤 애들도 보관을 하고 반영을 할까? 고민되네.
-                // 처음엔 문장갯수도 그리 많지 않을테니 그냥 두자.
-                if (count === postList.length - 1) {
-                  readPosts();
-                  setCount(0);
-                  //setPostList([]);
-                  //alert("문장이 바닥났어요");
-                  return;
-                } else {
-                  setPost(postList[count + 1]);
-                  setCount(count + 1);
-                }
-              }}
-            >
-              <div>
-                <ArrowRight height="30" width="30" />
-              </div>
-              <div>넘어가기</div>
             </DefaultButton>
           </div>
         </div>
