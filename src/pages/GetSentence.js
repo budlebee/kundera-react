@@ -98,6 +98,32 @@ export const GetSentence = () => {
               onClick={async () => {
                 const res = await axios({
                   method: "post",
+                  url: `${process.env.REACT_APP_SERVER_URL}/hate-sentence`,
+                  withCredentials: true,
+                  data: { userId: `${myId}`, postId: `${post.post_id}` },
+                });
+                if (count === postList.length - 1) {
+                  readPosts();
+                  setCount(0);
+                  //setPostList([]);
+                  //alert("문장이 바닥났어요");
+                  return;
+                } else {
+                  setPost(postList[count + 1]);
+                  setCount(count + 1);
+                }
+              }}
+            >
+              <div>
+                <ArrowRight height="30" width="30" />
+              </div>
+              <div>넘어가기</div>
+            </DefaultButton>
+
+            <DefaultButton
+              onClick={async () => {
+                const res = await axios({
+                  method: "post",
                   url: `${process.env.REACT_APP_SERVER_URL}/love-sentence`,
                   withCredentials: true,
                   data: {
@@ -125,32 +151,6 @@ export const GetSentence = () => {
                 <RedFireIcon height="30" width="30" />
               </div>
               <div>간직하기</div>
-            </DefaultButton>
-
-            <DefaultButton
-              onClick={async () => {
-                const res = await axios({
-                  method: "post",
-                  url: `${process.env.REACT_APP_SERVER_URL}/hate-sentence`,
-                  withCredentials: true,
-                  data: { userId: `${myId}`, postId: `${post.post_id}` },
-                });
-                if (count === postList.length - 1) {
-                  readPosts();
-                  setCount(0);
-                  //setPostList([]);
-                  //alert("문장이 바닥났어요");
-                  return;
-                } else {
-                  setPost(postList[count + 1]);
-                  setCount(count + 1);
-                }
-              }}
-            >
-              <div>
-                <ArrowRight height="30" width="30" />
-              </div>
-              <div>넘어가기</div>
             </DefaultButton>
           </div>
         </div>
