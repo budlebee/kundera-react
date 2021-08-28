@@ -5,7 +5,7 @@ import Cookies from "universal-cookie";
 import Swal from "sweetalert2";
 
 import { Link } from "react-router-dom";
-import { SettingIcon } from "../components/Icons";
+import { HeartFilledIcon, SettingIcon } from "../components/Icons";
 import { Redirect } from "react-router";
 import { BorderButton, DefaultButton } from "../components/Buttons";
 import { HorizontalLine } from "../components/Lines";
@@ -34,6 +34,7 @@ export const UserFeed = ({ match }) => {
   const [isGuru, setIsGuru] = useState(false);
   const [userNickname, setUserNickname] = useState("");
   const [userProfile, setUserProfile] = useState("");
+  const [heartCount, setHeartCount] = useState("");
   const [error, setError] = useState(false);
   const { myId } = useSelector((state) => {
     return {
@@ -60,6 +61,7 @@ export const UserFeed = ({ match }) => {
 
           //setLoading(false);
           setIsGuru(res.data.isGuru);
+          setHeartCount(res.data.heartCount);
           setPostList(res.data.result);
           setUserNickname(res.data.userNickname);
           setUserProfile(res.data.userProfile);
@@ -104,6 +106,9 @@ export const UserFeed = ({ match }) => {
               }}
             >
               {userNickname}
+              {"  "}
+              <HeartFilledIcon width="14" height="14" />
+              {heartCount}
             </span>
 
             <span>
