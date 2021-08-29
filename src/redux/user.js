@@ -83,11 +83,11 @@ export const signUp = (email, nickname, pwd, tempLove) => async (dispatch) => {
       hasNoti: res.data.hasNoti,
       loading: false,
     });
-    //Swal.fire({
-    //  icon: "success",
-    //  title: "인증 이메일이 발송됐어요!",
-    //  text: "이메일 인증을 안해도 사용할 수 있지만, 인증을 하면 매주 좋은 문장을 모아보내드려요!",
-    //});
+    Swal.fire({
+      icon: "success",
+      title: "인증 이메일이 발송됐어요!",
+      text: "이메일 인증을 안해도 사용할 수 있지만, 인증을 하면 매주 좋은 문장을 모아보내드려요!",
+    });
   } catch (e) {
     dispatch({ type: SIGNUP_FAIL, error: e, loading: false });
     Swal.fire(e.response.data.message);
