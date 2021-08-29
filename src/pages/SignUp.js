@@ -57,7 +57,7 @@ export const SignUp = () => {
         />
         {nickname.length > 29 ? (
           <div style={{ color: colors.softRed }}>
-            {`너무 긴 닉네임은 지원하지 않고 있습니다 ;(`}
+            {`너무 긴 닉네임은 지원하지 않고 있어요 ;(`}
           </div>
         ) : (
           ""

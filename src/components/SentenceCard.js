@@ -121,7 +121,7 @@ export const SentenceCard = ({
               style={{
                 color: "#000000",
                 fontWeight: fontWeight.semiBold,
-                color: colors.softViolet,
+                color: colors.violet,
               }}
               to={`/user-feed/${keeperId}`}
             >
@@ -165,7 +165,7 @@ export const SentenceCard = ({
                 style={{
                   color: "#000000",
                   fontWeight: "700",
-                  color: colors.softViolet,
+                  color: colors.violet,
                 }}
                 to={`/user-feed/${userId}`}
               >
@@ -276,7 +276,7 @@ export const SentenceCard = ({
                         style={{
                           color: "#000000",
                           fontWeight: "700",
-                          color: colors.softViolet,
+                          color: colors.violet,
                         }}
                         to={`/user-feed/${ele.created_by}`}
                       >

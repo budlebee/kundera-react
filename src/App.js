@@ -23,6 +23,8 @@ import Cookies from "universal-cookie";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { refreshToken } from "./redux/user";
+import { EmailVerification } from "./pages/EmailVerification";
+import { EmailUnsubscription } from "./pages/EmailUnsubscription";
 
 function App() {
   const dispatch = useDispatch();
@@ -69,6 +71,14 @@ function App() {
             <Route path="/followers/:userId" component={FollowerList} />
             <Route path="/gurus/:userId" component={GuruList} />
             <Route path="/noti/:userId" component={Notis} />
+            <Route
+              path="/email-verification/:key"
+              component={EmailVerification}
+            />
+            <Route
+              path="/email-unsubscription/:key"
+              component={EmailUnsubscription}
+            />
             <Route path="/setting" exact={true} component={Setting} />
             <Route path="/signup" exact={true} component={SignUp} />
             <Route path="/login" exact={true} component={Login} />

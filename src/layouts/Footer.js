@@ -94,9 +94,15 @@ export const Footer = () => {
 
         <FooterElement>
           <div>
-            <Link to={`/user-feed/${myId}`}>
-              <BookmarkIcon height="20" width="20" />
-            </Link>
+            {cookies.get("user-id") ? (
+              <Link to={`/user-feed/${myId}`}>
+                <BookmarkIcon height="20" width="20" />
+              </Link>
+            ) : (
+              <Link to={`/signup`}>
+                <BookmarkIcon height="20" width="20" />
+              </Link>
+            )}
           </div>
           <div>마이페이지</div>
         </FooterElement>

@@ -36,6 +36,7 @@ export const UserFeed = ({ match }) => {
   const [userProfile, setUserProfile] = useState("");
   const [heartCount, setHeartCount] = useState("");
   const [error, setError] = useState(false);
+  const [redirect, setRedirect] = useState(false);
   const { myId } = useSelector((state) => {
     return {
       myId: state.user.myId,
@@ -48,35 +49,38 @@ export const UserFeed = ({ match }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
-    if (cookies.get("user-id")) {
-      const readPosts = async () => {
-        try {
-          //setLoading(true);
-          const res = await axios({
-            method: "post",
-            url: `${process.env.REACT_APP_SERVER_URL}/user-feed`,
-            data: { userId: `${userId}`, myId: `${myId}` },
-            withCredentials: true,
-          });
+    //if (cookies.get("user-id")) {
+    const readPosts = async () => {
+      try {
+        //setLoading(true);
+        const res = await axios({
+          method: "post",
+          url: `${process.env.REACT_APP_SERVER_URL}/user-feed`,
+          data: { userId: `${userId}`, myId: `${myId}` },
+          withCredentials: true,
+        });
 
-          //setLoading(false);
-          setIsGuru(res.data.isGuru);
-          setHeartCount(res.data.heartCount);
-          setPostList(res.data.result);
-          setUserNickname(res.data.userNickname);
-          setUserProfile(res.data.userProfile);
-        } catch (e) {
-          Swal.fire(e.response.data.message);
-          setError(true);
-          console.log("error: ", e.response.data.message);
-        }
-      };
-      readPosts();
-    }
+        //setLoading(false);
+        setIsGuru(res.data.isGuru);
+        setHeartCount(res.data.heartCount);
+        setPostList(res.data.result);
+        setUserNickname(res.data.userNickname);
+        setUserProfile(res.data.userProfile);
+      } catch (e) {
+        Swal.fire(e.response.data.message);
+        setError(true);
+        console.log("error: ", e.response.data.message);
+      }
+    };
+    readPosts();
+    //};
   }, [userId, myId, error]);
 
   const cookies = new Cookies();
   if (!cookies.get("user-id")) {
+    //return <Redirect to="/signup" />;
+  }
+  if (redirect) {
     return <Redirect to="/signup" />;
   }
 
@@ -135,6 +139,10 @@ export const UserFeed = ({ match }) => {
                         color: "#eee",
                       }}
                       onClick={async () => {
+                        if (!cookies.get("user-id")) {
+                          setRedirect(true);
+                          return;
+                        }
                         const res = await axios({
                           method: "post",
                           url: `${process.env.REACT_APP_SERVER_URL}/follow`,

@@ -28,32 +28,32 @@ export const Post = ({ match }) => {
   });
 
   useEffect(() => {
-    if (cookies.get("user-id")) {
-      const readPosts = async () => {
-        try {
-          setLoading(true);
-          const res = await axios({
-            method: "post",
-            url: `${process.env.REACT_APP_SERVER_URL}/get-certain-post`,
-            data: { postId: `${postId}`, myId },
-            withCredentials: true,
-          });
+    //if (cookies.get("user-id")) {
+    const readPosts = async () => {
+      try {
+        setLoading(true);
+        const res = await axios({
+          method: "post",
+          url: `${process.env.REACT_APP_SERVER_URL}/get-certain-post`,
+          data: { postId: `${postId}`, myId },
+          withCredentials: true,
+        });
 
-          setPostList(res.data.posts);
-        } catch (e) {
-          Swal.fire(e.response.data.message);
-          setError(true);
-          console.log("error: ", e.response.data.message);
-        }
-        setLoading(false);
-      };
-      readPosts();
-    }
+        setPostList(res.data.posts);
+      } catch (e) {
+        Swal.fire(e.response.data.message);
+        setError(true);
+        console.log("error: ", e.response.data.message);
+      }
+      setLoading(false);
+    };
+    readPosts();
+    //}
   }, [postId, myId, error]);
 
   const cookies = new Cookies();
   if (!cookies.get("user-id")) {
-    return <Redirect to="/signup" />;
+    //return <Redirect to="/signup" />;
   }
 
   if (error) {
