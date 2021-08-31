@@ -48,6 +48,10 @@ export const SentenceCard = ({
       myId: state.user.myId,
     };
   });
+  useEffect(() => {
+    setLoved(wasLove);
+  }, [wasLove]);
+
   const { myNickname } = useSelector((state) => {
     return {
       myNickname: state.user.myNickname,
