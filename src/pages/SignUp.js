@@ -3,6 +3,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../redux/user";
 import Cookies from "universal-cookie";
+import "../css/button.css";
 
 import { Redirect, Link } from "react-router-dom";
 import { ListWrapper } from "../components/ListWrapper";
@@ -154,7 +155,8 @@ export const SignUp = () => {
           }}
         />*/}
 
-        <FormButton
+        <button
+          className="retroVioletButton"
           disabled={
             !(
               !loading &&
@@ -178,7 +180,7 @@ export const SignUp = () => {
           }}
         >
           회원가입
-        </FormButton>
+        </button>
         <Link to="/login">
           이미 회원이신가요?{" "}
           <span style={{ color: colors.softViolet }}>로그인</span>

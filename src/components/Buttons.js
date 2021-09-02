@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { boxShadow, colors } from "../lib/style";
 import { ArrowLeft } from "./Icons";
+import "../css/button.css";
 
 export const DefaultButton = styled.button`
   font-size: 12px;
@@ -18,6 +19,23 @@ export const DefaultButton = styled.button`
     background-color: #555555;
   }
 `;
+
+export const RetroButton = ({ children }) => {
+  return (
+    <a href="#" class="button nav-link">
+      <div class="bottom"></div>
+
+      <div class="top">
+        <div class="label">{children}</div>
+
+        <div class="button-border button-border-left"></div>
+        <div class="button-border button-border-top"></div>
+        <div class="button-border button-border-right"></div>
+        <div class="button-border button-border-bottom"></div>
+      </div>
+    </a>
+  );
+};
 
 export const BorderButton = styled.button`
   font-size: 12px;

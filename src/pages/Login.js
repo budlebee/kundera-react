@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/user";
 import Cookies from "universal-cookie";
+import "../css/button.css";
 
 import { Redirect, Link } from "react-router-dom";
 import { ListWrapper } from "../components/ListWrapper";
@@ -52,7 +53,8 @@ export const Login = () => {
           }}
         />
 
-        <FormButton
+        <button
+          className="retroVioletButton"
           disabled={!(!loading && email.length > 0 && pwd.length > 0)}
           onClick={() => {
             dispatch(login(email, pwd));
@@ -61,7 +63,7 @@ export const Login = () => {
           }}
         >
           로그인
-        </FormButton>
+        </button>
         <Link to="/signup">
           아직 회원이 아니신가요?{" "}
           <span style={{ color: colors.softViolet }}>회원가입</span>

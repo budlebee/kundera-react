@@ -58,7 +58,8 @@ export const Setting = () => {
           </a>
         </div>
         <div style={{ width: "100%" }}>
-          <FormButton
+          <button
+            className="retroVioletButton"
             style={{
               //all: "unset",
               cursor: "pointer",
@@ -69,7 +70,7 @@ export const Setting = () => {
             }}
           >
             프로필 수정
-          </FormButton>
+          </button>
         </div>
         {onChangeSetting ? (
           <div
@@ -156,7 +157,8 @@ export const Setting = () => {
             width: "100%",
           }}
         >
-          <FormButton
+          <button
+            className="retroGreenButton"
             style={{
               //all: "unset",
               cursor: "pointer",
@@ -180,7 +182,7 @@ export const Setting = () => {
             }}
           >
             이메일 알림 설정
-          </FormButton>
+          </button>
         </div>
         {onChangeAlert ? (
           <div
@@ -298,7 +300,8 @@ export const Setting = () => {
             lineHeight: 2,
           }}
         >
-          <FormButton
+          <button
+            className="retro-button-yellow"
             style={{
               //all: "unset",
               cursor: "pointer",
@@ -309,7 +312,7 @@ export const Setting = () => {
             }}
           >
             문의
-          </FormButton>
+          </button>
         </div>
         {onContact ? (
           <div style={{ display: "grid", placeItems: "center" }}>
@@ -335,7 +338,8 @@ export const Setting = () => {
           }}
           to="/guest"
         >
-          <FormButton
+          <button
+            className="retro-button-red"
             style={{
               //all: "unset",
               cursor: "pointer",
@@ -346,7 +350,7 @@ export const Setting = () => {
             }}
           >
             로그아웃
-          </FormButton>
+          </button>
         </Link>
       </div>
     </ListWrapper>

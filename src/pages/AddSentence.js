@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import styled from "styled-components";
+import "../css/button.css";
 import { testId } from "../lib/test";
 import { useSelector, useDispatch } from "react-redux";
 import Cookies from "universal-cookie";
@@ -67,7 +68,8 @@ export const AddSentence = () => {
         </div>
 
         <div style={{ padding: "10px" }}>
-          <FormButton
+          <button
+            className="retroVioletButton"
             disabled={!(!loading && bodyText.length > 0)}
             onClick={async () => {
               try {
@@ -90,8 +92,8 @@ export const AddSentence = () => {
               }
             }}
           >
-            <div style={{ fontSize: "16px" }}>띄워보내기</div>
-          </FormButton>
+            <div style={{ fontSize: "16px" }}>글쓰기</div>
+          </button>
         </div>
       </div>
     </>
