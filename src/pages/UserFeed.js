@@ -233,7 +233,6 @@ export const UserFeed = ({ match }) => {
                     );
                   }
                   setOnMyPost(!onMyPost);
-                  console.log("뭐이 ㅁ버튼이 왜 반응안함?");
                 }}
               />
               <span class="slider round"></span>

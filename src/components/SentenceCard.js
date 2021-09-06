@@ -56,6 +56,9 @@ export const SentenceCard = ({
   useEffect(() => {
     setLoved(wasLove);
   }, [wasLove]);
+  useEffect(() => {
+    setLocalContent(content);
+  }, [content]);
 
   const { myNickname } = useSelector((state) => {
     return {
