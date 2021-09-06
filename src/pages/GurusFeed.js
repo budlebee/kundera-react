@@ -32,7 +32,14 @@ export const GurusFeed = () => {
           withCredentials: true,
         });
         console.log(res.data);
-        setPostList(res.data.result);
+        const sortedList = res.data.result.sort((a, b) => {
+          if (Date.parse(a.timestamp) > Date.parse(b.timestamp)) {
+            return -1;
+          } else {
+            return 1;
+          }
+        });
+        setPostList(sortedList);
         //setPost(res.data.result[0]);
         setLoading(false);
       };

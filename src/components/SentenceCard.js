@@ -275,7 +275,7 @@ export const SentenceCard = ({
                   }}
                   to={`/user-feed/${userId}`}
                 >
-                  {nickname}
+                  from {nickname}
                 </Link>
               </div>
             </div>

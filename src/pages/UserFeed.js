@@ -67,12 +67,18 @@ export const UserFeed = ({ match }) => {
           data: { userId: `${userId}`, myId: `${myId}` },
           withCredentials: true,
         });
-
+        const sortedList = res.data.result.sort((a, b) => {
+          if (Date.parse(a.timestamp) > Date.parse(b.timestamp)) {
+            return -1;
+          } else {
+            return 1;
+          }
+        });
         //setLoading(false);
         setIsGuru(res.data.isGuru);
         setHeartCount(res.data.heartCount);
-        setPostList(res.data.result);
-        setTempPostList(res.data.result);
+        setPostList(sortedList);
+        setTempPostList(sortedList);
         setUserNickname(res.data.userNickname);
         setUserProfile(res.data.userProfile);
       } catch (e) {
@@ -227,9 +233,19 @@ export const UserFeed = ({ match }) => {
                     setPostList(tempPostList);
                   } else {
                     setPostList(
-                      postList.filter((ele) => {
-                        return ele.created_by == userId;
-                      })
+                      postList
+                        .filter((ele) => {
+                          return ele.created_by == userId;
+                        })
+                        .sort((a, b) => {
+                          if (
+                            Date.parse(a.timestamp) > Date.parse(b.timestamp)
+                          ) {
+                            return -1;
+                          } else {
+                            return 1;
+                          }
+                        })
                     );
                   }
                   setOnMyPost(!onMyPost);
