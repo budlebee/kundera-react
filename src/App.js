@@ -1,6 +1,7 @@
 import { Route, Switch, Link } from "react-router-dom";
 import { GetSentence } from "./pages/GetSentence";
 import { AddSentence } from "./pages/AddSentence";
+import { UpdateSentence } from "./pages/UpdateSentence";
 import { GurusFeed } from "./pages/GurusFeed";
 import { Notis } from "./pages/Notis";
 import { UserFeed } from "./pages/UserFeed";
@@ -64,6 +65,11 @@ function App() {
           <Switch>
             <Route path="/" exact={true} component={GetSentence} />
             <Route path="/add" exact={true} component={AddSentence} />
+            <Route
+              path="/update-sentence/:postId"
+              exact={true}
+              component={UpdateSentence}
+            />
             <Route path="/post/:postId" component={Post} />
             <Route path="/my-comments/:userId" component={MyComments} />
             <Route path="/gurus-feed" component={GurusFeed} />

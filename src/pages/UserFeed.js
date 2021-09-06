@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import Cookies from "universal-cookie";
 import Swal from "sweetalert2";
 import "../css/button.css";
+import "../css/slider.css";
 
 import { Link } from "react-router-dom";
 import { HeartFilledIcon, SettingIcon } from "../components/Icons";
@@ -42,6 +43,7 @@ export const UserFeed = ({ match }) => {
   const [heartCount, setHeartCount] = useState("");
   const [error, setError] = useState(false);
   const [redirect, setRedirect] = useState(false);
+  const [onMyPost, setOnMyPost] = useState(false);
   const { myId } = useSelector((state) => {
     return {
       myId: state.user.myId,
@@ -49,6 +51,7 @@ export const UserFeed = ({ match }) => {
   });
 
   const [postList, setPostList] = useState([]);
+  const [tempPostList, setTempPostList] = useState([]);
   const [guruList, setGuruList] = useState([]);
   const [followerList, setFollowerList] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -69,6 +72,7 @@ export const UserFeed = ({ match }) => {
         setIsGuru(res.data.isGuru);
         setHeartCount(res.data.heartCount);
         setPostList(res.data.result);
+        setTempPostList(res.data.result);
         setUserNickname(res.data.userNickname);
         setUserProfile(res.data.userProfile);
       } catch (e) {
@@ -211,9 +215,32 @@ export const UserFeed = ({ match }) => {
         ) : (
           ""
         )}
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <span>직접 쓴 글만 모아보기</span>
+          <span>
+            <label class="switch">
+              <input
+                type="checkbox"
+                checked={onMyPost}
+                onChange={(e) => {
+                  if (onMyPost) {
+                    setPostList(tempPostList);
+                  } else {
+                    setPostList(
+                      postList.filter((ele) => {
+                        return ele.created_by == userId;
+                      })
+                    );
+                  }
+                  setOnMyPost(!onMyPost);
+                  console.log("뭐이 ㅁ버튼이 왜 반응안함?");
+                }}
+              />
+              <span class="slider round"></span>
+            </label>
+          </span>
+        </div>
       </div>
-
-      <HorizontalLine />
 
       {loading ? <Skeleton count={5} /> : ""}
       {postList.map((ele, idx) => {
