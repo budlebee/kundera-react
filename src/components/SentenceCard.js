@@ -39,6 +39,7 @@ export const SentenceCard = ({
   comments,
 }) => {
   const [loved, setLoved] = useState(wasLove);
+  const [localContent, setLocalContent] = useState(content);
   const [comment, setComment] = useState("");
   const [onComment, setOnComment] = useState(commentUnfold);
   const [loading, setLoading] = useState(false);
@@ -97,9 +98,9 @@ export const SentenceCard = ({
     }
   }, [postId, commentUnfold]);
 
-  if (onSubmit) {
-    return <Redirect to={`/post/${postId}`}></Redirect>;
-  }
+  //if (onSubmit) {
+  //   return <Redirect to={`/post/${postId}`}></Redirect>;
+  //}
 
   return (
     <div
@@ -151,13 +152,13 @@ export const SentenceCard = ({
             ""
           )}
         </div>
-        {/*
-          <div>
+
+        <div>
           {userId == myId && myId && userId ? (
             <DefaultButton
               onClick={() => {
                 setOnUpdate(!onUpdate);
-                setEditedText(content);
+                setEditedText(localContent);
               }}
               style={{ padding: "2 2 2 2", margin: "0 0 0 0" }}
             >
@@ -166,8 +167,7 @@ export const SentenceCard = ({
           ) : (
             ""
           )}
-        </div> 
-        */}
+        </div>
       </div>
       {onUpdate ? (
         <div
@@ -224,7 +224,9 @@ export const SentenceCard = ({
 
                   //setCheckValue(res.data.text);
                   setLoading(false);
+                  setOnUpdate(false);
                   setOnSubmit(true);
+                  setLocalContent(editedText);
                 } catch (e) {
                   alert("죄송합니다. 에러가 발생했어요");
                 }
@@ -245,7 +247,9 @@ export const SentenceCard = ({
             paddingBottom: padding.default,
           }}
         >
-          <div style={{ lineHeight: "1.5", fontSize: "16px" }}>{content}</div>
+          <div style={{ lineHeight: "1.5", fontSize: "16px" }}>
+            {localContent}
+          </div>
           {userId && userId != keeperId ? (
             <div
               style={{
