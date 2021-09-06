@@ -7,6 +7,8 @@ import {
   padding,
 } from "../lib/style";
 import { timeForToday } from "../lib/functions";
+import "../css/button.css";
+
 import {
   BookmarkIcon,
   BookmarkFilledIcon,
@@ -407,8 +409,9 @@ export const SentenceCard = ({
                     />
                   </div>
                   <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                    <DefaultButton
-                      disabled={loading}
+                    <button
+                      className="retroVioletButton"
+                      disabled={loading || comment.length < 1}
                       onClick={async () => {
                         setLoading(true);
                         const res = await axios({
@@ -440,7 +443,7 @@ export const SentenceCard = ({
                       }}
                     >
                       댓글달기
-                    </DefaultButton>
+                    </button>
                   </div>
                 </>
               ) : (
