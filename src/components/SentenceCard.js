@@ -204,7 +204,7 @@ export const SentenceCard = ({
               }}
               placeholder="갖고 있는 문장을 어딘가로 띄워보낼 수 있어요. 명언도 좋고, 책에서 읽은 문장도 좋고, 자신의 생각을 담은 통찰을 띄워보내도 좋아요. "
               minLength="1"
-              maxLength="1000"
+              maxLength="3000"
               autoFocus={false}
               spellCheck="false"
             />
