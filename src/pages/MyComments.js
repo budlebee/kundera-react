@@ -23,7 +23,6 @@ export const MyComments = ({ match }) => {
   const cookies = new Cookies();
 
   useEffect(() => {
-    console.log(userId);
     if (cookies.get("user-id") == userId) {
       const getMyComments = async () => {
         try {
@@ -36,7 +35,6 @@ export const MyComments = ({ match }) => {
           });
 
           setCommentList(res.data.result);
-          console.log(res.data.result);
         } catch (e) {
           console.log("error: ", e);
         }

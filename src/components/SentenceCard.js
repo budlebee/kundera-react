@@ -50,9 +50,10 @@ export const SentenceCard = ({
   const [onUpdate, setOnUpdate] = useState(false);
   const [editedText, setEditedText] = useState("");
   const [onSubmit, setOnSubmit] = useState(false);
-  const { myId } = useSelector((state) => {
+  const { myId, sessionKey } = useSelector((state) => {
     return {
       myId: state.user.myId,
+      sessionKey: state.user.sessionKey,
     };
   });
   useEffect(() => {
@@ -220,6 +221,7 @@ export const SentenceCard = ({
                     method: "post",
                     url: `${process.env.REACT_APP_SERVER_URL}/update-sentence`,
                     data: {
+                      sessionKey: sessionKey,
                       content: editedText,
                       userId: `${myId}`,
                       postId: postId,
@@ -277,7 +279,7 @@ export const SentenceCard = ({
                   }}
                   to={`/user-feed/${userId}`}
                 >
-                  from {nickname}
+                  {nickname ? `from ${nickname}` : ``}
                 </Link>
               </div>
             </div>

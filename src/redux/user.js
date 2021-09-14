@@ -11,6 +11,7 @@ const initialState = {
   myNickname: "",
   myProfile: "",
   accessToken: null,
+  sessionKey: "",
   tempLoveId: "",
   hasNoti: false,
   emailAlertWeekly: false,
@@ -76,6 +77,7 @@ export const signUp = (email, nickname, pwd, tempLove) => async (dispatch) => {
     }
     dispatch({
       type: SIGNUP_SUCCESS,
+      sessionKey: res.data.key,
       //accessToken: res.data.token,
       userId: res.data.userId,
       nickname: res.data.nickname,
@@ -86,7 +88,7 @@ export const signUp = (email, nickname, pwd, tempLove) => async (dispatch) => {
     Swal.fire({
       icon: "success",
       title: "인증 이메일이 발송됐어요!",
-      text: "이메일 인증을 안해도 사용할 수 있지만, 인증을 하면 매주 좋은 문장을 모아보내드려요!",
+      text: "이메일 인증을 안해도 사용할 수 있지만, 인증을 하면 매주 좋은 문장을 보내드려요!",
     });
   } catch (e) {
     dispatch({ type: SIGNUP_FAIL, error: e, loading: false });
@@ -123,6 +125,7 @@ export const login = (email, pwd) => async (dispatch) => {
 
       dispatch({
         type: LOG_IN_SUCCESS,
+        sessionKey: res.data.key,
         //accessToken: res.data.token,
         userId: res.data.userId,
         nickname: res.data.nickname,
@@ -182,6 +185,7 @@ export const refreshToken = (accessToken) => async (dispatch) => {
     }
     dispatch({
       type: REFRESH_TOKEN_SUCCESS,
+      sessionKey: res.data.key,
       //accessToken: res.data.token,
       userId: res.data.userId,
       nickname: res.data.myNickname,
@@ -214,6 +218,7 @@ export default function user(state = initialState, action) {
     case LOG_IN_SUCCESS:
       return {
         ...state,
+        sessionKey: action.sessionKey,
         //accessToken: action.accessToken,
         hasNoti: action.hasNoti,
         myId: action.userId,
@@ -231,6 +236,7 @@ export default function user(state = initialState, action) {
     case REFRESH_TOKEN_SUCCESS:
       return {
         ...state,
+        sessionKey: action.sessionKey,
         // accessToken: action.accessToken,
         myId: action.userId,
         myNickname: action.nickname,
@@ -248,6 +254,7 @@ export default function user(state = initialState, action) {
     case SIGNUP_SUCCESS:
       return {
         ...state,
+        sessionKey: action.sessionKey,
         //  accessToken: action.accessToken,
         myId: action.userId,
         hasNoti: action.hasNoti,

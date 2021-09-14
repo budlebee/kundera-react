@@ -31,7 +31,7 @@ export const GurusFeed = () => {
           data: { myId: `${myId}` },
           withCredentials: true,
         });
-        console.log(res.data);
+
         const sortedList = res.data.result.sort((a, b) => {
           if (Date.parse(a.timestamp) > Date.parse(b.timestamp)) {
             return -1;

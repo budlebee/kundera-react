@@ -11,7 +11,7 @@ export const NotiBlock = ({
   postId,
 }) => {
   const link = notiType == 3 ? `/post/${postId}` : `/user-feed/${senderId}`;
-  console.log(link);
+  
   return (
     <Link to={link}>
       <div
