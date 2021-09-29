@@ -68,7 +68,7 @@ export const UserFeed = ({ match }) => {
           withCredentials: true,
         });
         const sortedList = res.data.result.sort((a, b) => {
-          if (Date.parse(a.timestamp) > Date.parse(b.timestamp)) {
+          if (Date.parse(a.added_at) > Date.parse(b.added_at)) {
             return -1;
           } else {
             return 1;
@@ -238,9 +238,7 @@ export const UserFeed = ({ match }) => {
                           return ele.created_by == userId;
                         })
                         .sort((a, b) => {
-                          if (
-                            Date.parse(a.timestamp) > Date.parse(b.timestamp)
-                          ) {
+                          if (Date.parse(a.added_at) > Date.parse(b.added_at)) {
                             return -1;
                           } else {
                             return 1;
