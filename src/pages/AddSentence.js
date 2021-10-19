@@ -11,6 +11,7 @@ import { borderRadius, boxShadow, colors } from "../lib/style";
 import { DefaultButton, FormButton } from "../components/Buttons";
 
 export const AddSentence = () => {
+
   const [bodyText, setBodyText] = React.useState("");
   const [checkValue, setCheckValue] = React.useState("");
   const [submit, setSubmit] = useState(false);
@@ -85,8 +86,10 @@ export const AddSentence = () => {
                 });
 
                 //setCheckValue(res.data.text);
+
                 setLoading(false);
                 setSubmit(true);
+
               } catch (e) {
                 alert("죄송합니다. 에러가 발생했어요");
               }
@@ -94,6 +97,7 @@ export const AddSentence = () => {
           >
             <div style={{ fontSize: "16px" }}>글쓰기</div>
           </button>
+
         </div>
       </div>
     </>

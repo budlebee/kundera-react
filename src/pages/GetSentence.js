@@ -12,8 +12,11 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { colors } from "../lib/style";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const GetSentence = () => {
+  const notify = () => toast("문장이 마이페이지에 추가됐어요!");
   const [postList, setPostList] = useState([]);
   const [post, setPost] = useState(null);
   const [count, setCount] = React.useState(0);
@@ -132,7 +135,8 @@ export const GetSentence = () => {
                     createdBy: post.created_by,
                   },
                 });
-
+                // 여기서 배너가 떠야한다.
+                notify()
                 if (count === postList.length - 1) {
                   readPosts();
                   setCount(0);
@@ -152,6 +156,16 @@ export const GetSentence = () => {
               </div>
               <div>간직하기</div>
             </DefaultButton>
+            <ToastContainer
+              position="top-center"
+              autoClose={1500}
+              hideProgressBar={true}
+              newestOnTop={true}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover />
           </div>
         </div>
       )}
