@@ -68,7 +68,7 @@ export const SentenceCard = ({
       myNickname: state.user.myNickname,
     };
   });
-
+  console.log(nickname)
   const noCommentDefault = "지금은 코멘트가 없어요 :)";
   useEffect(() => {
     if (typeof comments != "undefined") {

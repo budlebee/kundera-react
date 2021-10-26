@@ -91,6 +91,8 @@ export const GetSentence = () => {
               <SentenceCard
                 content={post.content}
                 postId={post.post_id}
+                nickname={post.nickname}
+                userId={post.created_by}
               ></SentenceCard>
             ) : (
               ""
